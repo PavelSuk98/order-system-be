@@ -16,7 +16,7 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
       username: process.env.DB_USERNAME,
       database: process.env.DB_NAME,
       password: process.env.DB_PASSWORD,
-      migrations: [],
+      migrations: [InitialSeed1649781299856],
       extra: {
         charset: 'utf8mb4_unicode_ci',
       },
@@ -35,7 +35,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   username: process.env.DB_USERNAME,
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
-  migrations: [],
+  migrations: [InitialSeed1649781299856],
   extra: {
     charset: 'utf8mb4_unicode_ci',
   },
