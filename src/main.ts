@@ -7,9 +7,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
-  app.enableCors({
-    origin: '*',
-  });
+  if (process.env.PRODUCTION) {
+    app.enableCors({
+      origin: '*',
+    });
+  }
   const config = new DocumentBuilder()
     .setTitle('Order system API')
     .setDescription('The cats API description')
