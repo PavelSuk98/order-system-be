@@ -7,7 +7,6 @@ import {
   Res,
   UseGuards,
   Request,
-  Header,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { HttpStatusCode } from 'axios';
@@ -25,21 +24,18 @@ export class IdentityController {
   constructor(private readonly identityFacade: IdentityFacade) {}
 
   @UseGuards(JwtAuthGuard)
-  @Header('Access-Control-Allow-Origin', 'https://dobracajka.netlify.app')
   @Get('UserInfo')
   async getUserInfo(@Request() req: any): Promise<UserDTO> {
     return await this.identityFacade.getUserInfo(req.user.userId);
   }
 
   @Post('Login')
-  @Header('Access-Control-Allow-Origin', 'https://dobracajka.netlify.app')
   @HttpCode(HttpStatusCode.Ok)
   async login(@Body() data: LoginDTO): Promise<LoginResponseDTO | void> {
     return await this.identityFacade.login(data);
   }
 
   @Get('Permissions')
-  @Header('Access-Control-Allow-Origin', 'https://dobracajka.netlify.app')
   @HttpCode(HttpStatusCode.Ok)
   getPermissions(): { [key: string]: { [key: string]: number } } {
     return { '': { ADMIN: 1 } };
