@@ -7,7 +7,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { IdentityDomain } from './domains/identity/identity-domain.module';
 import { ProductModule } from './domains/product/product.module';
-import { ProductCategoryModule } from './product-category/product-category.module';
+import { ProductCategoryModule } from './domains/product-category/product-category.module';
 
 @Module({
   imports: [
