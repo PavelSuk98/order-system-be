@@ -22,7 +22,7 @@ export class AdminProductCategoryController {
   constructor(private readonly productCategoryFacade: ProductCategoryFacade) {}
 
   @Post()
-  @Roles(UserRoleEnum.SuperAdmin)
+  @Roles(UserRoleEnum.Admin)
   @UseGuards(RoleGuard)
   create(
     @Body() createProductCategoryDto: CreateProductCategoryDTO,
@@ -32,7 +32,7 @@ export class AdminProductCategoryController {
   }
 
   @Get()
-  @Roles(UserRoleEnum.SuperAdmin)
+  @Roles(UserRoleEnum.Admin)
   @UseGuards(RoleGuard)
   findAll() {
     return 'ahoj';

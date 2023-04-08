@@ -2,7 +2,7 @@ import { TableBaseEntity } from 'src/domains/shared/domain/base.entity';
 import { PrimaryGeneratedColumn, Entity, Column } from 'typeorm';
 
 @Entity('Role')
-export class RoleEntity extends TableBaseEntity {
+export class RoleEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
@@ -10,5 +10,5 @@ export class RoleEntity extends TableBaseEntity {
   name!: string;
 
   @Column({ default: false })
-  active!: boolean;
+  isActive!: boolean;
 }

@@ -5,7 +5,7 @@ export default class InitialSeed1649781299856 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner) {
     await queryRunner.query(
-      `INSERT INTO "Role" (id, name, active, "createdDate", "createdBy", "updatedDate", "updatedBy") VALUES('2d142769-a5c1-4a37-a151-aefe097e8934', 'Super Admin', true, 'NOW()', 'System', NOW(), 'System')`,
+      `INSERT INTO "Role" (id, name, isActive) VALUES('2d142769-a5c1-4a37-a151-aefe097e8934', 'Admin', true)`,
     );
 
     await queryRunner.query(
