@@ -4,7 +4,7 @@ import { AdminProductCategoryController } from './controllers/admin-product-cate
 import { ProductCategoryHttpModule } from './product-category-http.module';
 
 @Module({
-  imports: [ProductCategoryHttpModule, LogHttpModule],
+  imports: [ProductCategoryHttpModule],
   providers: [],
   controllers: [AdminProductCategoryController],
 })

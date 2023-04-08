@@ -12,6 +12,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/domains/identity/decorators/role.decorator';
 import { UserRoleEnum } from 'src/domains/identity/domain/role.enum';
 import { RoleGuard } from 'src/domains/identity/infrastructure/role.guard';
+import { LogFacade } from 'src/domains/logger/services/log.facade';
 import { ListItemModel } from 'src/domains/shared/domain/list-item.interface';
 import { CreateProductCategoryDTO } from '../models/create-product-category.dto';
 import { ProductCategoryDTO } from '../models/product-category.dto';
@@ -46,7 +47,7 @@ export class AdminProductCategoryController {
     return this.productCategoryFacade.findOneDTO(id);
   }
 
-  @Put('')
+  @Put(':id')
   async update(
     @Body() updateProductCategoryDto: UpdateProductCategoryDTO,
   ): Promise<void> {

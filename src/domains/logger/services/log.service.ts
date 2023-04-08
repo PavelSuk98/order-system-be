@@ -1,7 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { LogEntity } from '../entities/log.entity';
+import { CreateLogModel } from '../models/create-log.model';
 
 @Injectable()
 export class LogService {
@@ -10,11 +11,18 @@ export class LogService {
     private logRepository: Repository<LogEntity>,
   ) {}
 
-  // findAll(): Promise<ProductCategoryEntity[]> {
-  //   return this.productCategoryRepository.find({
-  //     where: {
-  //       isActive: true,
-  //     },
-  //   });
-  // }
+  // TODO: PAVEL: add relation by id without fetching whole object
+  async create(log: CreateLogModel): Promise<void> {
+    const logEntity: Partial<LogEntity> = {
+      type: { id: log.logType } as any,
+      createdBy: { id: log.createdByUserId } as any,
+      productCategory: { id: log.productCategoryId } as any,
+    };
+
+    this.logRepository.save(logEntity);
+  }
+
+  findAll(): Promise<LogEntity[]> {
+    return this.logRepository.find();
+  }
 }
