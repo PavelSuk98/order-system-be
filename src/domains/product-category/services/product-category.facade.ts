@@ -12,13 +12,7 @@ export class ProductCategoryFacade {
   constructor(
     private readonly productCategoryService: ProductCategoryService,
     private readonly logFacade: LogFacade,
-  ) {
-    // this.logFacade.create({
-    //   createdByUserId: 'beedecfd-64bb-4c1c-9e8c-76dbdba640b5',
-    //   logType: LogTypeEnum.Create,
-    //   productCategoryId: '',
-    // });
-  }
+  ) {}
 
   async findAllDTO(): Promise<ListItemModel<ProductCategoryDTO>> {
     const productCategories = await this.productCategoryService.findAll();
@@ -42,6 +36,12 @@ export class ProductCategoryFacade {
     category: CreateProductCategoryDTO,
   ): Promise<ProductCategoryDTO> {
     const productCategory = await this.productCategoryService.create(category);
+
+    this.logFacade.create({
+      createdByUserId: category.createdByUserId,
+      logType: LogTypeEnum.Create,
+      productCategoryId: productCategory.id,
+    });
 
     return new ProductCategoryDTO(productCategory);
   }

@@ -8,10 +8,5 @@ export class LogFacade {
 
   async create(log: CreateLogModel): Promise<void> {
     await this.logService.create(log);
-
-    const items = await this.logService.findAll();
-
-    console.log(items);
-    console.log(items);
   }
 }

@@ -16,13 +16,17 @@ export class LogService {
     const logEntity: Partial<LogEntity> = {
       type: { id: log.logType } as any,
       createdBy: { id: log.createdByUserId } as any,
-      productCategory: { id: log.productCategoryId } as any,
+      productCategory: log.productCategoryId
+        ? ({ id: log.productCategoryId } as any)
+        : undefined,
     };
 
-    this.logRepository.save(logEntity);
+    await this.logRepository.save(logEntity);
   }
 
   findAll(): Promise<LogEntity[]> {
-    return this.logRepository.find();
+    return this.logRepository.find({
+      relations: ['createdBy', 'type', 'productCategory'],
+    });
   }
 }

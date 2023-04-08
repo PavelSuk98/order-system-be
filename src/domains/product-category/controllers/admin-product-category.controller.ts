@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -29,7 +30,10 @@ export class AdminProductCategoryController {
   @UseGuards(RoleGuard)
   create(
     @Body() createProductCategoryDTO: CreateProductCategoryDTO,
+    @Request() request,
   ): Promise<ProductCategoryDTO> {
+    createProductCategoryDTO.createdByUserId = request.user.userId;
+
     return this.productCategoryFacade.create(createProductCategoryDTO);
   }
 
