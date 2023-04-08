@@ -1,5 +1,6 @@
+import { LogEntity } from 'src/domains/logger/entities/log.entity';
 import { TableBaseEntity } from 'src/domains/shared/domain/base.entity';
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class ProductCategoryEntity extends TableBaseEntity {
@@ -11,4 +12,7 @@ export class ProductCategoryEntity extends TableBaseEntity {
 
   @Column()
   order: number;
+
+  @OneToMany(() => LogEntity, (log) => log.productCategory)
+  logs: LogEntity[];
 }
