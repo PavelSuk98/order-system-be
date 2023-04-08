@@ -41,19 +41,21 @@ export class AdminProductCategoryController {
   @Get(':id')
   @Roles(UserRoleEnum.Admin)
   @UseGuards(RoleGuard)
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<ProductCategoryDTO> {
     return this.productCategoryFacade.findOneDTO(id);
   }
 
-  @Put(':id')
-  update(@Body() updateProductCategoryDto: UpdateProductCategoryDTO) {
-    return this.productCategoryFacade.update(updateProductCategoryDto);
+  @Put('')
+  async update(
+    @Body() updateProductCategoryDto: UpdateProductCategoryDTO,
+  ): Promise<void> {
+    await this.productCategoryFacade.update(updateProductCategoryDto);
   }
 
   @Delete(':id')
   @Roles(UserRoleEnum.Admin)
   @UseGuards(RoleGuard)
-  remove(@Param('id') id: string) {
-    return this.productCategoryFacade.delete(id);
+  async remove(@Param('id') id: string): Promise<void> {
+    await this.productCategoryFacade.delete(id);
   }
 }

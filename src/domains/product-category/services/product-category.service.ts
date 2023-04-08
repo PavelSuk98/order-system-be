@@ -1,6 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UpdateProductDto } from 'src/domains/product/domain/dto/update-product.dto';
 import { Repository } from 'typeorm';
 import { ProductCategoryEntity } from '../entities/product-category.entity';
 import { CreateProductCategoryDTO } from '../models/create-product-category.dto';
@@ -21,13 +20,19 @@ export class ProductCategoryService {
     });
   }
 
-  findOne(id: string): Promise<ProductCategoryEntity | undefined> {
-    return this.productCategoryRepository.findOne({
+  async findOne(id: string): Promise<ProductCategoryEntity | undefined> {
+    const entity = await this.productCategoryRepository.findOne({
       where: {
         id,
         isActive: true,
       },
     });
+
+    if (!entity) {
+      throw new BadRequestException(`Entity with id: ${id} does not exists.`);
+    }
+
+    return entity;
   }
 
   create(category: CreateProductCategoryDTO): Promise<ProductCategoryEntity> {
@@ -41,7 +46,9 @@ export class ProductCategoryService {
     let categoryInDB = await this.findOne(category.id);
 
     if (!categoryInDB) {
-      return;
+      throw new BadRequestException(
+        `Entity with id: ${category.id} does not exists.`,
+      );
     }
 
     categoryInDB = { ...categoryInDB, ...category };
@@ -53,7 +60,7 @@ export class ProductCategoryService {
     const productCategory = await this.findOne(id);
 
     if (!productCategory) {
-      return;
+      throw new BadRequestException(`Entity with id: ${id} does not exists.`);
     }
 
     productCategory.isActive = false;
