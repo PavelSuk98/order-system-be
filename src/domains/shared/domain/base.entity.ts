@@ -1,15 +1,18 @@
-import { CreateDateColumn, UpdateDateColumn, Column } from 'typeorm';
+import { CreateDateColumn, Column } from 'typeorm';
 
-export abstract class BaseEntity {
+export abstract class TableBaseEntity {
   @Column({ nullable: true })
   createdBy!: string;
 
   @CreateDateColumn({ type: 'timestamp with time zone' })
   createdDate!: Date;
 
-  @Column({ nullable: true })
-  updatedBy!: string;
+  @Column({ default: true })
+  isActive: boolean;
 
-  @UpdateDateColumn({ type: 'timestamp with time zone', nullable: true })
-  updatedDate!: Date;
+  // @Column({ nullable: true })
+  // updatedBy!: string;
+
+  // @UpdateDateColumn({ type: 'timestamp with time zone', nullable: true })
+  // updatedDate!: Date;
 }

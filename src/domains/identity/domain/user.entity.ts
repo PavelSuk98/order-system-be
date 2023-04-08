@@ -1,4 +1,4 @@
-import { BaseEntity } from 'src/domains/shared/domain/base.entity';
+import { TableBaseEntity } from 'src/domains/shared/domain/base.entity';
 import {
   PrimaryGeneratedColumn,
   Entity,
@@ -9,7 +9,7 @@ import {
 import { RoleEntity } from './role.entity';
 
 @Entity('User')
-export class UserEntity extends BaseEntity {
+export class UserEntity extends TableBaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 

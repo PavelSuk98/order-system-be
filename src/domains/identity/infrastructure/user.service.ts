@@ -15,7 +15,7 @@ export class UserService {
     @InjectRepository(UserEntity)
     private usersRepository: Repository<UserEntity>,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   private findAll(): Promise<UserEntity[]> {
     return this.usersRepository.find();
@@ -42,8 +42,8 @@ export class UserService {
     //   throw new BadRequestException('Incorrect password.');
     // }
 
-    user.updatedBy = user.userName;
-    user.updatedDate = new Date();
+    // user.updatedBy = user.userName;
+    // user.updatedDate = new Date();
     const hashedPassword = await bcrypt.hash(data.newPassword, 10);
     user.password = hashedPassword;
 

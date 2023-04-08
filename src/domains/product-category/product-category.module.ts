@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ProductCategoryService } from './infrastructure/product-category.service';
-import { ProductCategoryController } from './api/product-category.controller';
+import { AdminProductCategoryController } from './controllers/admin-product-category.controller';
+import { ProductCategoryHttpModule } from './product-category-http.module';
 
 @Module({
-  controllers: [ProductCategoryController],
-  providers: [ProductCategoryService],
+  imports: [ProductCategoryHttpModule],
+  providers: [],
+  controllers: [AdminProductCategoryController],
 })
 export class ProductCategoryModule {}
