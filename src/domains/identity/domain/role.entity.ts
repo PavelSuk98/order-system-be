@@ -1,4 +1,3 @@
-import { TableBaseEntity } from 'src/domains/shared/domain/base.entity';
 import { PrimaryGeneratedColumn, Entity, Column } from 'typeorm';
 
 @Entity('Role')

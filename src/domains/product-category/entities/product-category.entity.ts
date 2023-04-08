@@ -1,5 +1,5 @@
 import { TableBaseEntity } from 'src/domains/shared/domain/base.entity';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class ProductCategoryEntity extends TableBaseEntity {
