@@ -1,3 +1,4 @@
+import { LogEntity } from 'src/domains/logger/entities/log.entity';
 import { TableBaseEntity } from 'src/domains/shared/domain/base.entity';
 import {
   PrimaryGeneratedColumn,
@@ -5,6 +6,7 @@ import {
   Column,
   JoinColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { RoleEntity } from './role.entity';
 
@@ -25,4 +27,7 @@ export class UserEntity extends TableBaseEntity {
   @ManyToOne(() => RoleEntity)
   @JoinColumn()
   role!: RoleEntity;
+
+  @OneToMany(() => LogEntity, (log) => log.createdBy)
+  logs: LogEntity[];
 }

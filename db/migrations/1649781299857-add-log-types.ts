@@ -6,11 +6,15 @@ export default class AddLogTypes1649781299857 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner) {
     await queryRunner.query(
-      `INSERT INTO "Role" (id, name, isActive) VALUES('2d142769-a5c1-4a37-a151-aefe097e8934', 'Admin', true)`,
+      `INSERT INTO "log_type_entity" (id, name) VALUES('${LogTypeEnum.Create}', 'Create')`,
     );
 
     await queryRunner.query(
-      `INSERT INTO "Role" (id, name, isActive) VALUES('${LogTypeEnum.Create}', 'Admin', true)`,
+      `INSERT INTO "log_type_entity" (id, name) VALUES('${LogTypeEnum.Update}', 'Update')`,
+    );
+
+    await queryRunner.query(
+      `INSERT INTO "log_type_entity" (id, name) VALUES('${LogTypeEnum.Delete}', 'Delete')`,
     );
   }
 

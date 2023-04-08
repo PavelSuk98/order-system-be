@@ -17,19 +17,4 @@ export class LogService {
   //     },
   //   });
   // }
-
-  // async findOne(id: string): Promise<ProductCategoryEntity | undefined> {
-  //   const entity = await this.productCategoryRepository.findOne({
-  //     where: {
-  //       id,
-  //       isActive: true,
-  //     },
-  //   });
-
-  //   if (!entity) {
-  //     throw new BadRequestException(`Entity with id: ${id} does not exists.`);
-  //   }
-
-  //   return entity;
-  // }
 }

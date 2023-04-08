@@ -4,6 +4,7 @@ import {
   TypeOrmModuleOptions,
 } from '@nestjs/typeorm';
 import InitialSeed1649781299856 from './migrations/1649781299856-initial-seed';
+import AddLogTypes1649781299857 from './migrations/1649781299857-add-log-types';
 
 export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
@@ -16,7 +17,7 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
       username: process.env.DB_USERNAME,
       database: process.env.DB_NAME,
       password: process.env.DB_PASSWORD,
-      migrations: [InitialSeed1649781299856],
+      migrations: [InitialSeed1649781299856, AddLogTypes1649781299857],
       extra: {
         charset: 'utf8mb4_unicode_ci',
       },
@@ -35,7 +36,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   username: process.env.DB_USERNAME,
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
-  migrations: [InitialSeed1649781299856],
+  migrations: [InitialSeed1649781299856, AddLogTypes1649781299857],
   extra: {
     charset: 'utf8mb4_unicode_ci',
   },
