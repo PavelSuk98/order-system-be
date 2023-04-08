@@ -1,4 +1,4 @@
-import { getRepository, MigrationInterface, QueryRunner } from 'typeorm';
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export default class InitialSeed1649781299856 implements MigrationInterface {
   name = 'InitialSeed1649781299856';

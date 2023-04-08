@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ListItemModel } from 'src/domains/shared/domain/list-item.interface';
 import { CreateProductCategoryDTO } from '../models/create-product-category.dto';
 import { ProductCategoryDTO } from '../models/product-category.dto';
 import { UpdateProductCategoryDTO } from '../models/update-product-category.dto';
@@ -10,10 +11,12 @@ export class ProductCategoryFacade {
     private readonly productCategoryService: ProductCategoryService,
   ) {}
 
-  async findAllDTO(): Promise<ProductCategoryDTO[]> {
+  async findAllDTO(): Promise<ListItemModel<ProductCategoryDTO>> {
     const productCategories = await this.productCategoryService.findAll();
 
-    return productCategories.map((c) => new ProductCategoryDTO(c));
+    return {
+      list: productCategories.map((c) => new ProductCategoryDTO(c)),
+    };
   }
 
   async findOneDTO(id: string): Promise<ProductCategoryDTO | undefined> {

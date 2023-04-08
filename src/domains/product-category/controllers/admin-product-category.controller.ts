@@ -12,6 +12,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/domains/identity/decorators/role.decorator';
 import { UserRoleEnum } from 'src/domains/identity/domain/role.enum';
 import { RoleGuard } from 'src/domains/identity/infrastructure/role.guard';
+import { ListItemModel } from 'src/domains/shared/domain/list-item.interface';
 import { CreateProductCategoryDTO } from '../models/create-product-category.dto';
 import { ProductCategoryDTO } from '../models/product-category.dto';
 import { UpdateProductCategoryDTO } from '../models/update-product-category.dto';
@@ -34,7 +35,7 @@ export class AdminProductCategoryController {
   @Get()
   @Roles(UserRoleEnum.Admin)
   @UseGuards(RoleGuard)
-  findAll(): Promise<ProductCategoryDTO[]> {
+  findAll(): Promise<ListItemModel<ProductCategoryDTO>> {
     return this.productCategoryFacade.findAllDTO();
   }
 
