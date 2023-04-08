@@ -1,11 +1,14 @@
 import { Module } from '@nestjs/common';
-import { LogHttpModule } from '../logger/log-http.module';
+import { AdminProductCategoryTypeController } from './controllers/admin-product-category-type.controller';
 import { AdminProductCategoryController } from './controllers/admin-product-category.controller';
 import { ProductCategoryHttpModule } from './product-category-http.module';
 
 @Module({
   imports: [ProductCategoryHttpModule],
   providers: [],
-  controllers: [AdminProductCategoryController],
+  controllers: [
+    AdminProductCategoryController,
+    AdminProductCategoryTypeController,
+  ],
 })
 export class ProductCategoryModule {}
