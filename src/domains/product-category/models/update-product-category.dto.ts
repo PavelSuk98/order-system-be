@@ -2,6 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { ProductCategoryTypeEnum } from './product-category-type.enum';
 
 export class UpdateProductCategoryDTO {
+  createdByUserId: string;
+
   @ApiProperty()
   id: string;
 

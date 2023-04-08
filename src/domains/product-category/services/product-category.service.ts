@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { LogTypeEnum } from 'src/domains/logger/models/log-type.enum';
+import { In, Repository } from 'typeorm';
 import { ProductCategoryEntity } from '../entities/product-category.entity';
 import { CreateProductCategoryDTO } from '../models/create-product-category.dto';
 import { UpdateProductCategoryDTO } from '../models/update-product-category.dto';
@@ -17,7 +18,7 @@ export class ProductCategoryService {
       where: {
         isActive: true,
       },
-      relations: ['type'],
+      relations: ['type', 'logs', 'logs.type', 'logs.createdBy'],
     });
   }
 
@@ -27,7 +28,7 @@ export class ProductCategoryService {
         id,
         isActive: true,
       },
-      relations: ['type'],
+      relations: ['type', 'logs', 'logs.type', 'logs.createdBy'],
     });
 
     if (!entity) {

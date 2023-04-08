@@ -52,16 +52,21 @@ export class AdminProductCategoryController {
   }
 
   @Put(':id')
+  @Roles(UserRoleEnum.Admin)
+  @UseGuards(RoleGuard)
   async update(
     @Body() updateProductCategoryDto: UpdateProductCategoryDTO,
+    @Request() request,
   ): Promise<void> {
+    updateProductCategoryDto.createdByUserId = request.user.userId;
+
     await this.productCategoryFacade.update(updateProductCategoryDto);
   }
 
   @Delete(':id')
   @Roles(UserRoleEnum.Admin)
   @UseGuards(RoleGuard)
-  async remove(@Param('id') id: string): Promise<void> {
-    await this.productCategoryFacade.delete(id);
+  async remove(@Param('id') id: string, @Request() request): Promise<void> {
+    await this.productCategoryFacade.delete(id, request.user.userId);
   }
 }

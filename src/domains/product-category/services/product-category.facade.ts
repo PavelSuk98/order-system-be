@@ -56,10 +56,22 @@ export class ProductCategoryFacade {
   }
 
   async update(productCategory: UpdateProductCategoryDTO): Promise<void> {
+    this.logFacade.create({
+      createdByUserId: productCategory.createdByUserId,
+      logType: LogTypeEnum.Update,
+      productCategoryId: productCategory.id,
+    });
+
     await this.productCategoryService.update(productCategory);
   }
 
-  async delete(id: string): Promise<void> {
+  async delete(id: string, requestedByUserId: string): Promise<void> {
+    this.logFacade.create({
+      createdByUserId: requestedByUserId,
+      logType: LogTypeEnum.Update,
+      productCategoryId: id,
+    });
+
     await this.productCategoryService.delete(id);
   }
 }
