@@ -17,7 +17,7 @@ import { ProductCategoryDTO } from '../models/product-category.dto';
 import { ProductCategoryFacade } from '../services/product-category.facade';
 
 @ApiTags('Admin Product Category')
-@Controller('admin/ProductCategory')
+@Controller('v1/admin/ProductCategory')
 export class AdminProductCategoryController {
   constructor(private readonly productCategoryFacade: ProductCategoryFacade) {}
 
@@ -31,10 +31,12 @@ export class AdminProductCategoryController {
     // return this.productCategoryFacade.create(createProductCategoryDto);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.productCategoryService.findAll();
-  // }
+  @Get()
+  @Roles(UserRoleEnum.SuperAdmin)
+  @UseGuards(RoleGuard)
+  findAll() {
+    return 'ahoj';
+  }
 
   // @Get(':id')
   // findOne(@Param('id') id: string) {

@@ -8,6 +8,7 @@ import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { Observable } from 'rxjs';
 import { UserRoleEnum } from '../domain/role.enum';
+import { UserDTO } from '../domain/user.dto';
 
 @Injectable()
 export class RoleGuard extends AuthGuard('jwt') {
@@ -27,12 +28,13 @@ export class RoleGuard extends AuthGuard('jwt') {
 
     await super.canActivate(context);
 
-    const jwtUserData = context.switchToHttp().getRequest().user;
-    const userRoleId = jwtUserData.roleId as UserRoleEnum;
+    const jwtUserData: UserDTO = context.switchToHttp().getRequest().user.user;
+    const userRoleId = jwtUserData.role.id as UserRoleEnum;
 
     if (!permittedRoles.includes(userRoleId)) {
       throw new ForbiddenException('Invalid role');
     }
+
     return true;
   }
 

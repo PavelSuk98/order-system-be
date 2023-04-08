@@ -15,7 +15,7 @@ export class UserService {
     @InjectRepository(UserEntity)
     private usersRepository: Repository<UserEntity>,
     private jwtService: JwtService,
-  ) { }
+  ) {}
 
   private findAll(): Promise<UserEntity[]> {
     return this.usersRepository.find();
@@ -51,8 +51,12 @@ export class UserService {
     // return await this.accountService.changePassword(data, response);
   }
 
+  // TODO: return role, relations
   public async login(data: LoginDTO): Promise<LoginResponseDTO> {
-    const user = await this.findOne({ where: { email: data.email } });
+    const user = await this.findOne({
+      where: { email: data.email },
+      relations: ['role'],
+    });
 
     if (!user) {
       throw new BadRequestException('Invalid email');
