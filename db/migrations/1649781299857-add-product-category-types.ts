@@ -17,7 +17,7 @@ export default class AddProductCategoryTypes1649781299857
     );
 
     await queryRunner.query(
-      `INSERT INTO "product_category_type_entity" (id, name) VALUES('${ProductCategoryTypeEnum.Pipe}', 'Pipe')`,
+      `INSERT INTO "product_category_type_entity" (id, name) VALUES('${ProductCategoryTypeEnum.Hookah}', 'Hookah')`,
     );
   }
 

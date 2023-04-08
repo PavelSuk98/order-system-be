@@ -17,6 +17,7 @@ export class ProductCategoryService {
       where: {
         isActive: true,
       },
+      relations: ['type'],
     });
   }
 
@@ -26,6 +27,7 @@ export class ProductCategoryService {
         id,
         isActive: true,
       },
+      relations: ['type'],
     });
 
     if (!entity) {
@@ -39,6 +41,7 @@ export class ProductCategoryService {
     return this.productCategoryRepository.save({
       order: category.order,
       title: category.title,
+      type: { id: category.typeId } as any,
     });
   }
 
