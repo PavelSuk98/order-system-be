@@ -1,7 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { LogInfoDTO } from 'src/domains/logger/models/log-info.model';
-import { LogTypeEnum } from 'src/domains/logger/models/log-type.enum';
-import { ProductCategoryEntity } from '../entities/product-category.entity';
 import { ProductCategoryTypeDTO } from './product-category-type.dto';
 
 export class ProductCategoryDTO {
@@ -23,21 +21,17 @@ export class ProductCategoryDTO {
   @ApiProperty()
   updatedLogInfo?: LogInfoDTO;
 
-  constructor(entity: ProductCategoryEntity) {
-    this.id = entity.id;
-    this.title = entity.title;
-    this.order = entity.order;
-    this.type = new ProductCategoryTypeDTO(entity.type);
+  // constructor(entity: ProductCategoryEntity) {
+  //   this.id = entity.id;
+  //   this.title = entity.title;
+  //   this.order = entity.order;
+  //   this.type = new ProductCategoryTypeDTO(entity.type);
 
-    const createdLog = entity.logs.find(
-      (c) => c.type.id === LogTypeEnum.Create,
-    );
+  //   const createdLog = entity.logs.find(
+  //     (c) => c.type.id === LogTypeEnum.Create,
+  //   );
 
-    this.createdLogInfo = new LogInfoDTO(createdLog);
-    console.log(createdLog);
-
-    // const updatedLog = entity.logs.find(
-    //   (c) => c.type.id === LogTypeEnum.,
-    // );
-  }
+  //   this.createdLogInfo = new LogInfoDTO(createdLog);
+  //   console.log(createdLog);
+  // }
 }

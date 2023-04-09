@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { RoleEntity } from './role.entity';
-import { UserEntity } from './user.entity';
+import { Role } from '@prisma/client';
 
 export class UserDTO {
   id!: string;
@@ -9,12 +8,12 @@ export class UserDTO {
 
   email!: string;
 
-  role!: RoleEntity;
+  role!: Role;
 
-  constructor(user: UserEntity) {
-    this.id = user.id;
-    this.userName = user.userName;
-    this.email = user.email;
-    this.role = user.role;
-  }
+  // constructor(user: UserEntity) {
+  //   this.id = user.id;
+  //   this.userName = user.userName;
+  //   this.email = user.email;
+  //   this.role = user.role;
+  // }
 }

@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Role {
+  id       String  @id(map: "PK_9309532197a7397548e341e5536") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name     String  @db.VarChar
+  isActive Boolean @default(false)
+  User     User[]
+}
+
+model User {
+  createdDate DateTime     @default(now()) @db.Timestamptz(6)
+  id          String       @id(map: "PK_9862f679340fb2388436a5ab3e4") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  userName    String       @db.VarChar
+  email       String       @unique @db.VarChar
+  password    String       @db.VarChar
+  roleId      String?      @db.Uuid
+  isActive    Boolean      @default(true)
+  Role        Role?        @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_0b8c60cc29663fa5b9fb108edd7")
+  log_entity  log_entity[]
+}
+
+model log_entity {
+  id                      String                   @id(map: "PK_db6e55781ba6e3d4fd6485cca24") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  typeId                  String?                  @db.Uuid
+  productCategoryId       String?                  @db.Uuid
+  createdById             String?                  @db.Uuid
+  createdDate             DateTime                 @default(now()) @db.Timestamptz(6)
+  isActive                Boolean                  @default(true)
+  User                    User?                    @relation(fields: [createdById], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_88299ef9a14cb86c9befb535d76")
+  product_category_entity product_category_entity? @relation(fields: [productCategoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_a47b7680906e07270c2ee190569")
+  log_type_entity         log_type_entity?         @relation(fields: [typeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_c4036eeca8928b5ce7848c3f1c4")
+}
+
+model log_type_entity {
+  id         String       @id(map: "PK_a7cfdf632ad7bb014e67183da00") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name       String       @db.VarChar
+  log_entity log_entity[]
+}
+
+model migrations {
+  id        Int    @id(map: "PK_8c82d7f526340ab734260ea46be") @default(autoincrement())
+  timestamp BigInt
+  name      String @db.VarChar
+}
+
+model product_category_entity {
+  createdDate                  DateTime                      @default(now()) @db.Timestamptz(6)
+  isActive                     Boolean                       @default(true)
+  id                           String                        @id(map: "PK_e92698845b7004ef04fe046816f") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title                        String                        @db.VarChar
+  order                        Int
+  typeId                       String?                       @db.Uuid
+  log_entity                   log_entity[]
+  product_category_type_entity product_category_type_entity? @relation(fields: [typeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_3396a6ae1dbd72159a63978fccf")
+  product_entity               product_entity[]
+}
+
+model product_category_type_entity {
+  createdDate             DateTime                  @default(now()) @db.Timestamptz(6)
+  isActive                Boolean                   @default(true)
+  id                      String                    @id(map: "PK_d2efbbbac2d3f39560f7cf497da") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name                    String                    @db.VarChar
+  product_category_entity product_category_entity[]
+}
+
+model product_entity {
+  createdDate             DateTime                 @default(now()) @db.Timestamptz(6)
+  isActive                Boolean                  @default(true)
+  id                      String                   @id(map: "PK_6e8f75045ddcd1c389c765c896e") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title                   String                   @db.VarChar
+  description             String                   @db.VarChar
+  imgUrl                  String                   @db.VarChar
+  order                   Int
+  price                   Int
+  categoryId              String?                  @db.Uuid
+  product_category_entity product_category_entity? @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_641188cadea80dfe98d4c769ebf")
+}

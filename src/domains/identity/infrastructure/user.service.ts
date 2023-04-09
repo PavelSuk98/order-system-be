@@ -1,58 +1,50 @@
 import { LoginDTO } from '../domain/login.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserDTO } from '../domain/user.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ChangePasswordDTO } from '../domain/change-password.dto';
-import { UserEntity } from '../domain/user.entity';
 import { LoginResponseDTO } from '../domain/login-response.dto';
+import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(UserEntity)
-    private usersRepository: Repository<UserEntity>,
     private jwtService: JwtService,
+    private readonly prismaService: PrismaService,
   ) {}
 
-  private findAll(): Promise<UserEntity[]> {
-    return this.usersRepository.find();
-  }
+  private findOne(options: any): Promise<any | undefined> {
+    return {} as any;
 
-  private findOne(options: any): Promise<UserEntity | undefined> {
-    return this.usersRepository.findOne(options);
+    // return this.usersRepository.findOne(options);
   }
 
   async getUsers(): Promise<UserDTO[]> {
-    const users = await this.usersRepository.find({ relations: ['role'] });
+    return {} as any;
 
-    return users.map((user) => new UserDTO(user));
+    // const users = await this.usersRepository.find({ relations: ['role'] });
+
+    // return users.map((user) => new UserDTO(user));
   }
 
   async changePassword(data: ChangePasswordDTO, response: any): Promise<void> {
-    const user = await this.findOne({ where: { email: data.email } });
+    return {} as any;
 
-    if (!user) {
-      throw new BadRequestException('Invalid email');
-    }
+    // const user = await this.findOne({ where: { email: data.email } });
 
-    // if (!await bcrypt.compare(data.oldPassword, user.password)) {
-    //   throw new BadRequestException('Incorrect password.');
+    // if (!user) {
+    //   throw new BadRequestException('Invalid email');
     // }
 
-    // user.updatedBy = user.userName;
-    // user.updatedDate = new Date();
-    const hashedPassword = await bcrypt.hash(data.newPassword, 10);
-    user.password = hashedPassword;
+    // const hashedPassword = await bcrypt.hash(data.newPassword, 10);
+    // user.password = hashedPassword;
 
-    await this.usersRepository.save(user);
-    // return await this.accountService.changePassword(data, response);
+    // await this.usersRepository.save(user);
   }
 
-  // TODO: return role, relations
   public async login(data: LoginDTO): Promise<LoginResponseDTO> {
+    return {} as any;
     const user = await this.findOne({
       where: { email: data.email },
       relations: ['role'],
@@ -74,21 +66,24 @@ export class UserService {
   }
 
   async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.findOne({ where: { email: username } });
+    return {} as any;
 
-    if (user && (await bcrypt.compare(pass, user.password))) {
-      return user;
-    }
-    return null;
+    // const user = await this.findOne({ where: { email: username } });
+
+    // if (user && (await bcrypt.compare(pass, user.password))) {
+    //   return user;
+    // }
+    // return null;
   }
 
   public async getUserInfo(id: string): Promise<UserDTO> {
-    const user = await this.findOne({ where: { id: id }, relations: ['role'] });
+    return {} as any;
+    // const user = await this.findOne({ where: { id: id }, relations: ['role'] });
 
-    if (!user) {
-      throw new BadRequestException();
-    }
+    // if (!user) {
+    //   throw new BadRequestException();
+    // }
 
-    return new UserDTO(user);
+    // return new UserDTO(user);
   }
 }
