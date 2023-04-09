@@ -1,4 +1,5 @@
 import { LogEntity } from 'src/domains/logger/entities/log.entity';
+import { ProductEntity } from 'src/domains/product/entities/product.entity';
 import { TableBaseEntity } from 'src/domains/shared/domain/base.entity';
 import {
   Column,
@@ -25,4 +26,7 @@ export class ProductCategoryEntity extends TableBaseEntity {
 
   @OneToMany(() => LogEntity, (log) => log.productCategory)
   logs: LogEntity[];
+
+  @OneToMany(() => ProductEntity, (product) => product.category)
+  products: ProductEntity[];
 }
