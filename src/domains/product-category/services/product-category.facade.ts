@@ -46,32 +46,32 @@ export class ProductCategoryFacade {
   ): Promise<ProductCategoryDTO> {
     const productCategory = await this.productCategoryService.create(category);
 
-    this.logFacade.create({
+    await this.logFacade.create({
       createdByUserId: category.createdByUserId,
       logType: LogTypeEnum.Create,
       productCategoryId: productCategory.id,
     });
 
-    return new ProductCategoryDTO(productCategory);
+    return this.findOneDTO(productCategory.id);
   }
 
   async update(productCategory: UpdateProductCategoryDTO): Promise<void> {
-    this.logFacade.create({
+    await this.productCategoryService.update(productCategory);
+
+    await this.logFacade.create({
       createdByUserId: productCategory.createdByUserId,
       logType: LogTypeEnum.Update,
       productCategoryId: productCategory.id,
     });
-
-    await this.productCategoryService.update(productCategory);
   }
 
   async delete(id: string, requestedByUserId: string): Promise<void> {
-    this.logFacade.create({
+    await this.productCategoryService.delete(id);
+
+    await this.logFacade.create({
       createdByUserId: requestedByUserId,
       logType: LogTypeEnum.Update,
       productCategoryId: id,
     });
-
-    await this.productCategoryService.delete(id);
   }
 }
