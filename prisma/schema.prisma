@@ -10,7 +10,7 @@ datasource db {
 model Role {
   id       String  @id(map: "PK_9309532197a7397548e341e5536") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   name     String  @db.VarChar
-  isActive Boolean @default(false)
+  isActive Boolean @default(true)
   User     User[]
 }
 
