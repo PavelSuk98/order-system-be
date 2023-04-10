@@ -26,8 +26,8 @@ model User {
   password    String   @db.VarChar
   roleId      String   @db.Uuid
   isActive    Boolean  @default(true)
-  Role        Role     @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_0b8c60cc29663fa5b9fb108edd7")
-  Log         Log[]
+  role        Role     @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_0b8c60cc29663fa5b9fb108edd7")
+  log         Log[]
 }
 
 model Log {

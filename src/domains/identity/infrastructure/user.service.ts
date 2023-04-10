@@ -20,7 +20,7 @@ export class UserService {
         id,
       },
       include: {
-        Role: true,
+        role: true,
       },
     });
   }
@@ -31,14 +31,14 @@ export class UserService {
         email,
       },
       include: {
-        Role: true,
+        role: true,
       },
     });
   }
 
   async getUsers(): Promise<UserDTO[]> {
     const users = await this.prisma.user.findMany({
-      include: { Role: true },
+      include: { role: true },
     });
 
     return users.map((user) => new UserDTO(user));

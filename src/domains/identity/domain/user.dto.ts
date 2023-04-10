@@ -1,26 +1,40 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Role, User } from '@prisma/client';
-
-export class UserDTO {
+import { User } from '@prisma/client';
+import { Exclude } from 'class-transformer';
+import { RoleDTO } from './role.dto';
+export class UserDTO implements User {
+  @ApiProperty()
   id!: string;
 
+  @ApiProperty()
   firstName!: string;
 
+  @ApiProperty()
   lastName!: string;
 
+  @ApiProperty()
   email!: string;
 
-  role!: Role;
+  @ApiProperty()
+  role: RoleDTO;
 
-  constructor(
-    user: User & {
-      Role: Role;
-    },
-  ) {
-    this.id = user.id;
-    this.firstName = user.firstName;
-    this.lastName = user.lastName;
-    this.email = user.email;
-    this.role = user.Role;
+  @ApiProperty()
+  createdDate: Date;
+
+  @Exclude()
+  password: string;
+
+  @Exclude()
+  isActive: boolean;
+
+  @Exclude()
+  roleId: string;
+
+  constructor({ role, ...data }: Partial<UserDTO>) {
+    Object.assign(this, data);
+
+    if (role) {
+      this.role = new RoleDTO(role);
+    }
   }
 }
