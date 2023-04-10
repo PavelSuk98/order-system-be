@@ -11,10 +11,10 @@ import { ProductCategoryFacade } from '../services/product-category.facade';
 export class AdminProductCategoryTypeController {
   constructor(private readonly productCategoryFacade: ProductCategoryFacade) {}
 
-  // @Get('')
-  // @Roles(UserRoleEnum.Admin)
-  // @UseGuards(RoleGuard)
-  // findAll(): Promise<ProductCategoryTypeDTO[]> {
-  //   return this.productCategoryFacade.findAllTypeDTO();
-  // }
+  @Get('')
+  @Roles(UserRoleEnum.Admin)
+  @UseGuards(RoleGuard)
+  findAll(): Promise<ProductCategoryTypeDTO[]> {
+    return this.productCategoryFacade.findAllPoductCategoryTypeDTOs();
+  }
 }

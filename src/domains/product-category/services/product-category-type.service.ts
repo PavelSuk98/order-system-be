@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class ProductCategoryTypeService {
-  constructor() {}
+  constructor(private prisma: PrismaService) {}
 
-  // findAll(): Promise<ProductCategoryTypeEntity[]> {
-  //   return this.productCategoryTypeRepository.find({
-  //     where: {
-  //       isActive: true,
-  //     },
-  //   });
-  // }
+  findAll() {
+    return this.prisma.productCategoryType.findMany({
+      where: {
+        isActive: true,
+      },
+    });
+  }
 }

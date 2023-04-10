@@ -1,11 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { LogTypeEnum } from 'src/domains/logger/models/log-type.enum';
+import { PrismaService } from 'src/prisma.service';
 import { CreateProductCategoryDTO } from '../models/create-product-category.dto';
 import { UpdateProductCategoryDTO } from '../models/update-product-category.dto';
 
 @Injectable()
 export class ProductCategoryService {
-  constructor() {}
+  constructor(private prisma: PrismaService) {}
 
   // findAll(): Promise<ProductCategoryEntity[]> {
   //   return this.productCategoryRepository.find({
