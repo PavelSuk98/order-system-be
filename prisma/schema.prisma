@@ -14,7 +14,7 @@ model Role {
   id       String  @id(map: "PK_9309532197a7397548e341e5536") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   name     String  @db.VarChar
   isActive Boolean @default(true)
-  User     User[]
+  user     User[]
 }
 
 model User {
@@ -37,9 +37,9 @@ model Log {
   createdById       String?          @db.Uuid
   createdDate       DateTime         @default(now()) @db.Timestamptz(6)
   isActive          Boolean          @default(true)
-  User              User?            @relation(fields: [createdById], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_88299ef9a14cb86c9befb535d76")
-  ProductCategory   ProductCategory? @relation(fields: [productCategoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_a47b7680906e07270c2ee190569")
-  LogType           LogType?         @relation(fields: [typeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_c4036eeca8928b5ce7848c3f1c4")
+  user              User?            @relation(fields: [createdById], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_88299ef9a14cb86c9befb535d76")
+  productCategory   ProductCategory? @relation(fields: [productCategoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_a47b7680906e07270c2ee190569")
+  type              LogType?         @relation(fields: [typeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_c4036eeca8928b5ce7848c3f1c4")
 
   @@map("Log")
 }
@@ -47,38 +47,38 @@ model Log {
 model LogType {
   id   String @id(map: "PK_a7cfdf632ad7bb014e67183da00") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   name String @db.VarChar
-  Log  Log[]
+  logs Log[]
 }
 
 model ProductCategory {
-  createdDate         DateTime             @default(now()) @db.Timestamptz(6)
-  isActive            Boolean              @default(true)
-  id                  String               @id(map: "PK_e92698845b7004ef04fe046816f") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  title               String               @db.VarChar
-  order               Int
-  typeId              String?              @db.Uuid
-  Log                 Log[]
-  ProductCategoryType ProductCategoryType? @relation(fields: [typeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_3396a6ae1dbd72159a63978fccf")
-  Product             Product[]
+  createdDate DateTime             @default(now()) @db.Timestamptz(6)
+  isActive    Boolean              @default(true)
+  id          String               @id(map: "PK_e92698845b7004ef04fe046816f") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title       String               @db.VarChar
+  order       Int
+  typeId      String?              @db.Uuid
+  logs        Log[]
+  type        ProductCategoryType? @relation(fields: [typeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_3396a6ae1dbd72159a63978fccf")
+  products    Product[]
 }
 
 model ProductCategoryType {
-  createdDate     DateTime          @default(now()) @db.Timestamptz(6)
-  isActive        Boolean           @default(true)
-  id              String            @id(map: "PK_d2efbbbac2d3f39560f7cf497da") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name            String            @db.VarChar
-  ProductCategory ProductCategory[]
+  createdDate       DateTime          @default(now()) @db.Timestamptz(6)
+  isActive          Boolean           @default(true)
+  id                String            @id(map: "PK_d2efbbbac2d3f39560f7cf497da") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name              String            @db.VarChar
+  productCategories ProductCategory[]
 }
 
 model Product {
-  createdDate     DateTime         @default(now()) @db.Timestamptz(6)
-  isActive        Boolean          @default(true)
-  id              String           @id(map: "PK_6e8f75045ddcd1c389c765c896e") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  title           String           @db.VarChar
-  description     String           @db.VarChar
-  imgUrl          String           @db.VarChar
-  order           Int
-  price           Int
-  categoryId      String?          @db.Uuid
-  ProductCategory ProductCategory? @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_641188cadea80dfe98d4c769ebf")
+  createdDate DateTime         @default(now()) @db.Timestamptz(6)
+  isActive    Boolean          @default(true)
+  id          String           @id(map: "PK_6e8f75045ddcd1c389c765c896e") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title       String           @db.VarChar
+  description String           @db.VarChar
+  imgUrl      String           @db.VarChar
+  order       Int
+  price       Int
+  categoryId  String?          @db.Uuid
+  category    ProductCategory? @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_641188cadea80dfe98d4c769ebf")
 }

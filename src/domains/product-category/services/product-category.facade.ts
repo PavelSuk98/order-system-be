@@ -22,12 +22,15 @@ export class ProductCategoryFacade {
 
     return types.map((c) => new ProductCategoryTypeDTO(c));
   }
-  // async findAllDTO(): Promise<ListItemModel<ProductCategoryDTO>> {
-  //   const productCategories = await this.productCategoryService.findAll();
-  //   return {
-  //     list: productCategories.map((c) => new ProductCategoryDTO(c)),
-  //   };
-  // }
+
+  async findAllDTO(): Promise<ListItemModel<ProductCategoryDTO>> {
+    const productCategories = await this.productCategoryService.findAll();
+
+    return {
+      list: productCategories.map((c) => new ProductCategoryDTO(c)),
+    };
+  }
+
   // async findOneDTO(id: string): Promise<ProductCategoryDTO | undefined> {
   //   const productCategory = await this.productCategoryService.findOne(id);
   //   if (!productCategory) {

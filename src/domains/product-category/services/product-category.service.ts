@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { ProductCategory } from '@prisma/client';
 import { LogTypeEnum } from 'src/domains/logger/models/log-type.enum';
 import { PrismaService } from 'src/prisma.service';
 import { CreateProductCategoryDTO } from '../models/create-product-category.dto';
@@ -8,14 +9,22 @@ import { UpdateProductCategoryDTO } from '../models/update-product-category.dto'
 export class ProductCategoryService {
   constructor(private prisma: PrismaService) {}
 
-  // findAll(): Promise<ProductCategoryEntity[]> {
-  //   return this.productCategoryRepository.find({
-  //     where: {
-  //       isActive: true,
-  //     },
-  //     relations: ['type', 'logs', 'logs.type', 'logs.createdBy'],
-  //   });
-  // }
+  findAll(): Promise<ProductCategory[]> {
+    return this.prisma.productCategory.findMany({
+      where: {
+        isActive: true,
+      },
+      include: {
+        logs: true,
+      },
+    });
+    // return this.productCategoryRepository.find({
+    //   where: {
+    //     isActive: true,
+    //   },
+    //   relations: ['type', 'logs', 'logs.type', 'logs.createdBy'],
+    // });
+  }
 
   // async findOne(id: string): Promise<ProductCategoryEntity | undefined> {
   //   const entity = await this.productCategoryRepository.findOne({
