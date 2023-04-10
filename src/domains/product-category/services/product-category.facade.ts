@@ -31,24 +31,26 @@ export class ProductCategoryFacade {
     };
   }
 
-  // async findOneDTO(id: string): Promise<ProductCategoryDTO | undefined> {
-  //   const productCategory = await this.productCategoryService.findOne(id);
-  //   if (!productCategory) {
-  //     return undefined;
-  //   }
-  //   return new ProductCategoryDTO(productCategory);
-  // }
-  // async create(
-  //   category: CreateProductCategoryDTO,
-  // ): Promise<ProductCategoryDTO> {
-  //   const productCategory = await this.productCategoryService.create(category);
-  //   await this.logFacade.create({
-  //     createdByUserId: category.createdByUserId,
-  //     logType: LogTypeEnum.Create,
-  //     productCategoryId: productCategory.id,
-  //   });
-  //   return this.findOneDTO(productCategory.id);
-  // }
+  async findOneDTO(id: string): Promise<ProductCategoryDTO | undefined> {
+    const productCategory = await this.productCategoryService.findOne(id);
+    if (!productCategory) {
+      return undefined;
+    }
+    return new ProductCategoryDTO(productCategory);
+  }
+  async create(
+    category: CreateProductCategoryDTO,
+  ): Promise<ProductCategoryDTO> {
+    const productCategory = await this.productCategoryService.create(category);
+
+    await this.logFacade.create({
+      createdByUserId: category.createdByUserId,
+      logType: LogTypeEnum.Create,
+      productCategoryId: productCategory.id,
+    });
+
+    return this.findOneDTO(productCategory.id);
+  }
   // async update(productCategory: UpdateProductCategoryDTO): Promise<void> {
   //   await this.productCategoryService.update(productCategory);
   //   await this.logFacade.create({

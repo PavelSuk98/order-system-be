@@ -18,37 +18,37 @@ export class ProductCategoryService {
         logs: true,
       },
     });
-    // return this.productCategoryRepository.find({
-    //   where: {
-    //     isActive: true,
-    //   },
-    //   relations: ['type', 'logs', 'logs.type', 'logs.createdBy'],
-    // });
   }
 
-  // async findOne(id: string): Promise<ProductCategoryEntity | undefined> {
-  //   const entity = await this.productCategoryRepository.findOne({
-  //     where: {
-  //       id,
-  //       isActive: true,
-  //     },
-  //     relations: ['type', 'logs', 'logs.type', 'logs.createdBy'],
-  //   });
+  async findOne(id: string): Promise<ProductCategory | undefined> {
+    const entity = await this.prisma.productCategory.findFirst({
+      where: {
+        id,
+        isActive: true,
+      },
+      include: {
+        type: true,
+        logs: true,
+      },
+      // relations: ['type', 'logs', 'logs.type', 'logs.createdBy'],
+    });
 
-  //   if (!entity) {
-  //     throw new BadRequestException(`Entity with id: ${id} does not exists.`);
-  //   }
+    if (!entity) {
+      throw new BadRequestException(`Entity with id: ${id} does not exists.`);
+    }
 
-  //   return entity;
-  // }
+    return entity;
+  }
 
-  // create(category: CreateProductCategoryDTO): Promise<ProductCategoryEntity> {
-  //   return this.productCategoryRepository.save({
-  //     order: category.order,
-  //     title: category.title,
-  //     type: { id: category.typeId } as any,
-  //   });
-  // }
+  create(category: CreateProductCategoryDTO): Promise<ProductCategory> {
+    return this.prisma.productCategory.create({
+      data: {
+        order: category.order,
+        title: category.title,
+        typeId: category.typeId,
+      },
+    });
+  }
 
   // async update(category: UpdateProductCategoryDTO): Promise<void> {
   //   let categoryInDB = await this.findOne(category.id);

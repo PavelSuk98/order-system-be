@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { Log } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { CreateLogModel } from '../models/create-log.model';
-import { LogTypeEnum } from '../models/log-type.enum';
 import { SearchLogModel } from '../models/search-log.model';
 
 @Injectable()
@@ -41,7 +40,7 @@ export class LogService {
         }),
       },
       include: {
-        user: true,
+        createdBy: true,
         type: true,
         productCategory: true,
       },
