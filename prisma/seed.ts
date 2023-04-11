@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { ProductState } from 'src/domains/product/models/product-state.enum';
+import { ProductState } from '../src/domains/product/models/product-state.enum';
 import { UserRoleEnum } from '../src/domains/identity/domain/role.enum';
 import { LogTypeEnum } from '../src/domains/logger/models/log-type.enum';
 import { ProductCategoryTypeEnum } from '../src/domains/product-category/models/product-category-type.enum';
