@@ -47,24 +47,49 @@ export class ProductCategoryFacade {
       createdByUserId: category.createdByUserId,
       logType: LogTypeEnum.Create,
       productCategoryId: productCategory.id,
+      oldObject: productCategory,
+      newObject: productCategory,
     });
 
     return this.findOneDTO(productCategory.id);
   }
-  // async update(productCategory: UpdateProductCategoryDTO): Promise<void> {
-  //   await this.productCategoryService.update(productCategory);
-  //   await this.logFacade.create({
-  //     createdByUserId: productCategory.createdByUserId,
-  //     logType: LogTypeEnum.Update,
-  //     productCategoryId: productCategory.id,
-  //   });
-  // }
-  // async delete(id: string, requestedByUserId: string): Promise<void> {
-  //   await this.productCategoryService.delete(id);
-  //   await this.logFacade.create({
-  //     createdByUserId: requestedByUserId,
-  //     logType: LogTypeEnum.Update,
-  //     productCategoryId: id,
-  //   });
-  // }
+
+  async update(
+    productCategory: UpdateProductCategoryDTO,
+    requestedByUserId: string,
+  ): Promise<void> {
+    const oldObject = await this.productCategoryService.findOneRaw(
+      productCategory.id,
+    );
+
+    await this.productCategoryService.update(productCategory);
+
+    const newObject = await this.productCategoryService.findOneRaw(
+      productCategory.id,
+    );
+
+    await this.logFacade.create({
+      createdByUserId: requestedByUserId,
+      logType: LogTypeEnum.Update,
+      productCategoryId: productCategory.id,
+      oldObject,
+      newObject,
+    });
+  }
+
+  async delete(id: string, requestedByUserId: string): Promise<void> {
+    const oldObject = await this.productCategoryService.findOneRaw(id);
+
+    await this.productCategoryService.delete(id);
+
+    const newObject = { ...oldObject, isActive: false };
+
+    await this.logFacade.create({
+      createdByUserId: requestedByUserId,
+      logType: LogTypeEnum.Update,
+      productCategoryId: id,
+      oldObject,
+      newObject,
+    });
+  }
 }

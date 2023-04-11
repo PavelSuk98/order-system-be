@@ -9,14 +9,13 @@ export class LogService {
   constructor(private prisma: PrismaService) {}
 
   async create(log: CreateLogModel): Promise<void> {
-    const logEntity: Partial<Log> = {
-      typeId: log.logType,
-      createdById: log.createdByUserId,
-      productCategoryId: log.productCategoryId,
-    };
-
     await this.prisma.log.create({
-      data: logEntity,
+      data: {
+        newObject: log.newObject,
+        oldObject: log.oldObject,
+        createdById: log.createdByUserId,
+        typeId: log.logType,
+      },
     });
   }
 

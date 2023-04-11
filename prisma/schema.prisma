@@ -41,6 +41,9 @@ model Log {
   productCategory   ProductCategory? @relation(fields: [productCategoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_a47b7680906e07270c2ee190569")
   type              LogType?         @relation(fields: [typeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_c4036eeca8928b5ce7848c3f1c4")
 
+  oldObject Json
+  newObject Json
+
   @@map("Log")
 }
 

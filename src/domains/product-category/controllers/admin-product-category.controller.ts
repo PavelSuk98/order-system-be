@@ -43,12 +43,12 @@ export class AdminProductCategoryController {
     return this.productCategoryFacade.findAllDTO();
   }
 
-  // @Get(':id')
-  // @Roles(UserRoleEnum.Admin)
-  // @UseGuards(RoleGuard)
-  // async findOne(@Param('id') id: string): Promise<ProductCategoryDTO> {
-  //   return this.productCategoryFacade.findOneDTO(id);
-  // }
+  @Get(':id')
+  @Roles(UserRoleEnum.Admin)
+  @UseGuards(RoleGuard)
+  async findOne(@Param('id') id: string): Promise<ProductCategoryDTO> {
+    return this.productCategoryFacade.findOneDTO(id);
+  }
 
   @Put(':id')
   @Roles(UserRoleEnum.Admin)
@@ -57,15 +57,16 @@ export class AdminProductCategoryController {
     @Body() updateProductCategoryDto: UpdateProductCategoryDTO,
     @Request() request,
   ): Promise<void> {
-    updateProductCategoryDto.createdByUserId = request.user.userId;
-
-    // await this.productCategoryFacade.update(updateProductCategoryDto);
+    await this.productCategoryFacade.update(
+      updateProductCategoryDto,
+      request.user.userId,
+    );
   }
 
   @Delete(':id')
   @Roles(UserRoleEnum.Admin)
   @UseGuards(RoleGuard)
   async remove(@Param('id') id: string, @Request() request): Promise<void> {
-    // await this.productCategoryFacade.delete(id, request.user.userId);
+    await this.productCategoryFacade.delete(id, request.user.userId);
   }
 }

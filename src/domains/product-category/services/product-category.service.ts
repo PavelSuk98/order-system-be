@@ -19,8 +19,11 @@ export class ProductCategoryService {
       },
     });
   }
+  async findOneRaw(id: string) {
+    return this.prisma.productCategory.findFirst({ where: { id } });
+  }
 
-  async findOne(id: string): Promise<ProductCategory | undefined> {
+  async findOne(id: string) {
     const entity = await this.prisma.productCategory.findFirst({
       where: {
         id,
@@ -30,7 +33,6 @@ export class ProductCategoryService {
         type: true,
         logs: true,
       },
-      // relations: ['type', 'logs', 'logs.type', 'logs.createdBy'],
     });
 
     if (!entity) {
@@ -50,29 +52,25 @@ export class ProductCategoryService {
     });
   }
 
-  // async update(category: UpdateProductCategoryDTO): Promise<void> {
-  //   let categoryInDB = await this.findOne(category.id);
+  async update(category: UpdateProductCategoryDTO): Promise<void> {
+    await this.prisma.productCategory.update({
+      where: {
+        id: category.id,
+      },
+      data: {
+        ...category,
+      },
+    });
+  }
 
-  //   if (!categoryInDB) {
-  //     throw new BadRequestException(
-  //       `Entity with id: ${category.id} does not exists.`,
-  //     );
-  //   }
-
-  //   categoryInDB = { ...categoryInDB, ...category };
-
-  //   this.productCategoryRepository.save(categoryInDB);
-  // }
-
-  // async delete(id: string): Promise<void> {
-  //   const productCategory = await this.findOne(id);
-
-  //   if (!productCategory) {
-  //     throw new BadRequestException(`Entity with id: ${id} does not exists.`);
-  //   }
-
-  //   productCategory.isActive = false;
-
-  //   this.productCategoryRepository.save(productCategory);
-  // }
+  async delete(id: string): Promise<void> {
+    await this.prisma.productCategory.update({
+      where: {
+        id,
+      },
+      data: {
+        isActive: false,
+      },
+    });
+  }
 }
