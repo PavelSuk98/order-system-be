@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { ProductState } from 'src/domains/product/models/product-state.enum';
 import { UserRoleEnum } from '../src/domains/identity/domain/role.enum';
 import { LogTypeEnum } from '../src/domains/logger/models/log-type.enum';
 import { ProductCategoryTypeEnum } from '../src/domains/product-category/models/product-category-type.enum';
@@ -125,11 +126,41 @@ const seedLogType = async () => {
     },
   });
 };
+
+const seedProductState = async () => {
+  await prisma.productState.upsert({
+    where: { id: ProductState.Preview },
+    update: {},
+    create: {
+      id: ProductState.Preview,
+      name: 'Preview',
+    },
+  });
+
+  await prisma.productState.upsert({
+    where: { id: ProductState.ToSell },
+    update: {},
+    create: {
+      id: ProductState.ToSell,
+      name: 'To sell',
+    },
+  });
+
+  await prisma.productState.upsert({
+    where: { id: ProductState.Unavailable },
+    update: {},
+    create: {
+      id: ProductState.Unavailable,
+      name: 'Unavailable',
+    },
+  });
+};
 async function main() {
   await seedRoles();
   await seedUsers();
   await seedProductCategoryType();
   await seedLogType();
+  await seedProductState();
 }
 
 main()
