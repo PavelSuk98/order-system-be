@@ -6,7 +6,6 @@ import { JwtService } from '@nestjs/jwt';
 import { ChangePasswordDTO } from '../domain/change-password.dto';
 import { LoginResponseDTO } from '../domain/login-response.dto';
 import { PrismaService } from 'src/prisma.service';
-import { User } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -15,7 +14,7 @@ export class UserService {
     private readonly prisma: PrismaService,
   ) {}
   private async getUserById(id: string) {
-    return this.prisma.user.findUnique({
+    return this.prisma.user.findFirst({
       where: {
         id,
       },
@@ -26,7 +25,7 @@ export class UserService {
   }
 
   private async getUserByEmail(email: string) {
-    return this.prisma.user.findUnique({
+    return this.prisma.user.findFirst({
       where: {
         email,
       },
