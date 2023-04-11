@@ -1,11 +1,37 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Log, Prisma, User } from '@prisma/client';
+import { Exclude } from 'class-transformer';
 
-export class LogInfoDTO {
+export class LogInfoDTO implements Log {
+  @Exclude()
+  id: string;
+
+  @Exclude()
+  typeId: string;
+
+  @Exclude()
+  productCategoryId: string;
+
+  @Exclude()
+  createdById: string;
+
+  @Exclude()
+  isActive: boolean;
+
+  @Exclude()
+  oldObject: Prisma.JsonValue;
+
+  @Exclude()
+  newObject: Prisma.JsonValue;
+
   @ApiProperty()
   userId: string;
 
   @ApiProperty()
-  userName: string;
+  firstName: string;
+
+  @ApiProperty()
+  lastName: string;
 
   @ApiProperty()
   email: string;
@@ -13,10 +39,14 @@ export class LogInfoDTO {
   @ApiProperty()
   createdDate: Date;
 
-  // constructor(entity: LogEntity) {
-  //   this.userId = entity.createdBy.id;
-  //   this.userName = entity.createdBy.userName;
-  //   this.email = entity.createdBy.email;
-  //   this.createdDate = entity.createdDate;
-  // }
+  @Exclude()
+  createdBy: User;
+
+  constructor(data: Partial<LogInfoDTO>) {
+    this.userId = data.createdBy.id;
+    this.firstName = data.createdBy.firstName;
+    this.lastName = data.createdBy.lastName;
+    this.email = data.createdBy.email;
+    this.createdDate = data.createdDate;
+  }
 }

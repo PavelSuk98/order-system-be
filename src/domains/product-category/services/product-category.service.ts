@@ -11,9 +11,6 @@ export class ProductCategoryService {
 
   findAll(): Promise<ProductCategory[]> {
     return this.prisma.productCategory.findMany({
-      where: {
-        isActive: true,
-      },
       include: {
         logs: true,
       },
@@ -27,11 +24,17 @@ export class ProductCategoryService {
     const entity = await this.prisma.productCategory.findFirst({
       where: {
         id,
-        isActive: true,
       },
       include: {
         type: true,
-        logs: true,
+        logs: {
+          select: {
+            createdDate: true,
+            createdBy: true,
+            type: true,
+            typeId: true,
+          },
+        },
       },
     });
 

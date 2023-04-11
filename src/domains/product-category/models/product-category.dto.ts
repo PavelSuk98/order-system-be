@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ProductCategory } from '@prisma/client';
+import { Log, ProductCategory } from '@prisma/client';
+import { Exclude } from 'class-transformer';
 import { LogInfoDTO } from 'src/domains/logger/models/log-info.model';
+import { LogTypeEnum } from 'src/domains/logger/models/log-type.enum';
 import { ProductCategoryTypeDTO } from './product-category-type.dto';
 
 export class ProductCategoryDTO implements ProductCategory {
@@ -23,26 +25,31 @@ export class ProductCategoryDTO implements ProductCategory {
   createdDate: Date;
 
   @ApiProperty()
-  type: ProductCategoryTypeDTO;
+  type: Partial<ProductCategoryTypeDTO>;
 
+  @Exclude()
+  logs: Partial<Log>[];
+
+  @Exclude()
   typeId: string;
 
+  @Exclude()
   isActive: boolean;
 
-  constructor({ type, ...data }: Partial<ProductCategoryDTO>) {
+  constructor({ logs, type, ...data }: Partial<ProductCategoryDTO>) {
     Object.assign(this, data);
-    console.log('type', type);
-    console.log(data);
-    // this.id = entity.id;
-    // this.title = entity.title;
-    // this.order = entity.order;
-    // this.type = new ProductCategoryTypeDTO(entity.type);
 
-    // const createdLog = entity.logs.find(
-    //   (c) => c.type.id === LogTypeEnum.Create,
-    // );
+    const createLog = logs.find((c) => c.typeId === LogTypeEnum.Create);
+    if (createLog) {
+      this.createdLogInfo = new LogInfoDTO(createLog);
+    }
 
-    // this.createdLogInfo = new LogInfoDTO(createdLog);
-    // console.log(createdLog);
+    const lastChangeLog = logs
+      .filter((c) => c.typeId !== LogTypeEnum.Create)
+      .pop();
+
+    if (lastChangeLog) {
+      this.updatedLogInfo = new LogInfoDTO(lastChangeLog);
+    }
   }
 }

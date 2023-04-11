@@ -29,7 +29,6 @@ export class RoleGuard extends AuthGuard('jwt') {
     await super.canActivate(context);
 
     const jwtUserData: UserDTO = context.switchToHttp().getRequest().user.user;
-    console.log(jwtUserData);
     const userRoleId = jwtUserData.role.id as UserRoleEnum;
 
     if (!permittedRoles.includes(userRoleId)) {
