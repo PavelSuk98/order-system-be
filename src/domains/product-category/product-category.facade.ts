@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { LogTypeEnum } from 'src/domains/logger/models/log-type.enum';
 import { LogFacade } from 'src/domains/logger/services/log.facade';
 import { ListItemModel } from 'src/domains/shared/domain/list-item.interface';
-import { CreateProductCategoryDTO } from '../models/create-product-category.dto';
-import { ProductCategoryDetailDTO } from '../models/product-category-detail.dto';
-import { ProductCategoryTypeDTO } from '../models/product-category-type.dto';
-import { ProductCategoryDTO } from '../models/product-category.dto';
-import { UpdateProductCategoryDTO } from '../models/update-product-category.dto';
-import { ProductCategoryTypeService } from './product-category-type.service';
-import { ProductCategoryService } from './product-category.service';
+import { CreateProductCategoryDTO } from './models/create-product-category.dto';
+import { ProductCategoryDetailDTO } from './models/product-category-detail.dto';
+import { ProductCategoryTypeDTO } from './models/product-category-type.dto';
+import { ProductCategoryDTO } from './models/product-category.dto';
+import { UpdateProductCategoryDTO } from './models/update-product-category.dto';
+import { ProductCategoryTypeService } from './services/product-category-type.service';
+import { ProductCategoryService } from './services/product-category.service';
 
 @Injectable()
 export class ProductCategoryFacade {

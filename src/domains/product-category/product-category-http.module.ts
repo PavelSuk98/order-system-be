@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { LogHttpModule } from '../logger/log-http.module';
+import { ProductCategoryFacade } from './product-category.facade';
 import { ProductCategoryTypeService } from './services/product-category-type.service';
-import { ProductCategoryFacade } from './services/product-category.facade';
 import { ProductCategoryService } from './services/product-category.service';
-
 @Module({
   imports: [LogHttpModule],
   providers: [

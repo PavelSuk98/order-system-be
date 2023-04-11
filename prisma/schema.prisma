@@ -10,6 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model ProductState {
+  id       String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name     String
+  isActive Boolean   @default(true)
+  products Product[]
+}
+
 model Role {
   id       String  @id(map: "PK_9309532197a7397548e341e5536") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   name     String  @db.VarChar
@@ -71,14 +78,16 @@ model ProductCategoryType {
 }
 
 model Product {
-  createdDate DateTime         @default(now()) @db.Timestamptz(6)
-  isActive    Boolean          @default(true)
-  id          String           @id(map: "PK_6e8f75045ddcd1c389c765c896e") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  title       String           @db.VarChar
-  description String           @db.VarChar
-  imgUrl      String           @db.VarChar
-  order       Int
-  price       Int
-  categoryId  String?          @db.Uuid
-  category    ProductCategory? @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_641188cadea80dfe98d4c769ebf")
+  createdDate    DateTime         @default(now()) @db.Timestamptz(6)
+  isActive       Boolean          @default(true)
+  id             String           @id(map: "PK_6e8f75045ddcd1c389c765c896e") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title          String           @db.VarChar
+  description    String           @db.VarChar
+  imgUrl         String           @db.VarChar
+  order          Int
+  price          Int
+  categoryId     String?          @db.Uuid
+  category       ProductCategory? @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_641188cadea80dfe98d4c769ebf")
+  productState   ProductState     @relation(fields: [productStateId], references: [id])
+  productStateId String           @db.Uuid
 }

@@ -20,6 +20,9 @@ export class LoggingInterceptor implements NestInterceptor {
 
     return next.handle().pipe(
       tap(async (data) => {
+        if (!(request && request.user)) {
+          return;
+        }
         const userId = request.user.userId;
 
         const ignoredLoggingURL = ['login', 'logout'];
@@ -27,10 +30,7 @@ export class LoggingInterceptor implements NestInterceptor {
           return;
         }
 
-        console.log(data);
-
         if (method !== 'GET' && data.id) {
-          console.log('CREATING LOG FROM', data);
           await this.prisma.log.create({
             data: {
               createdById: userId,

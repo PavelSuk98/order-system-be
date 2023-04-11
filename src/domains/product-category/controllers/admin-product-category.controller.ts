@@ -20,16 +20,16 @@ import { CreateProductCategoryDTO } from '../models/create-product-category.dto'
 import { ProductCategoryDetailDTO } from '../models/product-category-detail.dto';
 import { ProductCategoryDTO } from '../models/product-category.dto';
 import { UpdateProductCategoryDTO } from '../models/update-product-category.dto';
-import { ProductCategoryFacade } from '../services/product-category.facade';
+import { ProductCategoryFacade } from '../product-category.facade';
 
+@UseGuards(RoleGuard)
+@Roles(UserRoleEnum.Admin)
 @ApiTags('Admin Product Category')
 @Controller('v1/admin/ProductCategory')
 export class AdminProductCategoryController {
   constructor(private readonly productCategoryFacade: ProductCategoryFacade) {}
 
   @Post()
-  @Roles(UserRoleEnum.Admin)
-  @UseGuards(RoleGuard)
   async create(
     @Body() createProductCategoryDTO: CreateProductCategoryDTO,
   ): Promise<ProductCategoryDTO> {
@@ -37,22 +37,16 @@ export class AdminProductCategoryController {
   }
 
   @Get()
-  @Roles(UserRoleEnum.Admin)
-  @UseGuards(RoleGuard)
   async findAll(): Promise<ListItemModel<ProductCategoryDTO>> {
     return await this.productCategoryFacade.findAllDTO();
   }
 
   @Get(':id')
-  @Roles(UserRoleEnum.Admin)
-  @UseGuards(RoleGuard)
   async findOne(@Param('id') id: string): Promise<ProductCategoryDetailDTO> {
     return await this.productCategoryFacade.findOneDTO(id);
   }
 
   @Put(':id')
-  @Roles(UserRoleEnum.Admin)
-  @UseGuards(RoleGuard)
   async update(
     @Body() updateProductCategoryDto: UpdateProductCategoryDTO,
   ): Promise<ProductCategoryDTO> {
@@ -60,8 +54,6 @@ export class AdminProductCategoryController {
   }
 
   @Delete(':id')
-  @Roles(UserRoleEnum.Admin)
-  @UseGuards(RoleGuard)
   async remove(@Param('id') id: string): Promise<DeleteResponseModel> {
     await this.productCategoryFacade.delete(id);
 
