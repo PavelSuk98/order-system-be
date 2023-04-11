@@ -42,6 +42,17 @@ export class LogInfoDTO implements Log {
   @Exclude()
   createdBy: User;
 
+  @ApiProperty()
+  createdLogInfo: LogInfoDTO;
+
+  @ApiProperty()
+  updatedLogInfo?: LogInfoDTO;
+
+  @Exclude()
+  entityId: string;
+  @Exclude()
+  entityObject: Prisma.JsonValue;
+
   constructor(data: Partial<LogInfoDTO>) {
     this.userId = data.createdBy.id;
     this.firstName = data.createdBy.firstName;

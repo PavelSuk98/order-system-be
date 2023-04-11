@@ -6,6 +6,9 @@ import { AppService } from './app.service';
 import { IdentityDomain } from './domains/identity/identity-domain.module';
 import { ProductModule } from './domains/product/product.module';
 import { ProductCategoryModule } from './domains/product-category/product-category.module';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { LoggingInterceptor } from './domains/logger/interceptors/logging.interceptor';
+import { PrismaService } from './prisma.service';
 
 @Module({
   imports: [
@@ -21,6 +24,13 @@ import { ProductCategoryModule } from './domains/product-category/product-catego
     // ProductMeasureModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    PrismaService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
+    },
+  ],
 })
 export class AppModule {}

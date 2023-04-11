@@ -43,53 +43,18 @@ export class ProductCategoryFacade {
   ): Promise<ProductCategoryDTO> {
     const productCategory = await this.productCategoryService.create(category);
 
-    await this.logFacade.create({
-      createdByUserId: category.createdByUserId,
-      logType: LogTypeEnum.Create,
-      productCategoryId: productCategory.id,
-      oldObject: productCategory,
-      newObject: productCategory,
-    });
-
     return this.findOneDTO(productCategory.id);
   }
 
   async update(
     productCategory: UpdateProductCategoryDTO,
-    requestedByUserId: string,
-  ): Promise<void> {
-    const oldObject = await this.productCategoryService.findOneRaw(
-      productCategory.id,
-    );
-
+  ): Promise<ProductCategoryDTO> {
     await this.productCategoryService.update(productCategory);
 
-    const newObject = await this.productCategoryService.findOneRaw(
-      productCategory.id,
-    );
-
-    await this.logFacade.create({
-      createdByUserId: requestedByUserId,
-      logType: LogTypeEnum.Update,
-      productCategoryId: productCategory.id,
-      oldObject,
-      newObject,
-    });
+    return this.findOneDTO(productCategory.id);
   }
 
-  async delete(id: string, requestedByUserId: string): Promise<void> {
-    const oldObject = await this.productCategoryService.findOneRaw(id);
-
+  async delete(id: string): Promise<void> {
     await this.productCategoryService.delete(id);
-
-    const newObject = { ...oldObject, isActive: false };
-
-    await this.logFacade.create({
-      createdByUserId: requestedByUserId,
-      logType: LogTypeEnum.Update,
-      productCategoryId: id,
-      oldObject,
-      newObject,
-    });
   }
 }

@@ -10,11 +10,7 @@ export class ProductCategoryService {
   constructor(private prisma: PrismaService) {}
 
   findAll(): Promise<ProductCategory[]> {
-    return this.prisma.productCategory.findMany({
-      include: {
-        logs: true,
-      },
-    });
+    return this.prisma.productCategory.findMany();
   }
   async findOneRaw(id: string) {
     return this.prisma.productCategory.findFirst({ where: { id } });
@@ -27,14 +23,6 @@ export class ProductCategoryService {
       },
       include: {
         type: true,
-        logs: {
-          select: {
-            createdDate: true,
-            createdBy: true,
-            type: true,
-            typeId: true,
-          },
-        },
       },
     });
 

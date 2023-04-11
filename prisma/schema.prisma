@@ -31,18 +31,16 @@ model User {
 }
 
 model Log {
-  id                String           @id(map: "PK_db6e55781ba6e3d4fd6485cca24") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  typeId            String?          @db.Uuid
-  productCategoryId String?          @db.Uuid
-  createdById       String?          @db.Uuid
-  createdDate       DateTime         @default(now()) @db.Timestamptz(6)
-  isActive          Boolean          @default(true)
-  createdBy         User?            @relation(fields: [createdById], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_88299ef9a14cb86c9befb535d76")
-  productCategory   ProductCategory? @relation(fields: [productCategoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_a47b7680906e07270c2ee190569")
-  type              LogType?         @relation(fields: [typeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_c4036eeca8928b5ce7848c3f1c4")
+  id          String   @id(map: "PK_db6e55781ba6e3d4fd6485cca24") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  entityId    String   @db.Uuid
+  typeId      String?  @db.Uuid
+  createdById String?  @db.Uuid
+  createdDate DateTime @default(now()) @db.Timestamptz(6)
+  isActive    Boolean  @default(true)
+  createdBy   User?    @relation(fields: [createdById], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_88299ef9a14cb86c9befb535d76")
+  type        LogType? @relation(fields: [typeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_c4036eeca8928b5ce7848c3f1c4")
 
-  oldObject Json
-  newObject Json
+  entityObject Json
 
   @@map("Log")
 }
@@ -60,7 +58,6 @@ model ProductCategory {
   title       String               @db.VarChar
   order       Int
   typeId      String?              @db.Uuid
-  logs        Log[]
   type        ProductCategoryType? @relation(fields: [typeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_3396a6ae1dbd72159a63978fccf")
   products    Product[]
 }

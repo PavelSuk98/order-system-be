@@ -3,6 +3,7 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder } from '@nestjs/swagger';
 import { SwaggerModule } from '@nestjs/swagger/dist';
 import { AppModule } from './app.module';
+import { LoggingInterceptor } from './domains/logger/interceptors/logging.interceptor';
 import { PrismaService } from './prisma.service';
 
 async function bootstrap() {
@@ -19,6 +20,7 @@ async function bootstrap() {
   await prismaService.enableShutdownHooks(app);
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+  // app.useGlobalInterceptors(new LoggingInterceptor(prismaService));
 
   const config = new DocumentBuilder()
     .setTitle('Order system API')

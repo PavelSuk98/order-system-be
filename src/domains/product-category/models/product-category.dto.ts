@@ -16,19 +16,10 @@ export class ProductCategoryDTO implements ProductCategory {
   order: number;
 
   @ApiProperty()
-  createdLogInfo: LogInfoDTO;
-
-  @ApiProperty()
-  updatedLogInfo?: LogInfoDTO;
-
-  @ApiProperty()
   createdDate: Date;
 
   @ApiProperty()
   type: Partial<ProductCategoryTypeDTO>;
-
-  @Exclude()
-  logs: Partial<Log>[];
 
   @Exclude()
   typeId: string;
@@ -36,20 +27,7 @@ export class ProductCategoryDTO implements ProductCategory {
   @Exclude()
   isActive: boolean;
 
-  constructor({ logs, type, ...data }: Partial<ProductCategoryDTO>) {
+  constructor({ type, ...data }: Partial<ProductCategoryDTO>) {
     Object.assign(this, data);
-
-    const createLog = logs.find((c) => c.typeId === LogTypeEnum.Create);
-    if (createLog) {
-      this.createdLogInfo = new LogInfoDTO(createLog);
-    }
-
-    const lastChangeLog = logs
-      .filter((c) => c.typeId !== LogTypeEnum.Create)
-      .pop();
-
-    if (lastChangeLog) {
-      this.updatedLogInfo = new LogInfoDTO(lastChangeLog);
-    }
   }
 }

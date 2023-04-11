@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -14,6 +15,7 @@ import { Roles } from 'src/domains/identity/decorators/role.decorator';
 import { UserRoleEnum } from 'src/domains/identity/domain/role.enum';
 import { RoleGuard } from 'src/domains/identity/infrastructure/role.guard';
 import { ListItemModel } from 'src/domains/shared/domain/list-item.interface';
+import { DeleteResponseModel } from 'src/domains/shared/models/delete-response.model';
 import { CreateProductCategoryDTO } from '../models/create-product-category.dto';
 import { ProductCategoryDTO } from '../models/product-category.dto';
 import { UpdateProductCategoryDTO } from '../models/update-product-category.dto';
@@ -27,27 +29,24 @@ export class AdminProductCategoryController {
   @Post()
   @Roles(UserRoleEnum.Admin)
   @UseGuards(RoleGuard)
-  create(
+  async create(
     @Body() createProductCategoryDTO: CreateProductCategoryDTO,
-    @Request() request,
   ): Promise<ProductCategoryDTO> {
-    createProductCategoryDTO.createdByUserId = request.user.userId;
-
-    return this.productCategoryFacade.create(createProductCategoryDTO);
+    return await this.productCategoryFacade.create(createProductCategoryDTO);
   }
 
   @Get()
   @Roles(UserRoleEnum.Admin)
   @UseGuards(RoleGuard)
-  findAll(): Promise<ListItemModel<ProductCategoryDTO>> {
-    return this.productCategoryFacade.findAllDTO();
+  async findAll(): Promise<ListItemModel<ProductCategoryDTO>> {
+    return await this.productCategoryFacade.findAllDTO();
   }
 
   @Get(':id')
   @Roles(UserRoleEnum.Admin)
   @UseGuards(RoleGuard)
   async findOne(@Param('id') id: string): Promise<ProductCategoryDTO> {
-    return this.productCategoryFacade.findOneDTO(id);
+    return await this.productCategoryFacade.findOneDTO(id);
   }
 
   @Put(':id')
@@ -55,18 +54,16 @@ export class AdminProductCategoryController {
   @UseGuards(RoleGuard)
   async update(
     @Body() updateProductCategoryDto: UpdateProductCategoryDTO,
-    @Request() request,
-  ): Promise<void> {
-    await this.productCategoryFacade.update(
-      updateProductCategoryDto,
-      request.user.userId,
-    );
+  ): Promise<ProductCategoryDTO> {
+    return await this.productCategoryFacade.update(updateProductCategoryDto);
   }
 
   @Delete(':id')
   @Roles(UserRoleEnum.Admin)
   @UseGuards(RoleGuard)
-  async remove(@Param('id') id: string, @Request() request): Promise<void> {
-    await this.productCategoryFacade.delete(id, request.user.userId);
+  async remove(@Param('id') id: string): Promise<DeleteResponseModel> {
+    await this.productCategoryFacade.delete(id);
+
+    return { id };
   }
 }

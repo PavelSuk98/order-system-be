@@ -115,6 +115,15 @@ const seedLogType = async () => {
       name: 'Update',
     },
   });
+
+  await prisma.logType.upsert({
+    where: { id: LogTypeEnum.Unknow },
+    update: {},
+    create: {
+      id: LogTypeEnum.Unknow,
+      name: 'Unknow',
+    },
+  });
 };
 async function main() {
   await seedRoles();

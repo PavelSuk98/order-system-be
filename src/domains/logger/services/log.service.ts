@@ -11,10 +11,9 @@ export class LogService {
   async create(log: CreateLogModel): Promise<void> {
     await this.prisma.log.create({
       data: {
-        newObject: log.newObject,
-        oldObject: log.oldObject,
+        entityObject: log.entityObject,
+        entityId: log.entityId,
         createdById: log.createdByUserId,
-        productCategoryId: log.productCategoryId,
         typeId: log.logType,
       },
     });
@@ -36,9 +35,7 @@ export class LogService {
       include: {
         createdBy: true,
         type: true,
-        productCategory: true,
       },
-      // include: ['createdBy', 'type', 'productCategory'],
     });
   }
 }
