@@ -17,6 +17,7 @@ import { RoleGuard } from 'src/domains/identity/infrastructure/role.guard';
 import { ListItemModel } from 'src/domains/shared/domain/list-item.interface';
 import { DeleteResponseModel } from 'src/domains/shared/models/delete-response.model';
 import { CreateProductCategoryDTO } from '../models/create-product-category.dto';
+import { ProductCategoryDetailDTO } from '../models/product-category-detail.dto';
 import { ProductCategoryDTO } from '../models/product-category.dto';
 import { UpdateProductCategoryDTO } from '../models/update-product-category.dto';
 import { ProductCategoryFacade } from '../services/product-category.facade';
@@ -45,7 +46,7 @@ export class AdminProductCategoryController {
   @Get(':id')
   @Roles(UserRoleEnum.Admin)
   @UseGuards(RoleGuard)
-  async findOne(@Param('id') id: string): Promise<ProductCategoryDTO> {
+  async findOne(@Param('id') id: string): Promise<ProductCategoryDetailDTO> {
     return await this.productCategoryFacade.findOneDTO(id);
   }
 

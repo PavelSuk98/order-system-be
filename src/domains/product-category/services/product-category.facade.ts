@@ -3,6 +3,7 @@ import { LogTypeEnum } from 'src/domains/logger/models/log-type.enum';
 import { LogFacade } from 'src/domains/logger/services/log.facade';
 import { ListItemModel } from 'src/domains/shared/domain/list-item.interface';
 import { CreateProductCategoryDTO } from '../models/create-product-category.dto';
+import { ProductCategoryDetailDTO } from '../models/product-category-detail.dto';
 import { ProductCategoryTypeDTO } from '../models/product-category-type.dto';
 import { ProductCategoryDTO } from '../models/product-category.dto';
 import { UpdateProductCategoryDTO } from '../models/update-product-category.dto';
@@ -31,16 +32,16 @@ export class ProductCategoryFacade {
     };
   }
 
-  async findOneDTO(id: string): Promise<ProductCategoryDTO | undefined> {
+  async findOneDTO(id: string): Promise<ProductCategoryDetailDTO | undefined> {
     const productCategory = await this.productCategoryService.findOne(id);
     if (!productCategory) {
       return undefined;
     }
-    return new ProductCategoryDTO(productCategory);
+    return new ProductCategoryDetailDTO(productCategory);
   }
   async create(
     category: CreateProductCategoryDTO,
-  ): Promise<ProductCategoryDTO> {
+  ): Promise<ProductCategoryDetailDTO> {
     const productCategory = await this.productCategoryService.create(category);
 
     return this.findOneDTO(productCategory.id);
@@ -48,7 +49,7 @@ export class ProductCategoryFacade {
 
   async update(
     productCategory: UpdateProductCategoryDTO,
-  ): Promise<ProductCategoryDTO> {
+  ): Promise<ProductCategoryDetailDTO> {
     await this.productCategoryService.update(productCategory);
 
     return this.findOneDTO(productCategory.id);

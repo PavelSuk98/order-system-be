@@ -27,6 +27,8 @@ export class LoggingInterceptor implements NestInterceptor {
           return;
         }
 
+        console.log(data);
+
         if (method !== 'GET' && data.id) {
           console.log('CREATING LOG FROM', data);
           await this.prisma.log.create({
