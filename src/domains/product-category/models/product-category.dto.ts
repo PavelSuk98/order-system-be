@@ -14,9 +14,6 @@ export class ProductCategoryDTO implements ProductCategory {
   order: number;
 
   @ApiProperty()
-  createdDate: Date;
-
-  @ApiProperty()
   type: Partial<ProductCategoryTypeDTO>;
 
   @Exclude()

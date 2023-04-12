@@ -25,9 +25,6 @@ export class CreateProductDTO implements Product {
   productStateId: string;
 
   @Exclude()
-  createdDate: Date;
-
-  @Exclude()
   deleted: Date;
 
   @Exclude()

@@ -18,9 +18,6 @@ export class UserDTO implements User {
   @ApiProperty()
   role: RoleDTO;
 
-  @ApiProperty()
-  createdDate: Date;
-
   @Exclude()
   password: string;
 

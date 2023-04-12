@@ -25,15 +25,14 @@ model Role {
 }
 
 model User {
-  createdDate DateTime  @default(now()) @db.Timestamptz(6)
-  id          String    @id(map: "PK_9862f679340fb2388436a5ab3e4") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  firstName   String    @db.VarChar
-  lastName    String    @db.VarChar
-  email       String    @unique @db.VarChar
-  password    String    @db.VarChar
-  roleId      String    @db.Uuid
-  deleted     DateTime?
-  role        Role      @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_0b8c60cc29663fa5b9fb108edd7")
+  id        String    @id(map: "PK_9862f679340fb2388436a5ab3e4") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  firstName String    @db.VarChar
+  lastName  String    @db.VarChar
+  email     String    @unique @db.VarChar
+  password  String    @db.VarChar
+  roleId    String    @db.Uuid
+  deleted   DateTime?
+  role      Role      @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_0b8c60cc29663fa5b9fb108edd7")
 }
 
 model Log {

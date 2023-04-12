@@ -11,7 +11,11 @@ export class ProductService {
   findAll(): Promise<Product[]> {
     return this.prisma.product.findMany({
       include: {
-        category: true,
+        category: {
+          include: {
+            type: true,
+          },
+        },
         productState: true,
       },
     });
@@ -23,7 +27,11 @@ export class ProductService {
         id,
       },
       include: {
-        category: true,
+        category: {
+          include: {
+            type: true,
+          },
+        },
         productState: true,
       },
     });

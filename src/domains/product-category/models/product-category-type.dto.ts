@@ -9,9 +9,6 @@ export class ProductCategoryTypeDTO implements ProductCategoryType {
   @ApiProperty()
   name: string;
 
-  @ApiProperty()
-  createdDate: Date;
-
   @Exclude()
   deleted: Date | null;
 
