@@ -13,6 +13,6 @@ export class ProductDTO implements Product {
   productStateId: string;
 
   constructor(data: Partial<ProductDTO>) {
-    console.log(data);
+    // console.log(data);
   }
 }

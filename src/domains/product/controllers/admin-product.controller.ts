@@ -7,19 +7,20 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { Put } from '@nestjs/common/decorators';
+import { Put, UseGuards } from '@nestjs/common/decorators';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/domains/identity/decorators/role.decorator';
 import { UserRoleEnum } from 'src/domains/identity/domain/role.enum';
+import { RoleGuard } from 'src/domains/identity/infrastructure/role.guard';
 import { ListItemModel } from 'src/domains/shared/domain/list-item.interface';
 import { CreateProductDTO } from '../models/create-product.dto';
 import { ProductDetailDTO } from '../models/product-detail.dto';
 import { ProductDTO } from '../models/product.dto';
 import { UpdateProductDTO } from '../models/update-product.dto';
 import { ProductFacade } from '../product.facade';
+@UseGuards(RoleGuard)
 @Controller('v1/Admin/Product')
 @ApiTags('Admin Product')
-@ApiBearerAuth()
 export class AdminProductController {
   constructor(private readonly productFacade: ProductFacade) {}
 

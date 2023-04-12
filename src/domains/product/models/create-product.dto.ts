@@ -13,12 +13,6 @@ export class CreateProductDTO implements Product {
   price: number;
 
   @ApiProperty()
-  stateId: string;
-
-  @ApiProperty()
-  typeId: string;
-
-  @ApiProperty()
   description: string;
 
   @ApiProperty()

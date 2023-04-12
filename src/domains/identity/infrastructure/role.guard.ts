@@ -32,8 +32,6 @@ export class RoleGuard extends AuthGuard('jwt') {
       return true;
     }
 
-    console.log('checking role');
-
     await super.canActivate(context);
 
     const jwtUserData: UserDTO = context.switchToHttp().getRequest().user.user;
