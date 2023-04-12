@@ -34,18 +34,15 @@ model User {
   roleId      String   @db.Uuid
   isActive    Boolean  @default(true)
   role        Role     @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_0b8c60cc29663fa5b9fb108edd7")
-  log         Log[]
 }
 
 model Log {
-  id          String   @id(map: "PK_db6e55781ba6e3d4fd6485cca24") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  entityId    String   @db.Uuid
-  typeId      String?  @db.Uuid
-  createdById String?  @db.Uuid
-  createdDate DateTime @default(now()) @db.Timestamptz(6)
-  isActive    Boolean  @default(true)
-  createdBy   User?    @relation(fields: [createdById], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_88299ef9a14cb86c9befb535d76")
-  type        LogType? @relation(fields: [typeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_c4036eeca8928b5ce7848c3f1c4")
+  id              String   @id(map: "PK_db6e55781ba6e3d4fd6485cca24") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  entityId        String   @db.Uuid
+  logTypeId       String?  @db.Uuid
+  createdByUserId String?  @db.Uuid
+  createdDate     DateTime @default(now()) @db.Timestamptz(6)
+  isActive        Boolean  @default(true)
 
   entityObject Json
 
@@ -55,7 +52,6 @@ model Log {
 model LogType {
   id   String @id(map: "PK_a7cfdf632ad7bb014e67183da00") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   name String @db.VarChar
-  logs Log[]
 }
 
 model ProductCategory {
