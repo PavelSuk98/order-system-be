@@ -21,10 +21,12 @@ async function bootstrap() {
   await prismaService.enableShutdownHooks(app);
 
   prismaService.$use(async (params, next) => {
-    const result = await next(params);
     const originalAction = params.action;
-
     PrismaMiddlewareService.tryTransformToSoftDelete(params);
+
+    const result = await next(params);
+
+    console.log('params', params);
 
     PrismaMiddlewareService.tryCreateLogAboutRequest(
       prismaService,

@@ -12,6 +12,8 @@ export class PrismaMiddlewareService {
       // Change action to an update
       params.action = 'update';
       params.args['data'] = { deleted: new Date() };
+
+      console.log('converting to soft delete');
     }
     if (params.action == 'deleteMany') {
       // Delete many queries
