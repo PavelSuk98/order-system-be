@@ -88,42 +88,6 @@ const seedProductCategoryType = async () => {
   });
 };
 
-const seedLogType = async () => {
-  await prisma.logType.upsert({
-    where: { id: LogTypeEnum.Create },
-    update: {},
-    create: {
-      id: LogTypeEnum.Create,
-      name: 'Create',
-    },
-  });
-  await prisma.logType.upsert({
-    where: { id: LogTypeEnum.Delete },
-    update: {},
-    create: {
-      id: LogTypeEnum.Delete,
-      name: 'Delete',
-    },
-  });
-  await prisma.logType.upsert({
-    where: { id: LogTypeEnum.Update },
-    update: {},
-    create: {
-      id: LogTypeEnum.Update,
-      name: 'Update',
-    },
-  });
-
-  await prisma.logType.upsert({
-    where: { id: LogTypeEnum.Unknow },
-    update: {},
-    create: {
-      id: LogTypeEnum.Unknow,
-      name: 'Unknow',
-    },
-  });
-};
-
 const seedProductState = async () => {
   await prisma.productState.upsert({
     where: { id: ProductState.Preview },
@@ -156,7 +120,6 @@ async function main() {
   await seedRoles();
   await seedUsers();
   await seedProductCategoryType();
-  await seedLogType();
   await seedProductState();
 }
 

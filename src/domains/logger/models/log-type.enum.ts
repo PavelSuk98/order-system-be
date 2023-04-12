@@ -4,18 +4,3 @@ export enum LogTypeEnum {
   Delete = 'd6624889-c432-44a5-b633-1b8e1afedee0',
   Unknow = 'd6624889-c432-44a5-b633-1b8e1afedee0',
 }
-
-export function getTypeIdFromHttpMethod(method: string): LogTypeEnum {
-  switch (method) {
-    case 'POST':
-      return LogTypeEnum.Create;
-    case 'PUT':
-      return LogTypeEnum.Update;
-    case 'update':
-      return LogTypeEnum.Update;
-    case 'DELETE':
-      return LogTypeEnum.Delete;
-    default:
-      return LogTypeEnum.Unknow;
-  }
-}

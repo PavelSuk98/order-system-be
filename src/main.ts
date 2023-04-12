@@ -4,6 +4,7 @@ import { DocumentBuilder } from '@nestjs/swagger';
 import { SwaggerModule } from '@nestjs/swagger/dist';
 import { AppModule } from './app.module';
 import { LogService } from './domains/logger/services/log.service';
+import { PrismaMiddlewareService } from './domains/shared/services/prisma-middleware.service';
 import { PrismaService } from './prisma.service';
 
 async function bootstrap() {
@@ -21,10 +22,16 @@ async function bootstrap() {
 
   prismaService.$use(async (params, next) => {
     const result = await next(params);
+    const originalAction = params.action;
 
-    // TODO Soft delete
-    //www.prisma.io/docs/concepts/components/prisma-client/middleware/soft-delete-middleware#step-3-optionally-prevent-readupdate-of-soft-deleted-records
-    await LogService.logInPrismaMiddleware(prismaService, params, result);
+    PrismaMiddlewareService.tryTransformToSoftDelete(params);
+
+    PrismaMiddlewareService.tryCreateLogAboutRequest(
+      prismaService,
+      params,
+      result,
+      originalAction,
+    );
 
     return result;
   });

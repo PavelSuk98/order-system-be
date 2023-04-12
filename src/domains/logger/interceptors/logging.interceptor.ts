@@ -1,46 +1,46 @@
-import {
-  Injectable,
-  NestInterceptor,
-  ExecutionContext,
-  CallHandler,
-  Inject,
-} from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { PrismaService } from 'src/prisma.service';
-import { getTypeIdFromHttpMethod, LogTypeEnum } from '../models/log-type.enum';
+// import {
+//   Injectable,
+//   NestInterceptor,
+//   ExecutionContext,
+//   CallHandler,
+//   Inject,
+// } from '@nestjs/common';
+// import { Observable } from 'rxjs';
+// import { tap } from 'rxjs/operators';
+// import { PrismaService } from 'src/prisma.service';
+// import { getTypeIdFromHttpMethod, LogTypeEnum } from '../models/log-type.enum';
 
-@Injectable()
-export class LoggingInterceptor implements NestInterceptor {
-  constructor(private readonly prisma: PrismaService) {}
-  async intercept(context: ExecutionContext, next: CallHandler): Promise<any> {
-    const request = context.switchToHttp().getRequest();
-    const method = request.method;
-    const url: string = request.url;
+// @Injectable()
+// export class LoggingInterceptor implements NestInterceptor {
+//   constructor(private readonly prisma: PrismaService) {}
+//   async intercept(context: ExecutionContext, next: CallHandler): Promise<any> {
+//     const request = context.switchToHttp().getRequest();
+//     const method = request.method;
+//     const url: string = request.url;
 
-    return next.handle().pipe(
-      tap(async (data) => {
-        if (!(request && request.user)) {
-          return;
-        }
-        const userId = request.user.userId;
+//     return next.handle().pipe(
+//       tap(async (data) => {
+//         if (!(request && request.user)) {
+//           return;
+//         }
+//         const userId = request.user.userId;
 
-        const ignoredLoggingURL = ['login', 'logout'];
-        if (ignoredLoggingURL.find((c) => url.includes(c))) {
-          return;
-        }
+//         const ignoredLoggingURL = ['login', 'logout'];
+//         if (ignoredLoggingURL.find((c) => url.includes(c))) {
+//           return;
+//         }
 
-        if (method !== 'GET' && data.id) {
-          // await this.prisma.log.create({
-          //   data: {
-          //     createdById: userId,
-          //     entityObject: data,
-          //     entityId: data.id,
-          //     typeId: getTypeIdFromHttpMethod(method),
-          //   },
-          // });
-        }
-      }),
-    );
-  }
-}
+//         if (method !== 'GET' && data.id) {
+//           // await this.prisma.log.create({
+//           //   data: {
+//           //     createdById: userId,
+//           //     entityObject: data,
+//           //     entityId: data.id,
+//           //     typeId: getTypeIdFromHttpMethod(method),
+//           //   },
+//           // });
+//         }
+//       }),
+//     );
+//   }
+// }
