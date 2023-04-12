@@ -3,4 +3,5 @@ export class CreateLogModel {
   logType: string;
   entityObject: any;
   entityId: string;
+  model: string;
 }

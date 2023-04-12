@@ -1,5 +1,5 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/domains/identity/decorators/role.decorator';
 import { UserRoleEnum } from 'src/domains/identity/domain/role.enum';
 import { RoleGuard } from 'src/domains/identity/infrastructure/role.guard';
@@ -13,6 +13,7 @@ export class AdminProductCategoryTypeController {
 
   @Get('')
   @Roles(UserRoleEnum.Admin)
+  @ApiResponse({ type: ProductCategoryTypeDTO, isArray: true })
   findAll(): Promise<ProductCategoryTypeDTO[]> {
     return this.productCategoryFacade.findAllPoductCategoryTypeDTOs();
   }

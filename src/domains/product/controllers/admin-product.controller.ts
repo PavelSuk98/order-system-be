@@ -8,7 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { Put, UseGuards } from '@nestjs/common/decorators';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/domains/identity/decorators/role.decorator';
 import { UserRoleEnum } from 'src/domains/identity/domain/role.enum';
 import { RoleGuard } from 'src/domains/identity/infrastructure/role.guard';
@@ -26,6 +26,7 @@ export class AdminProductController {
 
   @Post()
   @Roles(UserRoleEnum.Admin)
+  @ApiResponse({ type: ProductDTO })
   async create(
     @Body() createProductCategoryDTO: CreateProductDTO,
   ): Promise<ProductDTO> {
@@ -34,18 +35,21 @@ export class AdminProductController {
 
   @Get()
   @Roles(UserRoleEnum.Admin)
+  @ApiResponse({ type: ListItemModel<ProductDTO> })
   async findAll(): Promise<ListItemModel<ProductDTO>> {
     return await this.productFacade.findAllDTO();
   }
 
   @Get(':id')
   @Roles(UserRoleEnum.Admin)
+  @ApiResponse({ type: ProductDetailDTO })
   async findOne(@Param('id') id: string): Promise<ProductDetailDTO> {
     return await this.productFacade.findOneDTO(id);
   }
 
   @Put(':id')
   @Roles(UserRoleEnum.Admin)
+  @ApiResponse({ type: ProductDTO })
   async update(
     @Body() updateProductCategoryDto: UpdateProductDTO,
   ): Promise<ProductDTO> {

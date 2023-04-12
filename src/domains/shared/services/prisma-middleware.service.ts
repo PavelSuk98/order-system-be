@@ -44,6 +44,7 @@ export class PrismaMiddlewareService {
           entityObject: result,
           entityId: result.id,
           logType: action,
+          model: params.model,
         },
       });
     }

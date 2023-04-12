@@ -12,10 +12,7 @@ export class LogService {
   async create(log: CreateLogModel): Promise<void> {
     await this.prisma.log.create({
       data: {
-        entityObject: log.entityObject,
-        entityId: log.entityId,
-        createdByUserId: log.createdByUserId,
-        logType: log.logType,
+        ...log,
       },
     });
   }

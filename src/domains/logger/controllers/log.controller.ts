@@ -6,10 +6,12 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common/decorators';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Log } from '@prisma/client';
 import { Roles } from 'src/domains/identity/decorators/role.decorator';
 import { UserRoleEnum } from 'src/domains/identity/domain/role.enum';
 import { RoleGuard } from 'src/domains/identity/infrastructure/role.guard';
+import { ListItemModel } from 'src/domains/shared/domain/list-item.interface';
 import { LogFacade } from '../log.facade';
 import { LogFilterDTO } from '../models/log-filter.dto';
 
@@ -22,7 +24,8 @@ export class LogController {
   @Post()
   @HttpCode(200)
   @Roles(UserRoleEnum.Admin)
-  findAll(@Body() logFilter: LogFilterDTO) {
-    return this.logFacade.findAll(logFilter);
+  @ApiResponse({ type: ListItemModel<Log> })
+  async findAll(@Body() logFilter: LogFilterDTO) {
+    return { list: await this.logFacade.findAll(logFilter) };
   }
 }

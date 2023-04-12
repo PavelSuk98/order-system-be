@@ -38,6 +38,7 @@ model User {
 model Log {
   id              String    @id(map: "PK_db6e55781ba6e3d4fd6485cca24") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   entityId        String    @db.Uuid
+  model           String
   logType         String?
   createdByUserId String?   @db.Uuid
   createdDate     DateTime  @default(now()) @db.Timestamptz(6)

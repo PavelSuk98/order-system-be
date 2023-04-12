@@ -10,6 +10,7 @@ export class LogInfoDTO implements Log {
   deleted: Date | null;
   entityObject: Prisma.JsonValue;
   logType: string;
+  model: string;
 
   constructor(data: Partial<LogInfoDTO>) {
     // this.userId = data.createdBy.id;
