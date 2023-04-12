@@ -1,9 +1,6 @@
-import { LogTypeEnum } from './log-type.enum';
-import { LoggedEntitiesModel } from './logged-entities.model';
-
-export class CreateLogModel extends LoggedEntitiesModel {
+export class CreateLogModel {
   createdByUserId: string;
-  logType: LogTypeEnum;
+  logType: string;
   entityObject: any;
   entityId: string;
 }

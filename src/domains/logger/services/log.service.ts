@@ -3,7 +3,7 @@ import { Log, Prisma } from '@prisma/client';
 import { RoleGuard } from 'src/domains/identity/infrastructure/role.guard';
 import { PrismaService } from 'src/prisma.service';
 import { CreateLogModel } from '../models/create-log.model';
-import { SearchLogModel } from '../models/search-log.model';
+import { LogFilterDTO } from '../models/log-filter.dto';
 
 @Injectable()
 export class LogService {
@@ -20,17 +20,17 @@ export class LogService {
     });
   }
 
-  findAll(filter: SearchLogModel): Promise<Log[]> {
+  findAll(filter: LogFilterDTO): Promise<Log[]> {
     return this.prisma.log.findMany({
       where: {
         ...(filter.createdByUserId && {
           createdByUserId: filter.createdByUserId,
         }),
         ...(filter.logType && {
-          logTypeId: filter.logType,
+          logType: filter.logType,
         }),
-        ...(filter.productCategoryId && {
-          productCategoryId: filter.productCategoryId,
+        ...(filter.entityId && {
+          entityId: filter.entityId,
         }),
       },
     });

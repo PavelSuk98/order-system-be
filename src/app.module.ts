@@ -8,6 +8,7 @@ import { ProductModule } from './domains/product/product.module';
 import { ProductCategoryModule } from './domains/product-category/product-category.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { PrismaService } from './prisma.service';
+import { LogModule } from './domains/logger/log.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { PrismaService } from './prisma.service';
     HttpModule,
     ProductModule,
     ProductCategoryModule,
+    LogModule,
     // OrderTableModule,
     // OrderModule,
     // ProductMeasureModule,

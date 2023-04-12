@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { LogTypeEnum } from 'src/domains/logger/models/log-type.enum';
-import { LogFacade } from 'src/domains/logger/services/log.facade';
+import { LogFacade } from 'src/domains/logger/log.facade';
 import { ListItemModel } from 'src/domains/shared/domain/list-item.interface';
 import { CreateProductCategoryDTO } from './models/create-product-category.dto';
 import { ProductCategoryDetailDTO } from './models/product-category-detail.dto';
