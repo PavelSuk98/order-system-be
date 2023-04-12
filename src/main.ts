@@ -20,24 +20,6 @@ async function bootstrap() {
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
 
-  prismaService.$use(async (params, next) => {
-    const originalAction = params.action;
-    console.log('PRIMSA USE TRACK');
-    console.log(originalAction);
-    PrismaMiddlewareService.tryTransformToSoftDelete(params);
-
-    const result = await next(params);
-
-    PrismaMiddlewareService.tryCreateLogAboutRequest(
-      prismaService,
-      params,
-      result,
-      originalAction,
-    );
-
-    return result;
-  });
-
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   // app.useGlobalInterceptors(new LoggingInterceptor(prismaService));
 
