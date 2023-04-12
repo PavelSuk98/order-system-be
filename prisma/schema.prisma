@@ -55,18 +55,16 @@ model LogType {
 }
 
 model ProductCategory {
-  createdDate DateTime             @default(now()) @db.Timestamptz(6)
-  deleted     DateTime?
-  id          String               @id(map: "PK_e92698845b7004ef04fe046816f") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  title       String               @db.VarChar
-  order       Int
-  typeId      String?              @db.Uuid
-  type        ProductCategoryType? @relation(fields: [typeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_3396a6ae1dbd72159a63978fccf")
-  products    Product[]
+  deleted  DateTime?
+  id       String               @id(map: "PK_e92698845b7004ef04fe046816f") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title    String               @db.VarChar
+  order    Int
+  typeId   String?              @db.Uuid
+  type     ProductCategoryType? @relation(fields: [typeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_3396a6ae1dbd72159a63978fccf")
+  products Product[]
 }
 
 model ProductCategoryType {
-  createdDate       DateTime          @default(now()) @db.Timestamptz(6)
   deleted           DateTime?
   id                String            @id(map: "PK_d2efbbbac2d3f39560f7cf497da") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   name              String            @db.VarChar
@@ -74,7 +72,6 @@ model ProductCategoryType {
 }
 
 model Product {
-  createdDate    DateTime         @default(now()) @db.Timestamptz(6)
   deleted        DateTime?
   id             String           @id(map: "PK_6e8f75045ddcd1c389c765c896e") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   title          String           @db.VarChar

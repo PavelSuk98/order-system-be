@@ -27,5 +27,9 @@ export class ProductCategoryDTO implements ProductCategory {
 
   constructor({ type, ...data }: Partial<ProductCategoryDTO>) {
     Object.assign(this, data);
+
+    if (type) {
+      this.type = new ProductCategoryTypeDTO(type);
+    }
   }
 }

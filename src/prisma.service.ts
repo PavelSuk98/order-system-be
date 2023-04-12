@@ -9,7 +9,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 
     this.$use(async (params, next) => {
       const originalAction = params.action;
-      console.log('PRIMSA USE TRACK');
+
       PrismaMiddlewareService.tryTransformToSoftDelete(params);
 
       const result = await next(params);

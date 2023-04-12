@@ -13,7 +13,7 @@ export class ProductCategoryTypeDTO implements ProductCategoryType {
   createdDate: Date;
 
   @Exclude()
-  deleted: Date | null;;
+  deleted: Date | null;
 
   constructor(data: Partial<ProductCategoryTypeDTO>) {
     Object.assign(this, data);

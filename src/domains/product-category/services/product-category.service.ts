@@ -10,7 +10,11 @@ export class ProductCategoryService {
   constructor(private prisma: PrismaService) {}
 
   findAll(): Promise<ProductCategory[]> {
-    return this.prisma.productCategory.findMany();
+    return this.prisma.productCategory.findMany({
+      include: {
+        type: true,
+      },
+    });
   }
 
   async findOne(id: string) {

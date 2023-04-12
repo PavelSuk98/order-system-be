@@ -26,7 +26,7 @@ export class ProductCategoryDetailDTO implements ProductCategoryDetailDTO {
   typeId: string;
 
   @Exclude()
-  deleted: Date | null;;
+  deleted: Date | null;
 
   // TODO: interceptor co nastavi logy
   // bud je nacte create a last update a nebo je da oba undefined
@@ -36,5 +36,9 @@ export class ProductCategoryDetailDTO implements ProductCategoryDetailDTO {
 
   constructor({ type, ...data }: Partial<ProductCategoryDTO>) {
     Object.assign(this, data);
+
+    if (type) {
+      this.type = new ProductCategoryTypeDTO(type);
+    }
   }
 }
