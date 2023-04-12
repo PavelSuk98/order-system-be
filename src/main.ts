@@ -26,8 +26,6 @@ async function bootstrap() {
 
     const result = await next(params);
 
-    console.log('params', params);
-
     PrismaMiddlewareService.tryCreateLogAboutRequest(
       prismaService,
       params,
