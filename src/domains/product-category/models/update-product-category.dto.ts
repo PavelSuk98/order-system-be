@@ -19,5 +19,5 @@ export class UpdateProductCategoryDTO {
       { Tea: ProductCategoryTypeEnum.Tea },
     ],
   })
-  productTypeId: ProductCategoryTypeEnum;
+  typeId: ProductCategoryTypeEnum;
 }

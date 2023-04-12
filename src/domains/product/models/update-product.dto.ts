@@ -1,4 +1,7 @@
-// import { CreateProductDto } from './create-product.dto';
-// import { Product } from '../entities/product.entity';
+import { ApiProperty } from '@nestjs/swagger';
+import { CreateProductDTO } from './create-product.dto';
 
-// export type UpdateProductDto = Partial<CreateProductDto> & Pick<Product, 'id'>;
+export class UpdateProductDTO extends CreateProductDTO {
+  @ApiProperty()
+  id: string;
+}

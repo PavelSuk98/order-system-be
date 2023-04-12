@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Product } from '@prisma/client';
+import { Exclude } from 'class-transformer';
 
-export class CreateProductDTO {
+export class CreateProductDTO implements Product {
   @ApiProperty()
   title: string;
 
@@ -20,8 +22,20 @@ export class CreateProductDTO {
   description: string;
 
   @ApiProperty()
-  imageUrl: string;
+  imgUrl: string;
 
   @ApiProperty()
   categoryId: string;
+
+  @ApiProperty()
+  productStateId: string;
+
+  @Exclude()
+  createdDate: Date;
+
+  @Exclude()
+  deleted: Date;
+
+  @Exclude()
+  id: string;
 }

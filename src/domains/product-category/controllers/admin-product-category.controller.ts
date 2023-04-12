@@ -58,9 +58,7 @@ export class AdminProductCategoryController {
 
   @Delete(':id')
   @Roles(UserRoleEnum.Admin)
-  async remove(@Param('id') id: string): Promise<DeleteResponseModel> {
+  async remove(@Param('id') id: string): Promise<void> {
     await this.productCategoryFacade.delete(id);
-
-    return { id };
   }
 }

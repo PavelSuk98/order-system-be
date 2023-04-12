@@ -12,9 +12,6 @@ export class ProductCategoryService {
   findAll(): Promise<ProductCategory[]> {
     return this.prisma.productCategory.findMany();
   }
-  async findOneRaw(id: string) {
-    return this.prisma.productCategory.findFirst({ where: { id } });
-  }
 
   async findOne(id: string) {
     const entity = await this.prisma.productCategory.findFirst({
@@ -36,9 +33,7 @@ export class ProductCategoryService {
   create(category: CreateProductCategoryDTO): Promise<ProductCategory> {
     return this.prisma.productCategory.create({
       data: {
-        order: category.order,
-        title: category.title,
-        typeId: category.typeId,
+        ...category,
       },
     });
   }

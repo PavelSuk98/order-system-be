@@ -16,8 +16,8 @@ import { ProductFacade } from '../product.facade';
 
 @UseGuards(RoleGuard)
 @Controller('v1/Admin/ProductState')
-@ApiTags('ProductState')
-export class ProductStateController {
+@ApiTags('Admin Product State')
+export class AdminProductStateController {
   constructor(private readonly productFacade: ProductFacade) {}
 
   @Get()
