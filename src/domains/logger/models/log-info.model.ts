@@ -5,11 +5,11 @@ import { Exclude } from 'class-transformer';
 export class LogInfoDTO implements Log {
   id: string;
   entityId: string;
-  logTypeId: string;
   createdByUserId: string;
   createdDate: Date;
   deleted: Date | null;
   entityObject: Prisma.JsonValue;
+  logType: string;
 
   constructor(data: Partial<LogInfoDTO>) {
     // this.userId = data.createdBy.id;

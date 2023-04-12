@@ -43,7 +43,7 @@ export class PrismaMiddlewareService {
           createdByUserId: RoleGuard.currentUserId,
           entityObject: result,
           entityId: result.id,
-          logTypeId: action,
+          logType: action,
         },
       });
     }

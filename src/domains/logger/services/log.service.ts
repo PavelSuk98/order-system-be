@@ -15,7 +15,7 @@ export class LogService {
         entityObject: log.entityObject,
         entityId: log.entityId,
         createdByUserId: log.createdByUserId,
-        logTypeId: log.logType,
+        logType: log.logType,
       },
     });
   }
