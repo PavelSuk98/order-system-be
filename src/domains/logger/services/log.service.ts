@@ -13,8 +13,8 @@ export class LogService {
       data: {
         entityObject: log.entityObject,
         entityId: log.entityId,
-        createdById: log.createdByUserId,
-        typeId: log.logType,
+        createdByUserId: log.createdByUserId,
+        logTypeId: log.logType,
       },
     });
   }
@@ -23,18 +23,14 @@ export class LogService {
     return this.prisma.log.findMany({
       where: {
         ...(filter.createdByUserId && {
-          createdById: filter.createdByUserId,
+          createdByUserId: filter.createdByUserId,
         }),
         ...(filter.logType && {
-          typeId: filter.logType,
+          logTypeId: filter.logType,
         }),
         ...(filter.productCategoryId && {
           productCategoryId: filter.productCategoryId,
         }),
-      },
-      include: {
-        createdBy: true,
-        type: true,
       },
     });
   }

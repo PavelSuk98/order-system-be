@@ -23,8 +23,6 @@ async function bootstrap() {
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
 
-  Prisma.defineExtension({});
-  // const prismaA = prismaService.$extends(extensionA);
 
   prismaService.$use(async (params, next) => {
     const result = await next(params);
@@ -52,10 +50,10 @@ async function bootstrap() {
       // });
       await prismaService.log.create({
         data: {
-          createdById: RoleGuard.currentUserId,
+          createdByUserId: RoleGuard.currentUserId,
           entityObject: result,
           entityId: result.id,
-          typeId: getTypeIdFromHttpMethod(params.action),
+          logTypeId: getTypeIdFromHttpMethod(params.action),
         },
       });
     }
