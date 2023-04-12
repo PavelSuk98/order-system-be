@@ -11,6 +11,8 @@ export function getTypeIdFromHttpMethod(method: string): LogTypeEnum {
       return LogTypeEnum.Create;
     case 'PUT':
       return LogTypeEnum.Update;
+    case 'update':
+      return LogTypeEnum.Update;
     case 'DELETE':
       return LogTypeEnum.Delete;
     default:

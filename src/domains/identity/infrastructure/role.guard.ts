@@ -12,6 +12,12 @@ import { UserDTO } from '../domain/user.dto';
 
 @Injectable()
 export class RoleGuard extends AuthGuard('jwt') {
+  private static _currentUserId?: string;
+
+  public static get currentUserId(): string {
+    return RoleGuard._currentUserId;
+  }
+
   constructor(private reflector: Reflector) {
     super();
   }
@@ -26,10 +32,14 @@ export class RoleGuard extends AuthGuard('jwt') {
       return true;
     }
 
+    console.log('checking role');
+
     await super.canActivate(context);
 
     const jwtUserData: UserDTO = context.switchToHttp().getRequest().user.user;
     const userRoleId = jwtUserData.role.id as UserRoleEnum;
+
+    RoleGuard._currentUserId = jwtUserData.id;
 
     if (!permittedRoles.includes(userRoleId)) {
       throw new ForbiddenException('Invalid role');
@@ -43,6 +53,7 @@ export class RoleGuard extends AuthGuard('jwt') {
     if (err || !user) {
       throw err || new UnauthorizedException();
     }
+
     return user;
   }
 }

@@ -31,14 +31,14 @@ export class LoggingInterceptor implements NestInterceptor {
         }
 
         if (method !== 'GET' && data.id) {
-          await this.prisma.log.create({
-            data: {
-              createdById: userId,
-              entityObject: data,
-              entityId: data.id,
-              typeId: getTypeIdFromHttpMethod(method),
-            },
-          });
+          // await this.prisma.log.create({
+          //   data: {
+          //     createdById: userId,
+          //     entityObject: data,
+          //     entityId: data.id,
+          //     typeId: getTypeIdFromHttpMethod(method),
+          //   },
+          // });
         }
       }),
     );

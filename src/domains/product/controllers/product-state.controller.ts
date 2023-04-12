@@ -15,13 +15,13 @@ import { RoleGuard } from 'src/domains/identity/infrastructure/role.guard';
 import { ProductFacade } from '../product.facade';
 
 @UseGuards(RoleGuard)
-@Roles(UserRoleEnum.Admin)
 @Controller('v1/Admin/ProductState')
 @ApiTags('ProductState')
 export class ProductStateController {
   constructor(private readonly productFacade: ProductFacade) {}
 
   @Get()
+  @Roles(UserRoleEnum.Admin)
   findAll() {
     return this.productFacade.findAllProductStates();
   }

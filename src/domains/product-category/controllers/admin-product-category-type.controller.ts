@@ -6,13 +6,13 @@ import { RoleGuard } from 'src/domains/identity/infrastructure/role.guard';
 import { ProductCategoryTypeDTO } from '../models/product-category-type.dto';
 import { ProductCategoryFacade } from '../product-category.facade';
 @UseGuards(RoleGuard)
-@Roles(UserRoleEnum.Admin)
 @ApiTags('Admin Product Category Type')
 @Controller('v1/admin/ProductCategoryType')
 export class AdminProductCategoryTypeController {
   constructor(private readonly productCategoryFacade: ProductCategoryFacade) {}
 
   @Get('')
+  @Roles(UserRoleEnum.Admin)
   findAll(): Promise<ProductCategoryTypeDTO[]> {
     return this.productCategoryFacade.findAllPoductCategoryTypeDTOs();
   }
