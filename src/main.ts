@@ -2,13 +2,8 @@ import { ClassSerializerInterceptor } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder } from '@nestjs/swagger';
 import { SwaggerModule } from '@nestjs/swagger/dist';
-import { Prisma } from '@prisma/client';
 import { AppModule } from './app.module';
-import { RoleGuard } from './domains/identity/infrastructure/role.guard';
-import { LoggingInterceptor } from './domains/logger/interceptors/logging.interceptor';
-import { getTypeIdFromHttpMethod } from './domains/logger/models/log-type.enum';
 import { LogService } from './domains/logger/services/log.service';
-import { AdminProductCategoryController } from './domains/product-category/controllers/admin-product-category.controller';
 import { PrismaService } from './prisma.service';
 
 async function bootstrap() {

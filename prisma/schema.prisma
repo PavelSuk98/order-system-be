@@ -13,36 +13,36 @@ datasource db {
 model ProductState {
   id       String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   name     String
-  isActive Boolean   @default(true)
+  deleted  DateTime?
   products Product[]
 }
 
 model Role {
-  id       String  @id(map: "PK_9309532197a7397548e341e5536") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name     String  @db.VarChar
-  isActive Boolean @default(true)
-  user     User[]
+  id      String    @id(map: "PK_9309532197a7397548e341e5536") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name    String    @db.VarChar
+  deleted DateTime?
+  user    User[]
 }
 
 model User {
-  createdDate DateTime @default(now()) @db.Timestamptz(6)
-  id          String   @id(map: "PK_9862f679340fb2388436a5ab3e4") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  firstName   String   @db.VarChar
-  lastName    String   @db.VarChar
-  email       String   @unique @db.VarChar
-  password    String   @db.VarChar
-  roleId      String   @db.Uuid
-  isActive    Boolean  @default(true)
-  role        Role     @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_0b8c60cc29663fa5b9fb108edd7")
+  createdDate DateTime  @default(now()) @db.Timestamptz(6)
+  id          String    @id(map: "PK_9862f679340fb2388436a5ab3e4") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  firstName   String    @db.VarChar
+  lastName    String    @db.VarChar
+  email       String    @unique @db.VarChar
+  password    String    @db.VarChar
+  roleId      String    @db.Uuid
+  deleted     DateTime?
+  role        Role      @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_0b8c60cc29663fa5b9fb108edd7")
 }
 
 model Log {
-  id              String   @id(map: "PK_db6e55781ba6e3d4fd6485cca24") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  entityId        String   @db.Uuid
-  logTypeId       String?  @db.Uuid
-  createdByUserId String?  @db.Uuid
-  createdDate     DateTime @default(now()) @db.Timestamptz(6)
-  isActive        Boolean  @default(true)
+  id              String    @id(map: "PK_db6e55781ba6e3d4fd6485cca24") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  entityId        String    @db.Uuid
+  logTypeId       String?   @db.Uuid
+  createdByUserId String?   @db.Uuid
+  createdDate     DateTime  @default(now()) @db.Timestamptz(6)
+  deleted         DateTime?
 
   entityObject Json
 
@@ -56,7 +56,7 @@ model LogType {
 
 model ProductCategory {
   createdDate DateTime             @default(now()) @db.Timestamptz(6)
-  isActive    Boolean              @default(true)
+  deleted     DateTime?
   id          String               @id(map: "PK_e92698845b7004ef04fe046816f") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   title       String               @db.VarChar
   order       Int
@@ -67,7 +67,7 @@ model ProductCategory {
 
 model ProductCategoryType {
   createdDate       DateTime          @default(now()) @db.Timestamptz(6)
-  isActive          Boolean           @default(true)
+  deleted           DateTime?
   id                String            @id(map: "PK_d2efbbbac2d3f39560f7cf497da") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   name              String            @db.VarChar
   productCategories ProductCategory[]
@@ -75,7 +75,7 @@ model ProductCategoryType {
 
 model Product {
   createdDate    DateTime         @default(now()) @db.Timestamptz(6)
-  isActive       Boolean          @default(true)
+  deleted        DateTime?
   id             String           @id(map: "PK_6e8f75045ddcd1c389c765c896e") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   title          String           @db.VarChar
   description    String           @db.VarChar
