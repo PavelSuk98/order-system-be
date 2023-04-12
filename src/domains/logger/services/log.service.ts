@@ -42,7 +42,6 @@ export class LogService {
     params: Prisma.MiddlewareParams,
     result: any,
   ): Promise<void> {
-
     const actionsToLog = ['create', 'update'];
     const dontLogThisEntities = ['Log'];
 

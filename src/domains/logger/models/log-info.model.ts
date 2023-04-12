@@ -8,7 +8,7 @@ export class LogInfoDTO implements Log {
   logTypeId: string;
   createdByUserId: string;
   createdDate: Date;
-  isActive: boolean;
+  deleted: Date | null;
   entityObject: Prisma.JsonValue;
 
   constructor(data: Partial<LogInfoDTO>) {

@@ -26,7 +26,7 @@ export class ProductCategoryDetailDTO implements ProductCategoryDetailDTO {
   typeId: string;
 
   @Exclude()
-  isActive: boolean;
+  deleted: Date | null;;
 
   // TODO: interceptor co nastavi logy
   // bud je nacte create a last update a nebo je da oba undefined

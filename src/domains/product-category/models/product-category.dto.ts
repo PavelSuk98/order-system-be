@@ -25,7 +25,7 @@ export class ProductCategoryDTO implements ProductCategory {
   typeId: string;
 
   @Exclude()
-  isActive: boolean;
+  deleted: Date | null;;
 
   constructor({ type, ...data }: Partial<ProductCategoryDTO>) {
     Object.assign(this, data);

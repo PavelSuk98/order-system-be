@@ -55,12 +55,9 @@ export class ProductCategoryService {
   }
 
   async delete(id: string): Promise<void> {
-    await this.prisma.productCategory.update({
+    await this.prisma.productCategory.delete({
       where: {
         id,
-      },
-      data: {
-        isActive: false,
       },
     });
   }

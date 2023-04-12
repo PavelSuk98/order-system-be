@@ -6,10 +6,6 @@ export class ProductCategoryTypeService {
   constructor(private prisma: PrismaService) {}
 
   findAll() {
-    return this.prisma.productCategoryType.findMany({
-      where: {
-        isActive: true,
-      },
-    });
+    return this.prisma.productCategoryType.findMany({});
   }
 }

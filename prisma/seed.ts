@@ -13,7 +13,6 @@ const seedRoles = async () => {
     create: {
       id: UserRoleEnum.Admin,
       name: 'Admin',
-      isActive: true,
     },
   });
   await prisma.role.upsert({
@@ -22,7 +21,6 @@ const seedRoles = async () => {
     create: {
       id: UserRoleEnum.Service,
       name: 'Service',
-      isActive: true,
     },
   });
   await prisma.role.upsert({
@@ -31,7 +29,6 @@ const seedRoles = async () => {
     create: {
       id: UserRoleEnum.Customer,
       name: 'Customer',
-      isActive: true,
     },
   });
 };

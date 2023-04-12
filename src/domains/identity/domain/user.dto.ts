@@ -25,7 +25,7 @@ export class UserDTO implements User {
   password: string;
 
   @Exclude()
-  isActive: boolean;
+  deleted: Date | null;
 
   @Exclude()
   roleId: string;

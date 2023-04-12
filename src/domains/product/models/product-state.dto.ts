@@ -10,7 +10,7 @@ export class ProductStateDTO implements ProductState {
   name: string;
 
   @Exclude()
-  isActive: boolean;
+  deleted: Date | null;
 
   constructor(data: Partial<ProductStateDTO>) {
     Object.assign(this, data);
