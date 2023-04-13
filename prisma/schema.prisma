@@ -75,11 +75,6 @@ model Log {
   @@map("Log")
 }
 
-model LogType {
-  id   String @id(map: "PK_a7cfdf632ad7bb014e67183da00") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name String @db.VarChar
-}
-
 model ProductCategory {
   deleted  DateTime?
   id       String               @id(map: "PK_e92698845b7004ef04fe046816f") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
