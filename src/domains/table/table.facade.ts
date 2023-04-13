@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ListItemModel } from '../shared/domain/list-item.interface';
+import { CreateTableAreaDTO } from './models/create-table-area.dto';
+import { TableAreaDTO } from './models/table-area.dto';
 import { TableStateDTO } from './models/table-state.dto';
+import { UpdateTableAreaDTO } from './models/update-table-area.dto';
 import { TableAreaService } from './services/table-area.service';
 import { TableStateService } from './services/table-state.service';
 import { TableService } from './services/table.service';
@@ -19,34 +22,34 @@ export class TableFacade {
     );
   }
 
-  // async findAllDTO(): Promise<ListItemModel<ProductDTO>> {
-  //   const products = await this.productService.findAll();
+  async findAllTableAreaDTO(): Promise<ListItemModel<TableAreaDTO>> {
+    const tableAreas = await this.tableAreaService.findAll();
 
-  //   return {
-  //     list: products.map((c) => new ProductDTO(c)),
-  //   };
-  // }
+    return {
+      list: tableAreas.map((c) => new TableAreaDTO(c)),
+    };
+  }
 
-  // async findOneDTO(id: string): Promise<ProductDTO | undefined> {
-  //   const product = await this.productService.findOne(id);
-  //   if (!product) {
-  //     return undefined;
-  //   }
-  //   return new ProductDTO(product);
-  // }
-  // async create(createProduct: CreateProductDTO): Promise<ProductDTO> {
-  //   const product = await this.productService.create(createProduct);
+  async findOneTableAreaDTO(id: string): Promise<TableAreaDTO | undefined> {
+    const tableArea = await this.tableAreaService.findOne(id);
+    if (!tableArea) {
+      return undefined;
+    }
+    return new TableAreaDTO(tableArea);
+  }
+  async createTableArea(createDTO: CreateTableAreaDTO): Promise<TableAreaDTO> {
+    const tableArea = await this.tableAreaService.create(createDTO);
 
-  //   return this.findOneDTO(product.id);
-  // }
+    return this.findOneTableAreaDTO(tableArea.id);
+  }
 
-  // async update(updateProduct: UpdateProductDTO): Promise<ProductDTO> {
-  //   await this.productService.update(updateProduct);
+  async updateTableArea(updateDTO: UpdateTableAreaDTO): Promise<TableAreaDTO> {
+    await this.tableAreaService.update(updateDTO);
 
-  //   return this.findOneDTO(updateProduct.id);
-  // }
+    return this.findOneTableAreaDTO(updateDTO.id);
+  }
 
-  // async delete(id: string): Promise<void> {
-  //   await this.productService.delete(id);
-  // }
+  async deleteTableArea(id: string): Promise<void> {
+    await this.tableAreaService.delete(id);
+  }
 }
