@@ -33,21 +33,3 @@ async function bootstrap() {
   await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
-
-// function forUser(userId: number) {
-//   return Prisma.defineExtension((prisma) =>
-//     prisma.$extends({
-//       query: {
-//         $allModels: {
-//           async $allOperations({ args, query }) {
-//             const [, result] = await prisma.$transaction([
-//               prisma.$executeRawSELECT set_config('app.current_user_id', ${userId.toString()}, TRUE),
-//               query(args),
-//             ]);
-//             return result;
-//           },
-//         },
-//       },
-//     })
-//   );
-// }
