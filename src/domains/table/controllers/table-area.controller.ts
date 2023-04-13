@@ -14,6 +14,7 @@ import { UserRoleEnum } from 'src/domains/identity/domain/role.enum';
 import { RoleGuard } from 'src/domains/identity/infrastructure/role.guard';
 import { ListItemModel } from 'src/domains/shared/domain/list-item.interface';
 import { CreateTableAreaDTO } from '../models/create-table-area.dto';
+import { TableAreaDetailDTO } from '../models/table-area-detail.dto';
 import { TableAreaDTO } from '../models/table-area.dto';
 import { UpdateTableAreaDTO } from '../models/update-table-area.dto';
 import { TableFacade } from '../table.facade';
@@ -26,10 +27,10 @@ export class TableAreaController {
 
   @Post()
   @Roles(UserRoleEnum.Admin)
-  @ApiResponse({ type: TableAreaDTO })
+  @ApiResponse({ type: TableAreaDetailDTO })
   async create(
     @Body() createTableAreaDTO: CreateTableAreaDTO,
-  ): Promise<TableAreaDTO> {
+  ): Promise<TableAreaDetailDTO> {
     return await this.tableFacade.createTableArea(createTableAreaDTO);
   }
 
@@ -42,17 +43,17 @@ export class TableAreaController {
 
   @Get(':id')
   @Roles(UserRoleEnum.Admin)
-  @ApiResponse({ type: TableAreaDTO })
-  async findOne(@Param('id') id: string): Promise<TableAreaDTO> {
+  @ApiResponse({ type: TableAreaDetailDTO })
+  async findOne(@Param('id') id: string): Promise<TableAreaDetailDTO> {
     return await this.tableFacade.findOneTableAreaDTO(id);
   }
 
   @Put(':id')
   @Roles(UserRoleEnum.Admin)
-  @ApiResponse({ type: TableAreaDTO })
+  @ApiResponse({ type: TableAreaDetailDTO })
   async update(
     @Body() updateTableAreaDTO: UpdateTableAreaDTO,
-  ): Promise<TableAreaDTO> {
+  ): Promise<TableAreaDetailDTO> {
     return await this.tableFacade.updateTableArea(updateTableAreaDTO);
   }
 

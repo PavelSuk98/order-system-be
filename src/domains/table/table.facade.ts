@@ -1,9 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { ListItemModel } from '../shared/domain/list-item.interface';
 import { CreateTableAreaDTO } from './models/create-table-area.dto';
+import { CreateTableDTO } from './models/create-table.dto';
+import { TableAreaDetailDTO } from './models/table-area-detail.dto';
 import { TableAreaDTO } from './models/table-area.dto';
+import { TableDetailDTO } from './models/table-detail.dto';
 import { TableStateDTO } from './models/table-state.dto';
+import { TableDTO } from './models/table.dto';
 import { UpdateTableAreaDTO } from './models/update-table-area.dto';
+import { UpdateTableDTO } from './models/update-table.dto';
 import { TableAreaService } from './services/table-area.service';
 import { TableStateService } from './services/table-state.service';
 import { TableService } from './services/table.service';
@@ -30,20 +35,26 @@ export class TableFacade {
     };
   }
 
-  async findOneTableAreaDTO(id: string): Promise<TableAreaDTO | undefined> {
+  async findOneTableAreaDTO(
+    id: string,
+  ): Promise<TableAreaDetailDTO | undefined> {
     const tableArea = await this.tableAreaService.findOne(id);
     if (!tableArea) {
       return undefined;
     }
-    return new TableAreaDTO(tableArea);
+    return new TableAreaDetailDTO(tableArea);
   }
-  async createTableArea(createDTO: CreateTableAreaDTO): Promise<TableAreaDTO> {
+  async createTableArea(
+    createDTO: CreateTableAreaDTO,
+  ): Promise<TableAreaDetailDTO> {
     const tableArea = await this.tableAreaService.create(createDTO);
 
     return this.findOneTableAreaDTO(tableArea.id);
   }
 
-  async updateTableArea(updateDTO: UpdateTableAreaDTO): Promise<TableAreaDTO> {
+  async updateTableArea(
+    updateDTO: UpdateTableAreaDTO,
+  ): Promise<TableAreaDetailDTO> {
     await this.tableAreaService.update(updateDTO);
 
     return this.findOneTableAreaDTO(updateDTO.id);
@@ -51,5 +62,36 @@ export class TableFacade {
 
   async deleteTableArea(id: string): Promise<void> {
     await this.tableAreaService.delete(id);
+  }
+
+  async findAllTableDTO(): Promise<ListItemModel<TableDTO>> {
+    const tableAreas = await this.tableService.findAll();
+
+    return {
+      list: tableAreas.map((c) => new TableDTO(c)),
+    };
+  }
+
+  async findOneTableDTO(id: string): Promise<TableDetailDTO | undefined> {
+    const tableArea = await this.tableService.findOne(id);
+    if (!tableArea) {
+      return undefined;
+    }
+    return new TableDetailDTO(tableArea);
+  }
+  async createTable(createDTO: CreateTableDTO): Promise<TableDetailDTO> {
+    const tableArea = await this.tableService.create(createDTO);
+
+    return this.findOneTableDTO(tableArea.id);
+  }
+
+  async updateTable(updateDTO: UpdateTableDTO): Promise<TableDetailDTO> {
+    await this.tableService.update(updateDTO);
+
+    return this.findOneTableDTO(updateDTO.id);
+  }
+
+  async deleteTable(id: string): Promise<void> {
+    await this.tableService.delete(id);
   }
 }

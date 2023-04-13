@@ -33,6 +33,7 @@ model Table {
   tableStateId String     @db.Uuid
   tableArea    TableArea  @relation(fields: [tableAreaId], references: [id])
   tableAreaId  String     @db.Uuid
+  deleted      DateTime?
 }
 
 model ProductState {

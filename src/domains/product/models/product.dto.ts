@@ -39,12 +39,9 @@ export class ProductDTO implements Product {
   deleted: Date | null;
 
   constructor({ category, productState, ...data }: Partial<ProductDTO>) {
-    // console.log(data);
     Object.assign(this, data);
 
     if (category) {
-      console.log('-- CATEGORYY --');
-      console.log(category);
       this.category = new ProductCategoryDTO(category);
     }
 
