@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import { ProductState } from '../src/domains/product/models/product-state.enum';
 import { UserRoleEnum } from '../src/domains/identity/domain/role.enum';
-import { LogTypeEnum } from '../src/domains/logger/models/log-type.enum';
 import { ProductCategoryTypeEnum } from '../src/domains/product-category/models/product-category-type.enum';
+import { TableState } from '../src/domains/table/models/table-state.enum';
 
 const prisma = new PrismaClient();
 
@@ -116,11 +116,48 @@ const seedProductState = async () => {
     },
   });
 };
+
+const seedTableState = async () => {
+  await prisma.tableState.upsert({
+    where: { id: TableState.Available },
+    update: {},
+    create: {
+      id: TableState.Available,
+      name: 'Available',
+    },
+  });
+
+  await prisma.tableState.upsert({
+    where: { id: TableState.Ordered },
+    update: {},
+    create: {
+      id: TableState.Ordered,
+      name: 'Ordered',
+    },
+  });
+  await prisma.tableState.upsert({
+    where: { id: TableState.Reservation },
+    update: {},
+    create: {
+      id: TableState.Reservation,
+      name: 'Reservation',
+    },
+  });
+  await prisma.tableState.upsert({
+    where: { id: TableState.Unavailable },
+    update: {},
+    create: {
+      id: TableState.Unavailable,
+      name: 'Unavailable',
+    },
+  });
+};
 async function main() {
   await seedRoles();
   await seedUsers();
   await seedProductCategoryType();
   await seedProductState();
+  await seedTableState();
 }
 
 main()

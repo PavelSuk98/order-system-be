@@ -10,6 +10,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model TableState {
+  id      String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name    String
+  deleted DateTime?
+  Table   Table[]
+}
+
+model TableArea {
+  id      String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title   String
+  deleted DateTime?
+  Table   Table[]
+}
+
+model Table {
+  id           String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title        String
+  order        Int
+  qrKey        String
+  tableState   TableState @relation(fields: [tableStateId], references: [id])
+  tableStateId String     @db.Uuid
+  tableArea    TableArea  @relation(fields: [tableAreaId], references: [id])
+  tableAreaId  String     @db.Uuid
+}
+
 model ProductState {
   id       String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   name     String
