@@ -10,7 +10,7 @@ export class RoleDTO implements Role {
   name: string;
 
   @Exclude()
-  deleted: Date | null;;
+  deleted: Date | null;
 
   constructor(role: Partial<RoleDTO>) {
     Object.assign(this, role);
