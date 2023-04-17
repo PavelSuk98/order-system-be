@@ -9,7 +9,7 @@ import { PaymentFacade } from '../payment.facade';
 
 @UseGuards(RoleGuard)
 @Controller('v1/Admin/PaymentType')
-@ApiTags('Admin Payment Types')
+@ApiTags('Admin Payment Type')
 export class AdminPaymentController {
   constructor(private readonly paymentFacade: PaymentFacade) {}
 
