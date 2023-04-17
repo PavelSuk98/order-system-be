@@ -21,7 +21,7 @@ import { LogFilterDTO } from '../models/log-filter.dto';
 export class LogController {
   constructor(private readonly logFacade: LogFacade) {}
 
-  @Post()
+  @Post('search')
   @HttpCode(200)
   @Roles(UserRoleEnum.Admin)
   @ApiResponse({ type: ListItemModel<Log> })
