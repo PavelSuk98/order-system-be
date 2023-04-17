@@ -3,8 +3,6 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder } from '@nestjs/swagger';
 import { SwaggerModule } from '@nestjs/swagger/dist';
 import { AppModule } from './app.module';
-import { LogService } from './domains/logger/services/log.service';
-import { PrismaMiddlewareService } from './domains/shared/services/prisma-middleware.service';
 import { PrismaService } from './prisma.service';
 
 async function bootstrap() {

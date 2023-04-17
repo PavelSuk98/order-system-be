@@ -1,9 +1,9 @@
 import { PrismaClient } from '@prisma/client';
-import { ProductState } from '../src/domains/product/models/product-state.enum';
-import { UserRoleEnum } from '../src/domains/identity/domain/role.enum';
-import { ProductCategoryTypeEnum } from '../src/domains/product-category/models/product-category-type.enum';
-import { TableState } from '../src/domains/table/models/table-state.enum';
-import { PaymentTypeEnum } from '../src/domains/payment/models/payment-type.enum';
+import { PaymentTypeEnum } from '../src/domains/admin/payment/models/payment-type.enum';
+import { ProductCategoryTypeEnum } from '../src/domains/admin/product-category/models/product-category-type.enum';
+import { ProductState } from '../src/domains/admin/product/models/product-state.enum';
+import { UserRoleEnum } from '../src/domains/admin/identity/domain/role.enum';
+import { TableState } from '../src/domains/admin/table/models/table-state.enum';
 
 const prisma = new PrismaClient();
 

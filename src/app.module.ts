@@ -3,15 +3,14 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { IdentityDomain } from './domains/identity/identity-domain.module';
-import { ProductModule } from './domains/product/product.module';
-import { ProductCategoryModule } from './domains/product-category/product-category.module';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { IdentityDomain } from './domains/admin/identity/identity-domain.module';
 import { PrismaService } from './prisma.service';
-import { LogModule } from './domains/logger/log.module';
-import { TableModule } from './domains/table/table.module';
-import { PaymentModule } from './domains/payment/payment.module';
-import { OrderModule } from './domains/order/order.module';
+import { TableModule } from './domains/admin/table/table.module';
+import { ServiceOrderModule } from './domains/service/order/order.module';
+import { ProductModule } from './domains/admin/product/product.module';
+import { ProductCategoryModule } from './domains/admin/product-category/product-category.module';
+import { LogModule } from './domains/admin/logger/log.module';
+import { PaymentModule } from './domains/admin/payment/payment.module';
 
 @Module({
   imports: [
@@ -25,7 +24,7 @@ import { OrderModule } from './domains/order/order.module';
     LogModule,
     TableModule,
     PaymentModule,
-    OrderModule,
+    ServiceOrderModule,
     // OrderTableModule,
     // OrderModule,
     // ProductMeasureModule,

@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import { RoleGuard } from 'src/domains/identity/infrastructure/role.guard';
+import { RoleGuard } from 'src/domains/admin/identity/infrastructure/role.guard';
 import { PrismaService } from 'src/prisma.service';
 
 //www.prisma.io/docs/concepts/components/prisma-client/middleware/soft-delete-middleware#step-3-optionally-prevent-readupdate-of-soft-deleted-records
