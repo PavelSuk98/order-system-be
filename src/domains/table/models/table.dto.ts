@@ -9,7 +9,7 @@ export class TableDTO implements Table {
   id: string;
 
   @ApiProperty()
-  title: string;
+  name: string;
 
   @ApiProperty()
   order: number;

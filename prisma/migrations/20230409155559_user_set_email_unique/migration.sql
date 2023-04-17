@@ -56,7 +56,7 @@ CREATE TABLE "product_category_entity" (
     "createdDate" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
-    "title" VARCHAR NOT NULL,
+    "name" VARCHAR NOT NULL,
     "order" INTEGER NOT NULL,
     "typeId" UUID,
 
@@ -78,7 +78,7 @@ CREATE TABLE "product_entity" (
     "createdDate" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
-    "title" VARCHAR NOT NULL,
+    "name" VARCHAR NOT NULL,
     "description" VARCHAR NOT NULL,
     "imgUrl" VARCHAR NOT NULL,
     "order" INTEGER NOT NULL,

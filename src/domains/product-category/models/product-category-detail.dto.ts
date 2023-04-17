@@ -11,7 +11,7 @@ export class ProductCategoryDetailDTO implements ProductCategoryDetailDTO {
   id: string;
 
   @ApiProperty()
-  title: string;
+  name: string;
 
   @ApiProperty()
   order: number;

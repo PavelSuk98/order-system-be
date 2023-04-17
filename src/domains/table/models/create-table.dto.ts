@@ -4,7 +4,7 @@ import { Exclude } from 'class-transformer';
 
 export class CreateTableDTO implements Table {
   @ApiProperty()
-  title: string;
+  name: string;
 
   @ApiProperty()
   order: number;

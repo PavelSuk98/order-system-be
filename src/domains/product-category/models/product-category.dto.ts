@@ -8,7 +8,7 @@ export class ProductCategoryDTO implements ProductCategory {
   id: string;
 
   @ApiProperty()
-  title: string;
+  name: string;
 
   @ApiProperty()
   order: number;

@@ -3,7 +3,7 @@ import { ProductCategoryTypeEnum } from './product-category-type.enum';
 
 export class CreateProductCategoryDTO {
   @ApiProperty()
-  title: string;
+  name: string;
 
   @ApiProperty({
     enum: ProductCategoryTypeEnum,

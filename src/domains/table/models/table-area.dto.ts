@@ -6,7 +6,7 @@ export class TableAreaDTO implements TableArea {
   @ApiProperty()
   id: string;
   @ApiProperty()
-  title: string;
+  name: string;
   @ApiProperty()
   order: number;
   @Exclude()

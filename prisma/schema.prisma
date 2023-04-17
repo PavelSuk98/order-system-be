@@ -10,9 +10,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Order {
+  id            String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  paymentType   PaymentType @relation(fields: [paymentTypeId], references: [id])
+  paymentTypeId String      @db.Uuid
+  tip           Float
+  totalPrice    Float
+  totalPaid     Float
+  createdDate   DateTime    @default(now()) @db.Timestamptz(6)
+  deleted       DateTime?
+  customer      User?       @relation(fields: [customerId], references: [id])
+  customerId    String      @db.Uuid
+}
+
 model PaymentType {
-  id   String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name String
+  id    String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name  String
+  Order Order[]
 }
 
 model TableState {
@@ -24,7 +38,7 @@ model TableState {
 
 model TableArea {
   id      String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  title   String
+  name    String
   order   Int
   deleted DateTime?
   Table   Table[]
@@ -32,7 +46,7 @@ model TableArea {
 
 model Table {
   id           String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  title        String
+  name         String
   order        Int
   qrKey        String
   tableState   TableState @relation(fields: [tableStateId], references: [id])
@@ -65,6 +79,7 @@ model User {
   roleId    String    @db.Uuid
   deleted   DateTime?
   role      Role      @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_0b8c60cc29663fa5b9fb108edd7")
+  Order     Order[]
 }
 
 model Log {
@@ -84,7 +99,7 @@ model Log {
 model ProductCategory {
   deleted  DateTime?
   id       String               @id(map: "PK_e92698845b7004ef04fe046816f") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  title    String               @db.VarChar
+  name     String               @db.VarChar
   order    Int
   typeId   String?              @db.Uuid
   type     ProductCategoryType? @relation(fields: [typeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_3396a6ae1dbd72159a63978fccf")
@@ -101,7 +116,7 @@ model ProductCategoryType {
 model Product {
   deleted        DateTime?
   id             String           @id(map: "PK_6e8f75045ddcd1c389c765c896e") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  title          String           @db.VarChar
+  name           String           @db.VarChar
   description    String           @db.VarChar
   imgUrl         String           @db.VarChar
   order          Int

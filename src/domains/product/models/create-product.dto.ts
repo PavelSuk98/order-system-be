@@ -4,7 +4,7 @@ import { Exclude } from 'class-transformer';
 
 export class CreateProductDTO implements Product {
   @ApiProperty()
-  title: string;
+  name: string;
 
   @ApiProperty()
   order: number;

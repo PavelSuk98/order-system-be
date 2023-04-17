@@ -10,7 +10,7 @@ CREATE TABLE "TableState" (
 -- CreateTable
 CREATE TABLE "TableArea" (
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
-    "title" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     "deleted" TIMESTAMP(3),
 
     CONSTRAINT "TableArea_pkey" PRIMARY KEY ("id")
@@ -19,7 +19,7 @@ CREATE TABLE "TableArea" (
 -- CreateTable
 CREATE TABLE "Table" (
     "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
-    "title" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     "order" INTEGER NOT NULL,
     "qrKey" TEXT NOT NULL,
     "tableStateId" UUID NOT NULL,
