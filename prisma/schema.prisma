@@ -10,17 +10,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model OrderTableProduct {
+  id           String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  table        Table    @relation(fields: [tableId], references: [id])
+  tableId      String   @db.Uuid
+  product      Product  @relation(fields: [productId], references: [id])
+  productId    String   @db.Uuid
+  order        Order?   @relation(fields: [orderId], references: [id])
+  orderId      String?  @db.Uuid
+  orderDate    DateTime @default(now()) @db.Timestamptz(6)
+  productPrice Float
+}
+
 model Order {
-  id            String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  paymentType   PaymentType @relation(fields: [paymentTypeId], references: [id])
-  paymentTypeId String      @db.Uuid
-  tip           Float
-  totalPrice    Float
-  totalPaid     Float
-  createdDate   DateTime    @default(now()) @db.Timestamptz(6)
-  deleted       DateTime?
-  customer      User?       @relation(fields: [customerId], references: [id])
-  customerId    String      @db.Uuid
+  id                String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  paymentType       PaymentType         @relation(fields: [paymentTypeId], references: [id])
+  paymentTypeId     String              @db.Uuid
+  tip               Float
+  totalPrice        Float
+  totalPaid         Float
+  createdDate       DateTime            @default(now()) @db.Timestamptz(6)
+  deleted           DateTime?
+  customer          User?               @relation(fields: [customerId], references: [id])
+  customerId        String?             @db.Uuid
+  OrderTableProduct OrderTableProduct[]
 }
 
 model PaymentType {
@@ -45,15 +58,16 @@ model TableArea {
 }
 
 model Table {
-  id           String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name         String
-  order        Int
-  qrKey        String
-  tableState   TableState @relation(fields: [tableStateId], references: [id])
-  tableStateId String     @db.Uuid
-  tableArea    TableArea  @relation(fields: [tableAreaId], references: [id])
-  tableAreaId  String     @db.Uuid
-  deleted      DateTime?
+  id                String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name              String
+  order             Int
+  qrKey             String
+  tableState        TableState          @relation(fields: [tableStateId], references: [id])
+  tableStateId      String              @db.Uuid
+  tableArea         TableArea           @relation(fields: [tableAreaId], references: [id])
+  tableAreaId       String              @db.Uuid
+  deleted           DateTime?
+  OrderTableProduct OrderTableProduct[]
 }
 
 model ProductState {
@@ -114,15 +128,16 @@ model ProductCategoryType {
 }
 
 model Product {
-  deleted        DateTime?
-  id             String           @id(map: "PK_6e8f75045ddcd1c389c765c896e") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name           String           @db.VarChar
-  description    String           @db.VarChar
-  imgUrl         String           @db.VarChar
-  order          Int
-  price          Int
-  categoryId     String?          @db.Uuid
-  category       ProductCategory? @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_641188cadea80dfe98d4c769ebf")
-  productState   ProductState     @relation(fields: [productStateId], references: [id])
-  productStateId String           @db.Uuid
+  deleted           DateTime?
+  id                String              @id(map: "PK_6e8f75045ddcd1c389c765c896e") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name              String              @db.VarChar
+  description       String              @db.VarChar
+  imgUrl            String              @db.VarChar
+  order             Int
+  price             Float
+  categoryId        String?             @db.Uuid
+  category          ProductCategory?    @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_641188cadea80dfe98d4c769ebf")
+  productState      ProductState        @relation(fields: [productStateId], references: [id])
+  productStateId    String              @db.Uuid
+  OrderTableProduct OrderTableProduct[]
 }
