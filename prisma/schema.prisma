@@ -11,29 +11,33 @@ datasource db {
 }
 
 model OrderTableProduct {
-  id           String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  table        Table    @relation(fields: [tableId], references: [id])
-  tableId      String   @db.Uuid
-  product      Product  @relation(fields: [productId], references: [id])
-  productId    String   @db.Uuid
-  order        Order?   @relation(fields: [orderId], references: [id])
-  orderId      String?  @db.Uuid
-  orderDate    DateTime @default(now()) @db.Timestamptz(6)
-  productPrice Float
+  id                  String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  table               Table    @relation(fields: [tableId], references: [id])
+  tableId             String   @db.Uuid
+  product             Product  @relation(fields: [productId], references: [id])
+  productId           String   @db.Uuid
+  order               Order?   @relation(fields: [orderId], references: [id])
+  orderId             String?  @db.Uuid
+  orderDate           DateTime @default(now()) @db.Timestamptz(6)
+  productPrice        Float
+  managedByEmployee   User     @relation(fields: [managedByEmployeeId], references: [id])
+  managedByEmployeeId String   @db.Uuid
 }
 
 model Order {
-  id                String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  paymentType       PaymentType         @relation(fields: [paymentTypeId], references: [id])
-  paymentTypeId     String              @db.Uuid
-  tip               Float
-  totalPrice        Float
-  totalPaid         Float
-  createdDate       DateTime            @default(now()) @db.Timestamptz(6)
-  deleted           DateTime?
-  customer          User?               @relation(fields: [customerId], references: [id])
-  customerId        String?             @db.Uuid
-  OrderTableProduct OrderTableProduct[]
+  id                  String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  paymentType         PaymentType         @relation(fields: [paymentTypeId], references: [id])
+  paymentTypeId       String              @db.Uuid
+  tip                 Float
+  totalPrice          Float
+  totalPaid           Float
+  createdDate         DateTime            @default(now()) @db.Timestamptz(6)
+  deleted             DateTime?
+  customer            User?               @relation("customer", fields: [customerId], references: [id])
+  customerId          String?             @db.Uuid
+  orderTableProduct   OrderTableProduct[]
+  managedByEmployee   User                @relation("managedByEmployee", fields: [managedByEmployeeId], references: [id])
+  managedByEmployeeId String              @db.Uuid
 }
 
 model PaymentType {
@@ -85,15 +89,17 @@ model Role {
 }
 
 model User {
-  id        String    @id(map: "PK_9862f679340fb2388436a5ab3e4") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  firstName String    @db.VarChar
-  lastName  String    @db.VarChar
-  email     String    @unique @db.VarChar
-  password  String    @db.VarChar
-  roleId    String    @db.Uuid
-  deleted   DateTime?
-  role      Role      @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_0b8c60cc29663fa5b9fb108edd7")
-  Order     Order[]
+  id                     String              @id(map: "PK_9862f679340fb2388436a5ab3e4") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  firstName              String              @db.VarChar
+  lastName               String              @db.VarChar
+  email                  String              @unique @db.VarChar
+  password               String              @db.VarChar
+  roleId                 String              @db.Uuid
+  deleted                DateTime?
+  role                   Role                @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_0b8c60cc29663fa5b9fb108edd7")
+  OrderTableProduct      OrderTableProduct[]
+  customerOrder          Order[]             @relation("customer")
+  managedByEmployeeOrder Order[]             @relation("managedByEmployee")
 }
 
 model Log {
