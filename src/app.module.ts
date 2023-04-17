@@ -11,6 +11,7 @@ import { PrismaService } from './prisma.service';
 import { LogModule } from './domains/logger/log.module';
 import { TableModule } from './domains/table/table.module';
 import { PaymentModule } from './domains/payment/payment.module';
+import { OrderModule } from './domains/order/order.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { PaymentModule } from './domains/payment/payment.module';
     LogModule,
     TableModule,
     PaymentModule,
+    OrderModule,
     // OrderTableModule,
     // OrderModule,
     // ProductMeasureModule,
