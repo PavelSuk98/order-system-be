@@ -3,6 +3,7 @@ import { ProductState } from '../src/domains/product/models/product-state.enum';
 import { UserRoleEnum } from '../src/domains/identity/domain/role.enum';
 import { ProductCategoryTypeEnum } from '../src/domains/product-category/models/product-category-type.enum';
 import { TableState } from '../src/domains/table/models/table-state.enum';
+import { PaymentTypeEnum } from '../src/domains/order/models/payment/payment-type.enum';
 
 const prisma = new PrismaClient();
 
@@ -152,12 +153,34 @@ const seedTableState = async () => {
     },
   });
 };
+
+const seedPaymentTypes = async () => {
+  await prisma.paymentType.upsert({
+    where: { id: PaymentTypeEnum.Card },
+    update: {},
+    create: {
+      id: PaymentTypeEnum.Card,
+      name: 'Card',
+    },
+  });
+
+  await prisma.paymentType.upsert({
+    where: { id: PaymentTypeEnum.Cash },
+    update: {},
+    create: {
+      id: PaymentTypeEnum.Cash,
+      name: 'Cash',
+    },
+  });
+};
+
 async function main() {
   await seedRoles();
   await seedUsers();
   await seedProductCategoryType();
   await seedProductState();
   await seedTableState();
+  await seedPaymentTypes();
 }
 
 main()
