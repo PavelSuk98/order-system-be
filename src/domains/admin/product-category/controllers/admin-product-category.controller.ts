@@ -24,7 +24,7 @@ import { ProductCategoryFacade } from '../product-category.facade';
 
 @UseGuards(RoleGuard)
 @ApiTags('Admin Product Category')
-@Controller('v1/admin/ProductCategory')
+@Controller('v1/Admin/ProductCategory')
 export class AdminProductCategoryController {
   constructor(private readonly productCategoryFacade: ProductCategoryFacade) {}
 

@@ -5,8 +5,8 @@ import { RoleGuard } from 'src/domains/admin/identity/infrastructure/role.guard'
 import { OrderFacade } from '../order.facade';
 
 @UseGuards(RoleGuard)
-@Controller('v1/Admin/Order')
-@ApiTags('Admin Order')
-export class OrderController {
+@Controller('v1/Service/Order')
+@ApiTags('Service Order')
+export class ServiceOrderController {
   constructor(private readonly orderService: OrderFacade) {}
 }
