@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { RoleGuard } from 'src/domains/identity/infrastructure/role.guard';
 import { PrismaService } from 'src/prisma.service';
 import { CreateOrderTableProductDTO } from '../models/create-order-table-product.dto';
 
@@ -6,17 +7,26 @@ import { CreateOrderTableProductDTO } from '../models/create-order-table-product
 export class OrderService {
   constructor(private readonly prisma: PrismaService) {}
 
-  createOrderTableProduct(
-    createOrderTableProductDTO: CreateOrderTableProductDTO,
+  async createOrderTableProduct(
+    createOrderTableProductDTO: CreateOrderTableProductDTO[],
   ) {
+    const createOrderTableProductEntities = await Promise.all(
+      createOrderTableProductDTO.map(async (product) => {
+        return {
+          productId: product.productId,
+          tableId: product.tableId,
+          productPrice: (
+            await this.prisma.product.findFirst({
+              where: { id: '' },
+            })
+          ).price,
+          managedByEmployeeId: RoleGuard.currentUserId,
+        };
+      }),
+    );
+
     this.prisma.orderTableProduct.createMany({
-      data: [
-        {
-          productId: createOrderTableProductDTO.productId,
-          tableId: createOrderTableProductDTO.tableId,
-          productPrice: 0,
-        },
-      ],
+      data: createOrderTableProductEntities,
     });
   }
 }

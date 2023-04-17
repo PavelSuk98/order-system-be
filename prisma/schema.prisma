@@ -11,17 +11,18 @@ datasource db {
 }
 
 model OrderTableProduct {
-  id                  String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  table               Table    @relation(fields: [tableId], references: [id])
-  tableId             String   @db.Uuid
-  product             Product  @relation(fields: [productId], references: [id])
-  productId           String   @db.Uuid
-  order               Order?   @relation(fields: [orderId], references: [id])
-  orderId             String?  @db.Uuid
-  orderDate           DateTime @default(now()) @db.Timestamptz(6)
+  id                  String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  table               Table     @relation(fields: [tableId], references: [id])
+  tableId             String    @db.Uuid
+  product             Product   @relation(fields: [productId], references: [id])
+  productId           String    @db.Uuid
+  order               Order?    @relation(fields: [orderId], references: [id])
+  orderId             String?   @db.Uuid
+  productOrderDate    DateTime  @default(now()) @db.Timestamptz(6)
+  productPreparedDate DateTime?
   productPrice        Float
-  managedByEmployee   User     @relation(fields: [managedByEmployeeId], references: [id])
-  managedByEmployeeId String   @db.Uuid
+  managedByEmployee   User      @relation(fields: [managedByEmployeeId], references: [id])
+  managedByEmployeeId String    @db.Uuid
 }
 
 model Order {
