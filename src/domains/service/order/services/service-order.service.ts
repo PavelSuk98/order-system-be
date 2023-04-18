@@ -75,4 +75,15 @@ export class ServiceOrderTableProductService {
       },
     });
   }
+
+  async markAsPrepared(id: string) {
+    await this.prisma.orderTableProduct.update({
+      where: {
+        id: id,
+      },
+      data: {
+        productPreparedDate: new Date(),
+      },
+    });
+  }
 }

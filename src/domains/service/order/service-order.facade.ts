@@ -28,4 +28,8 @@ export class ServiceOrderFacade {
 
     return orders.map((c) => new ServiceOrderTableProductDTO(c)) as any;
   }
+
+  async markAsPrepared(id: string): Promise<void> {
+    await this.orderTableProductService.markAsPrepared(id);
+  }
 }

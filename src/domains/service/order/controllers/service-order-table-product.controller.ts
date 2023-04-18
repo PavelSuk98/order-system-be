@@ -1,5 +1,12 @@
-import { Controller, Get } from '@nestjs/common';
-import { Body, Param, Post, UseGuards } from '@nestjs/common/decorators';
+import { Controller } from '@nestjs/common';
+import {
+  Body,
+  Param,
+  Patch,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common/decorators';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/domains/admin/identity/decorators/role.decorator';
 import { UserRoleEnum } from 'src/domains/admin/identity/domain/role.enum';
@@ -10,9 +17,9 @@ import { ServiceOrderTableProductDTO } from '../models/service-order-table-produ
 import { ServiceOrderFacade } from '../service-order.facade';
 
 @UseGuards(RoleGuard)
-@Controller('v1/Service/Order')
-@ApiTags('Service Order')
-export class ServiceOrderController {
+@Controller('v1/Service/OrderTableProduct')
+@ApiTags('Service Order Table Product')
+export class ServiceOrderTableProductController {
   constructor(private readonly serviceOrderFacade: ServiceOrderFacade) {}
 
   @Post()
@@ -31,5 +38,11 @@ export class ServiceOrderController {
     @Body() search: OrderTableProductFilterDTO,
   ): Promise<ServiceOrderTableProductDTO[]> {
     return await this.serviceOrderFacade.getActiveOrderTableProducts(search);
+  }
+
+  @Patch('MarkAsPrepared/:id')
+  @Roles(UserRoleEnum.Admin, UserRoleEnum.Service)
+  async markProductAsPrepared(@Param('id') id: string): Promise<void> {
+    return await this.serviceOrderFacade.markAsPrepared(id);
   }
 }
