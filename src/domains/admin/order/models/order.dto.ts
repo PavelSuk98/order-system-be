@@ -24,6 +24,9 @@ export class OrderDTO implements Order {
   @ApiProperty()
   table: Partial<TableDTO>;
 
+  @ApiProperty()
+  orderTableProductCount: number;
+
   @Exclude()
   paymentTypeId: string;
   @Exclude()
@@ -34,11 +37,14 @@ export class OrderDTO implements Order {
   managedByEmployeeId: string;
   @Exclude()
   tableId: string;
+  @Exclude()
+  _count: any;
 
   constructor({
     paymentType,
     managedByEmployee,
     table,
+    _count,
     ...data
   }: Partial<OrderDTO>) {
     Object.assign(this, data);
@@ -53,6 +59,10 @@ export class OrderDTO implements Order {
 
     if (managedByEmployee) {
       this.managedByEmployee = new UserDTO(managedByEmployee);
+    }
+
+    if (_count && _count.orderTableProduct) {
+      this.orderTableProductCount = _count.orderTableProduct;
     }
   }
 }

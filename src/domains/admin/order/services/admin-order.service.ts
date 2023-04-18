@@ -8,6 +8,11 @@ export class AdminOrderService {
   findAll() {
     return this.prisma.order.findMany({
       include: {
+        _count: {
+          select: {
+            orderTableProduct: true,
+          },
+        },
         managedByEmployee: {
           include: {
             role: true,
