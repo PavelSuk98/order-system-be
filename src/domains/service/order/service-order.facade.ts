@@ -1,14 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { CreateOrderTableProductDTO } from './models/create-order-table-product.dto';
+import { CreateOrderDTO } from './models/create-order.dto';
 import { OrderTableProductFilterDTO } from './models/order-table-product-filter.dto';
 import { ServiceOrderTableProductDTO } from './models/service-order-table-product.dto';
-import { ServiceOrderTableProductService } from './services/service-order.service';
+import { ServiceOrderTableProductService } from './services/service-order-table-product.service';
+import { ServiceOrderService } from './services/service-order.service';
 
 @Injectable()
 export class ServiceOrderFacade {
   constructor(
     private readonly orderTableProductService: ServiceOrderTableProductService,
+    private readonly orderService: ServiceOrderService,
   ) {}
+
+  async createOrder(order: CreateOrderDTO): Promise<void> {
+    order.productTotalPrice =
+      await this.orderTableProductService.getOrderTableProductTotalPrice(
+        order.orderTableProductIds,
+      );
+
+    await this.orderService.create(order);
+  }
 
   async createOrderTableProduct(
     order: CreateOrderTableProductDTO[],

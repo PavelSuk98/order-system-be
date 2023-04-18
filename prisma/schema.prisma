@@ -31,7 +31,6 @@ model Order {
   id                  String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   paymentType         PaymentType         @relation(fields: [paymentTypeId], references: [id])
   paymentTypeId       String              @db.Uuid
-  tip                 Float
   totalPrice          Float
   totalPaid           Float
   createdDate         DateTime            @default(now()) @db.Timestamptz(6)
