@@ -6,7 +6,7 @@ import { AppService } from './app.service';
 import { IdentityDomain } from './domains/admin/identity/identity-domain.module';
 import { PrismaService } from './prisma.service';
 import { TableModule } from './domains/admin/table/table.module';
-import { ServiceOrderModule } from './domains/service/order/order.module';
+import { ServiceOrderModule } from './domains/service/order/service-order.module';
 import { ProductModule } from './domains/admin/product/product.module';
 import { ProductCategoryModule } from './domains/admin/product-category/product-category.module';
 import { LogModule } from './domains/admin/logger/log.module';

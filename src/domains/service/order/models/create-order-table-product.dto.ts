@@ -5,4 +5,6 @@ export class CreateOrderTableProductDTO {
   tableId: string;
   @ApiProperty()
   productId: string;
+  @ApiProperty()
+  customerAdditionalRequirements?: string;
 }
