@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { RoleGuard } from 'src/domains/admin/identity/infrastructure/role.guard';
 import { PrismaService } from 'src/prisma.service';
 import { CreateOrderTableProductDTO } from '../models/create-order-table-product.dto';
+import { OrderTableProductFilterDTO } from '../models/order-table-product-filter.dto';
 
 @Injectable()
 export class ServiceOrderTableProductService {
@@ -52,10 +53,13 @@ export class ServiceOrderTableProductService {
     // });
   }
 
-  getActiveOrderTableProducts() {
+  getActiveOrderTableProducts(search: OrderTableProductFilterDTO) {
     return this.prisma.orderTableProduct.findMany({
       where: {
         orderId: null,
+        ...(search.tableId && {
+          tableId: search.tableId,
+        }),
       },
       include: {
         product: {

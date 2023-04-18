@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateOrderTableProductDTO } from './models/create-order-table-product.dto';
+import { OrderTableProductFilterDTO } from './models/order-table-product-filter.dto';
 import { ServiceOrderTableProductDTO } from './models/service-order-table-product.dto';
 import { ServiceOrderTableProductService } from './services/service-order.service';
 
@@ -19,9 +20,11 @@ export class ServiceOrderFacade {
     return orders.map((c) => new ServiceOrderTableProductDTO(c)) as any;
   }
 
-  async getActiveOrderTableProducts(): Promise<ServiceOrderTableProductDTO[]> {
+  async getActiveOrderTableProducts(
+    search: OrderTableProductFilterDTO,
+  ): Promise<ServiceOrderTableProductDTO[]> {
     const orders =
-      await this.orderTableProductService.getActiveOrderTableProducts();
+      await this.orderTableProductService.getActiveOrderTableProducts(search);
 
     return orders.map((c) => new ServiceOrderTableProductDTO(c)) as any;
   }

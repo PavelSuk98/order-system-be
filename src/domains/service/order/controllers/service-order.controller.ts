@@ -1,10 +1,11 @@
 import { Controller, Get } from '@nestjs/common';
-import { Body, Post, UseGuards } from '@nestjs/common/decorators';
+import { Body, Param, Post, UseGuards } from '@nestjs/common/decorators';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/domains/admin/identity/decorators/role.decorator';
 import { UserRoleEnum } from 'src/domains/admin/identity/domain/role.enum';
 import { RoleGuard } from 'src/domains/admin/identity/infrastructure/role.guard';
 import { CreateOrderTableProductDTO } from '../models/create-order-table-product.dto';
+import { OrderTableProductFilterDTO } from '../models/order-table-product-filter.dto';
 import { ServiceOrderTableProductDTO } from '../models/service-order-table-product.dto';
 import { ServiceOrderFacade } from '../service-order.facade';
 
@@ -23,10 +24,12 @@ export class ServiceOrderController {
     return await this.serviceOrderFacade.createOrderTableProduct(order);
   }
 
-  @Get()
+  @Post('search')
   @Roles(UserRoleEnum.Admin, UserRoleEnum.Service)
   @ApiResponse({ type: ServiceOrderTableProductDTO, isArray: true })
-  async getActiveOrders(): Promise<ServiceOrderTableProductDTO[]> {
-    return await this.serviceOrderFacade.getActiveOrderTableProducts();
+  async getActiveOrders(
+    @Body() search: OrderTableProductFilterDTO,
+  ): Promise<ServiceOrderTableProductDTO[]> {
+    return await this.serviceOrderFacade.getActiveOrderTableProducts(search);
   }
 }
