@@ -19,6 +19,7 @@ export class ServiceOrderTableProductService {
     return this.prisma.orderTableProduct.findMany({
       where: {
         id: { in: orderTableProductIds },
+        orderId: null,
       },
       select: {
         tableId: true,
