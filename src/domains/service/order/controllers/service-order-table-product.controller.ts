@@ -1,6 +1,7 @@
 import { Controller } from '@nestjs/common';
 import {
   Body,
+  Delete,
   Param,
   Patch,
   Post,
@@ -29,6 +30,12 @@ export class ServiceOrderTableProductController {
     @Body() order: CreateOrderTableProductDTO[],
   ): Promise<ServiceOrderTableProductDTO[]> {
     return await this.serviceOrderFacade.createOrderTableProduct(order);
+  }
+
+  @Delete('/:id')
+  @Roles(UserRoleEnum.Admin, UserRoleEnum.Service)
+  async delete(@Param('id') id: string): Promise<void> {
+    await this.serviceOrderFacade.deleteOrderTableProduct(id);
   }
 
   @Post('search')

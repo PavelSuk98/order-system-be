@@ -22,6 +22,10 @@ export class ServiceOrderFacade {
     await this.orderService.create(order);
   }
 
+  async deleteOrderTableProduct(id: string) {
+    await this.orderTableProductService.delete(id);
+  }
+
   async createOrderTableProduct(
     order: CreateOrderTableProductDTO[],
   ): Promise<ServiceOrderTableProductDTO[]> {

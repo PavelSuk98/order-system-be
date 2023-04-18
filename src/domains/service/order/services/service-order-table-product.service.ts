@@ -8,6 +8,14 @@ import { OrderTableProductFilterDTO } from '../models/order-table-product-filter
 export class ServiceOrderTableProductService {
   constructor(private readonly prisma: PrismaService) {}
 
+  delete(id: string) {
+    return this.prisma.orderTableProduct.delete({
+      where: {
+        id,
+      },
+    });
+  }
+
   async getOrderTableProductTotalPrice(
     orderTableProductIds: string[],
   ): Promise<number> {
