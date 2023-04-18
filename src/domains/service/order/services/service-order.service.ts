@@ -4,7 +4,7 @@ import { PrismaService } from 'src/prisma.service';
 import { CreateOrderTableProductDTO } from '../models/create-order-table-product.dto';
 
 @Injectable()
-export class ServiceOrderService {
+export class ServiceOrderTableProductService {
   constructor(private readonly prisma: PrismaService) {}
 
   async createOrderTableProduct(
@@ -29,6 +29,26 @@ export class ServiceOrderService {
 
     await this.prisma.orderTableProduct.createMany({
       data: createOrderTableProductEntities,
+    });
+  }
+
+  getActiveOrderTableProducts() {
+    return this.prisma.orderTableProduct.findMany({
+      where: {
+        orderId: null,
+      },
+      include: {
+        product: {
+          include: {
+            category: true,
+          },
+        },
+        table: {
+          include: {
+            tableArea: true,
+          },
+        },
+      },
     });
   }
 }

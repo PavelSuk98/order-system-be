@@ -5,7 +5,7 @@ import { Roles } from 'src/domains/admin/identity/decorators/role.decorator';
 import { UserRoleEnum } from 'src/domains/admin/identity/domain/role.enum';
 import { RoleGuard } from 'src/domains/admin/identity/infrastructure/role.guard';
 import { CreateOrderTableProductDTO } from '../models/create-order-table-product.dto';
-import { OrderTableProductDTO } from '../models/order-table-product.dto';
+import { ServiceOrderTableProductDTO } from '../models/service-order-table-product.dto';
 import { ServiceOrderFacade } from '../service-order.facade';
 
 @UseGuards(RoleGuard)
@@ -16,10 +16,17 @@ export class ServiceOrderController {
 
   @Post()
   @Roles(UserRoleEnum.Admin, UserRoleEnum.Service)
-  @ApiResponse({ type: OrderTableProductDTO, isArray: true })
+  @ApiResponse({ type: ServiceOrderTableProductDTO, isArray: true })
   async create(
     @Body() order: CreateOrderTableProductDTO[],
-  ): Promise<OrderTableProductDTO[]> {
+  ): Promise<ServiceOrderTableProductDTO[]> {
     return await this.serviceOrderFacade.createOrderTableProduct(order);
+  }
+
+  @Get()
+  @Roles(UserRoleEnum.Admin, UserRoleEnum.Service)
+  @ApiResponse({ type: ServiceOrderTableProductDTO, isArray: true })
+  async getActiveOrders(): Promise<ServiceOrderTableProductDTO[]> {
+    return await this.serviceOrderFacade.getActiveOrderTableProducts();
   }
 }
