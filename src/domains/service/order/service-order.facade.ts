@@ -12,11 +12,11 @@ export class ServiceOrderFacade {
   async createOrderTableProduct(
     order: CreateOrderTableProductDTO[],
   ): Promise<ServiceOrderTableProductDTO[]> {
-    const result = await this.orderTableProductService.createOrderTableProduct(
+    const orders = await this.orderTableProductService.createOrderTableProduct(
       order,
     );
 
-    return {} as any;
+    return orders.map((c) => new ServiceOrderTableProductDTO(c)) as any;
   }
 
   async getActiveOrderTableProducts(): Promise<ServiceOrderTableProductDTO[]> {

@@ -27,9 +27,29 @@ export class ServiceOrderTableProductService {
       }),
     );
 
-    await this.prisma.orderTableProduct.createMany({
-      data: createOrderTableProductEntities,
-    });
+    return await this.prisma.$transaction(
+      createOrderTableProductEntities.map((data) =>
+        this.prisma.orderTableProduct.create({
+          data,
+          include: {
+            product: {
+              include: {
+                category: true,
+              },
+            },
+            table: {
+              include: {
+                tableArea: true,
+              },
+            },
+          },
+        }),
+      ),
+    );
+    // does not return entities ids, only count
+    // return this.prisma.orderTableProduct.createMany({
+    //   data: createOrderTableProductEntities,
+    // });
   }
 
   getActiveOrderTableProducts() {
