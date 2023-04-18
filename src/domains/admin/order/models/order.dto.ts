@@ -61,8 +61,8 @@ export class OrderDTO implements Order {
       this.managedByEmployee = new UserDTO(managedByEmployee);
     }
 
-    if (_count && _count.orderTableProduct) {
-      this.orderTableProductCount = _count.orderTableProduct;
+    if (_count && _count.orderTableProducts) {
+      this.orderTableProductCount = _count.orderTableProducts;
     }
   }
 }

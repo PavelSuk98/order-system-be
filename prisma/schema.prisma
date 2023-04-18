@@ -37,7 +37,7 @@ model Order {
   deleted             DateTime?
   customer            User?               @relation("customer", fields: [customerId], references: [id])
   customerId          String?             @db.Uuid
-  orderTableProduct   OrderTableProduct[]
+  orderTableProducts  OrderTableProduct[]
   managedByEmployee   User                @relation("managedByEmployee", fields: [managedByEmployeeId], references: [id])
   managedByEmployeeId String              @db.Uuid
   table               Table?              @relation(fields: [tableId], references: [id])
