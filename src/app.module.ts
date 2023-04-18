@@ -11,6 +11,7 @@ import { ProductModule } from './domains/admin/product/product.module';
 import { ProductCategoryModule } from './domains/admin/product-category/product-category.module';
 import { LogModule } from './domains/admin/logger/log.module';
 import { PaymentModule } from './domains/admin/payment/payment.module';
+import { AdminOrderModule } from './domains/admin/order/admin-order.module';
 
 @Module({
   imports: [
@@ -25,9 +26,7 @@ import { PaymentModule } from './domains/admin/payment/payment.module';
     TableModule,
     PaymentModule,
     ServiceOrderModule,
-    // OrderTableModule,
-    // OrderModule,
-    // ProductMeasureModule,
+    AdminOrderModule,
   ],
   controllers: [AppController],
   providers: [

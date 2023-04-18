@@ -8,7 +8,7 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common/decorators';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/domains/admin/identity/decorators/role.decorator';
 import { UserRoleEnum } from 'src/domains/admin/identity/domain/role.enum';
 import { RoleGuard } from 'src/domains/admin/identity/infrastructure/role.guard';
@@ -26,6 +26,7 @@ export class ServiceOrderTableProductController {
   @Post()
   @Roles(UserRoleEnum.Admin, UserRoleEnum.Service)
   @ApiResponse({ type: ServiceOrderTableProductDTO, isArray: true })
+  @ApiBody({ type: CreateOrderTableProductDTO, isArray: true })
   async create(
     @Body() order: CreateOrderTableProductDTO[],
   ): Promise<ServiceOrderTableProductDTO[]> {

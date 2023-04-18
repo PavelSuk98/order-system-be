@@ -15,7 +15,16 @@ export class ServiceOrderTableProductService {
       },
     });
   }
-
+  async getOrderTableProductTableIds(orderTableProductIds: string[]) {
+    return this.prisma.orderTableProduct.findMany({
+      where: {
+        id: { in: orderTableProductIds },
+      },
+      select: {
+        tableId: true,
+      },
+    });
+  }
   async getOrderTableProductTotalPrice(
     orderTableProductIds: string[],
   ): Promise<number> {

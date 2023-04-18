@@ -19,6 +19,17 @@ export class ServiceOrderFacade {
         order.orderTableProductIds,
       );
 
+    const products =
+      await this.orderTableProductService.getOrderTableProductTableIds(
+        order.orderTableProductIds,
+      );
+
+    if (products.length === 0) {
+      return;
+    }
+
+    order.tableId = products[0].tableId;
+
     await this.orderService.create(order);
   }
 

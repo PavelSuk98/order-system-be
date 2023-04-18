@@ -11,4 +11,6 @@ export class CreateOrderDTO {
   paymentType: PaymentTypeEnum;
   @Exclude()
   productTotalPrice: number;
+  @Exclude()
+  tableId: string;
 }

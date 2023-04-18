@@ -16,6 +16,7 @@ export class ServiceOrderService {
         totalPrice: order.productTotalPrice,
         managedByEmployeeId: RoleGuard.currentUserId,
         paymentTypeId: order.paymentType,
+        tableId: order.tableId,
       },
     });
 
