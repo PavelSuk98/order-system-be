@@ -60,6 +60,19 @@ const seedUsers = async () => {
       roleId: '2d142769-a5c1-4a37-a151-aefe097e8934',
     },
   });
+
+  await prisma.user.upsert({
+    where: { id: '991ec5eb-1b56-45fb-bbc4-51c0e6c1a732' },
+    update: {},
+    create: {
+      id: '991ec5eb-1b56-45fb-bbc4-51c0e6c1a732',
+      firstName: 'Service',
+      lastName: 'System',
+      email: 'service@dobracajka.cz',
+      password: '$2a$10$k13JqPFi43ST1ILXKZJqqe1wGzTga79Fgps6iZfo1G/ffmGkf8GkC',
+      roleId: UserRoleEnum.Service,
+    },
+  });
 };
 
 const seedProductCategoryType = async () => {
