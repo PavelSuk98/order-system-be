@@ -21,10 +21,10 @@ export class ServiceOrderTableProductDTO implements OrderTableProduct {
   @ApiProperty()
   customerAdditionalRequirements: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: ProductDTO })
   product: Partial<ProductDTO>;
 
-  @ApiProperty()
+  @ApiProperty({ type: TableDTO })
   table: Partial<TableDTO>;
 
   @Exclude()

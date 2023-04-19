@@ -23,10 +23,10 @@ export class ProductDTO implements Product {
   @ApiProperty()
   price: number;
 
-  @ApiProperty()
+  @ApiProperty({ type: ProductCategoryDTO })
   category: ProductCategoryDTO;
 
-  @ApiProperty()
+  @ApiProperty({ type: ProductStateDTO })
   productState: ProductStateDTO;
 
   @Exclude()

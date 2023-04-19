@@ -4,7 +4,7 @@ import { ServiceOrderTableProductDTO } from 'src/domains/service/order/models/se
 import { OrderDTO } from './order.dto';
 
 export class OrderDetailDTO extends OrderDTO {
-  @ApiProperty()
+  @ApiProperty({ type: ServiceOrderTableProductDTO, isArray: true })
   orderTableProducts: ServiceOrderTableProductDTO[];
 
   constructor({

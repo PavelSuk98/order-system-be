@@ -15,13 +15,13 @@ export class OrderDTO implements Order {
   @ApiProperty()
   createdDate: Date;
 
-  @ApiProperty()
+  @ApiProperty({ type: PaymentTypeDTO })
   paymentType: PaymentTypeDTO;
 
-  @ApiProperty()
+  @ApiProperty({ type: UserDTO })
   managedByEmployee: UserDTO;
 
-  @ApiProperty()
+  @ApiProperty({ type: TableDTO })
   table: Partial<TableDTO>;
 
   @ApiProperty()
