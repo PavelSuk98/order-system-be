@@ -66,7 +66,7 @@ export class ServiceOrderFacade {
       order,
     );
 
-    return orders.map((c) => new ServiceOrderTableProductDTO(c)) as any;
+    return orders.map((c: any) => new ServiceOrderTableProductDTO(c));
   }
 
   async getActiveOrderTableProducts(
@@ -75,7 +75,7 @@ export class ServiceOrderFacade {
     const orders =
       await this.orderTableProductService.getActiveOrderTableProducts(search);
 
-    return orders.map((c) => new ServiceOrderTableProductDTO(c)) as any;
+    return orders.map((c: any) => new ServiceOrderTableProductDTO(c));
   }
 
   async markAsPrepared(id: string): Promise<void> {
