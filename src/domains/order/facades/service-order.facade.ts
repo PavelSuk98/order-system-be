@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { CreateOrderTableProductDTO } from '../models/services/create-order-table-product.dto';
-import { ServiceOrderTableProductService } from '../services/service-order-table-product.service';
+import { OrderTableProductService } from '../services/order-table-product.service';
 import { CreateOrderDTO } from '../models/services/create-order.dto';
 import { ServiceOrderTableProductDTO } from '../models/services/service-order-table-product.dto';
 import { OrderTableProductFilterDTO } from '../models/services/order-table-product-filter.dto';
 import { OrderService } from '../services/order.service';
+import { RoleGuard } from '@domains/identity/infrastructure/role.guard';
 
 @Injectable()
 export class ServiceOrderFacade {
   constructor(
-    private readonly orderTableProductService: ServiceOrderTableProductService,
+    private readonly orderTableProductService: OrderTableProductService,
     private readonly orderService: OrderService,
   ) {}
 
@@ -25,16 +26,37 @@ export class ServiceOrderFacade {
       );
 
     if (products.length === 0) {
-      return;
+      return; //FIXME: Do proper throw error here for user!
     }
 
     order.tableId = products[0].tableId;
 
-    await this.orderService.create(order);
+    const createdOrder = await this.orderService.create({
+      data: {
+        totalPaid: order.totalPaid,
+        totalPrice: order.productTotalPrice,
+        managedByEmployeeId: RoleGuard.currentUserId,
+        paymentTypeId: order.paymentType,
+        tableId: order.tableId,
+      },
+    });
+
+    await this.orderTableProductService.updateAll({
+      where: {
+        id: { in: order.orderTableProductIds },
+      },
+      data: {
+        orderId: createdOrder.id,
+      },
+    });
   }
 
   async deleteOrderTableProduct(id: string) {
-    await this.orderTableProductService.delete(id);
+    await this.orderTableProductService.delete({
+      where: {
+        id,
+      },
+    });
   }
 
   async createOrderTableProduct(
@@ -57,6 +79,13 @@ export class ServiceOrderFacade {
   }
 
   async markAsPrepared(id: string): Promise<void> {
-    await this.orderTableProductService.markAsPrepared(id);
+    await this.orderTableProductService.update({
+      where: {
+        id: id,
+      },
+      data: {
+        productPreparedDate: new Date(),
+      },
+    });
   }
 }

@@ -3,7 +3,7 @@ import { PrismaService } from 'src/prisma.service';
 import { AdminOrderFacade } from './facades/admin-order.facade';
 import { AdminOrderController } from './controllers/admin-order.controller';
 import { ServiceOrderFacade } from './facades/service-order.facade';
-import { ServiceOrderTableProductService } from './services/service-order-table-product.service';
+import { OrderTableProductService } from './services/order-table-product.service';
 import { OrderService } from './services/order.service';
 import { ServiceOrderController } from './controllers/service-order.controller';
 import { ServiceOrderTableProductController } from './controllers/service-order-table-product.controller';
@@ -19,7 +19,7 @@ import { ServiceOrderTableProductController } from './controllers/service-order-
     AdminOrderFacade,
     PrismaService,
     ServiceOrderFacade,
-    ServiceOrderTableProductService,
+    OrderTableProductService,
   ],
 })
 export class OrderModule {}

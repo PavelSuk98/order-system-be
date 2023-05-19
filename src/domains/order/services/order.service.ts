@@ -7,87 +7,15 @@ import { RoleGuard } from '@domains/identity/infrastructure/role.guard';
 export class OrderService {
   constructor(private readonly prisma: PrismaService) {}
 
-  findAll() {
-    return this.prisma.order.findMany({
-      include: {
-        _count: {
-          select: {
-            orderTableProducts: true,
-          },
-        },
-        managedByEmployee: {
-          include: {
-            role: true,
-          },
-        },
-        paymentType: true,
-        table: {
-          include: {
-            tableArea: true,
-          },
-        },
-      },
-    });
+  findAll(args) {
+    return this.prisma.order.findMany(args);
   }
 
-  findOne(id: string) {
-    return this.prisma.order.findFirst({
-      where: {
-        id,
-      },
-      include: {
-        _count: {
-          select: {
-            orderTableProducts: true,
-          },
-        },
-        orderTableProducts: {
-          include: {
-            product: {
-              include: {
-                category: true,
-              },
-            },
-            table: {
-              include: {
-                tableArea: true,
-              },
-            },
-          },
-        },
-        managedByEmployee: {
-          include: {
-            role: true,
-          },
-        },
-        paymentType: true,
-        table: {
-          include: {
-            tableArea: true,
-          },
-        },
-      },
-    });
+  findOne(args) {
+    return this.prisma.order.findFirst(args);
   }
 
-  async create(order: CreateOrderDTO): Promise<void> {
-    const orderEntity = await this.prisma.order.create({
-      data: {
-        totalPaid: order.totalPaid,
-        totalPrice: order.productTotalPrice,
-        managedByEmployeeId: RoleGuard.currentUserId,
-        paymentTypeId: order.paymentType,
-        tableId: order.tableId,
-      },
-    });
-
-    await this.prisma.orderTableProduct.updateMany({
-      where: {
-        id: { in: order.orderTableProductIds },
-      },
-      data: {
-        orderId: orderEntity.id,
-      },
-    });
+  async create(args) {
+    return await this.prisma.order.create(args);
   }
 }

@@ -5,16 +5,25 @@ import { CreateOrderTableProductDTO } from '../models/services/create-order-tabl
 import { OrderTableProductFilterDTO } from '../models/services/order-table-product-filter.dto';
 
 @Injectable()
-export class ServiceOrderTableProductService {
+export class OrderTableProductService {
   constructor(private readonly prisma: PrismaService) {}
 
-  delete(id: string) {
-    return this.prisma.orderTableProduct.delete({
-      where: {
-        id,
-      },
-    });
+  async update(args) {
+    return this.prisma.orderTableProduct.update(args);
   }
+
+  async updateAll(args) {
+    return this.prisma.orderTableProduct.updateMany(args);
+  }
+
+  findAll(args) {
+    return this.prisma.orderTableProduct.findMany(args);
+  }
+
+  delete(args) {
+    return this.prisma.orderTableProduct.delete(args);
+  }
+
   async getOrderTableProductTableIds(orderTableProductIds: string[]) {
     return this.prisma.orderTableProduct.findMany({
       where: {
@@ -109,17 +118,6 @@ export class ServiceOrderTableProductService {
             tableArea: true,
           },
         },
-      },
-    });
-  }
-
-  async markAsPrepared(id: string) {
-    await this.prisma.orderTableProduct.update({
-      where: {
-        id: id,
-      },
-      data: {
-        productPreparedDate: new Date(),
       },
     });
   }
