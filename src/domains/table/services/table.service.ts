@@ -12,10 +12,18 @@ export class TableService {
     include: {
       tableArea: true,
       tableState: true,
+
       orderTableProducts: {
         where: {
           deleted: null,
           orderId: null,
+        },
+        include: {
+          product: {
+            include: {
+              category: true,
+            },
+          },
         },
       },
     },
