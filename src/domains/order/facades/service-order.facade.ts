@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateOrderTableProductDTO } from '../models/services/create-order-table-product.dto';
 import { OrderTableProductService } from '../services/order-table-product.service';
 import { CreateOrderDTO } from '../models/services/create-order.dto';
@@ -26,7 +26,7 @@ export class ServiceOrderFacade {
       );
 
     if (products.length === 0) {
-      return; //FIXME: Do proper throw error here for user!
+      throw new BadRequestException('Can not find ordered products!');
     }
 
     order.tableId = products[0].tableId;

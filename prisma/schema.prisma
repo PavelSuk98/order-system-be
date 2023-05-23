@@ -66,17 +66,17 @@ model TableArea {
 }
 
 model Table {
-  id                String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name              String
-  order             Int
-  qrKey             String
-  tableState        TableState          @relation(fields: [tableStateId], references: [id])
-  tableStateId      String              @db.Uuid
-  tableArea         TableArea           @relation(fields: [tableAreaId], references: [id])
-  tableAreaId       String              @db.Uuid
-  deleted           DateTime?
-  OrderTableProduct OrderTableProduct[]
-  Order             Order[]
+  id                 String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name               String
+  order              Int
+  qrKey              String
+  tableState         TableState          @relation(fields: [tableStateId], references: [id])
+  tableStateId       String              @db.Uuid
+  tableArea          TableArea           @relation(fields: [tableAreaId], references: [id])
+  tableAreaId        String              @db.Uuid
+  deleted            DateTime?
+  orderTableProducts OrderTableProduct[]
+  Order              Order[]
 }
 
 model ProductState {
