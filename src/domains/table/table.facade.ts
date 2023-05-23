@@ -68,8 +68,10 @@ export class TableFacade {
 
   async serviceFindAllTableDTO(): Promise<ListItemModel<ServiceTableDTO>> {
     const tables = await this.tableService.serviceFindAll();
+    const tableStates = await this.tableStateService.findAll();
+
     return {
-      list: tables.map((c) => new ServiceTableDTO(c)),
+      list: tables.map((c) => new ServiceTableDTO(c, tableStates)),
     };
   }
 
