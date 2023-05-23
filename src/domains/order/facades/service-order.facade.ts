@@ -6,6 +6,7 @@ import { ServiceOrderTableProductDTO } from '../models/services/service-order-ta
 import { OrderTableProductFilterDTO } from '../models/services/order-table-product-filter.dto';
 import { OrderService } from '../services/order.service';
 import { RoleGuard } from '@domains/identity/infrastructure/role.guard';
+import { MoveOrderTableProductsDTO } from '../models/services/move-order-table-product.dto';
 
 @Injectable()
 export class ServiceOrderFacade {
@@ -13,6 +14,32 @@ export class ServiceOrderFacade {
     private readonly orderTableProductService: OrderTableProductService,
     private readonly orderService: OrderService,
   ) {}
+
+  async moveOrderTableProducts(
+    movement: MoveOrderTableProductsDTO,
+  ): Promise<void> {
+    const itemsToMove =
+      await this.orderTableProductService.getOrderTableProductsById(
+        movement.orderTableProductIds,
+      );
+
+    if (itemsToMove.length === 0) {
+      throw new BadRequestException('0', 'Products to move does not exists');
+    }
+
+    // all items are on one table
+    const oldTableId = itemsToMove[0].tableId;
+
+    await this.orderTableProductService.moveOrderTableProducts(
+      itemsToMove.map((c) => c.id),
+      movement.moveToTableId,
+    );
+
+    await this.orderTableProductService.recalculateTableState(oldTableId);
+    await this.orderTableProductService.recalculateTableState(
+      movement.moveToTableId,
+    );
+  }
 
   async createOrder(order: CreateOrderDTO): Promise<void> {
     order.productTotalPrice =

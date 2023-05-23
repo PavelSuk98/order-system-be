@@ -36,6 +36,25 @@ export class OrderTableProductService {
       },
     });
   }
+
+  async getOrderTableProductsById(orderTableProductIds: string[]) {
+    return this.prisma.orderTableProduct.findMany({
+      where: { id: { in: orderTableProductIds } },
+    });
+  }
+
+  async moveOrderTableProducts(
+    orderTableProductIds: string[],
+    newTableId: string,
+  ) {
+    return this.prisma.orderTableProduct.updateMany({
+      where: { id: { in: orderTableProductIds } },
+      data: {
+        tableId: newTableId,
+      },
+    });
+  }
+
   async getOrderTableProductTotalPrice(
     orderTableProductIds: string[],
   ): Promise<number> {

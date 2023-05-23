@@ -16,12 +16,22 @@ import { CreateOrderTableProductDTO } from '../models/services/create-order-tabl
 import { ServiceOrderFacade } from '../facades/service-order.facade';
 import { OrderTableProductFilterDTO } from '../models/services/order-table-product-filter.dto';
 import { ServiceOrderTableProductDTO } from '../models/services/service-order-table-product.dto';
+import { MoveOrderTableProductsDTO } from '../models/services/move-order-table-product.dto';
 
 @UseGuards(RoleGuard)
 @Controller('v1/Service/OrderTableProduct')
 @ApiTags('Service Order Table Product')
 export class ServiceOrderTableProductController {
   constructor(private readonly serviceOrderFacade: ServiceOrderFacade) {}
+
+  @Put('move')
+  @Roles(UserRoleEnum.Admin, UserRoleEnum.Service)
+  @ApiBody({ type: CreateOrderTableProductDTO, isArray: true })
+  async moveOrderTableProducts(
+    @Body() movement: MoveOrderTableProductsDTO,
+  ): Promise<void> {
+    return await this.serviceOrderFacade.moveOrderTableProducts(movement);
+  }
 
   @Post()
   @Roles(UserRoleEnum.Admin, UserRoleEnum.Service)
