@@ -1,3 +1,4 @@
+import { ListItemModel } from '@domains/shared/domain/list-item.interface';
 import { Controller } from '@nestjs/common';
 import {
   Body,
@@ -25,7 +26,7 @@ export class AdminOrderController {
   @Get()
   @Roles(UserRoleEnum.Admin)
   @ApiResponse({ type: OrderDTO, isArray: true })
-  async findAll(): Promise<OrderDTO[]> {
+  async findAll(): Promise<ListItemModel<OrderDTO>> {
     return this.orderFacade.getOrders();
   }
 

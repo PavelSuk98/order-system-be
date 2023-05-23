@@ -1,3 +1,4 @@
+import { ListItemModel } from '@domains/shared/domain/list-item.interface';
 import { Injectable } from '@nestjs/common';
 import { OrderDetailDTO } from '../models/admin/order-detail.dto';
 import { OrderDTO } from '../models/admin/order.dto';
@@ -7,7 +8,7 @@ import { OrderService } from '../services/order.service';
 export class AdminOrderFacade {
   constructor(private readonly orderService: OrderService) {}
 
-  async getOrders(): Promise<OrderDTO[]> {
+  async getOrders(): Promise<ListItemModel<OrderDTO>> {
     const orders = await this.orderService.findAll({
       include: {
         _count: {
@@ -29,7 +30,9 @@ export class AdminOrderFacade {
       },
     });
 
-    return orders.map((c) => new OrderDTO(c));
+    return {
+      list: orders.map((c) => new OrderDTO(c)),
+    };
   }
 
   async getOrder(id: string): Promise<OrderDetailDTO> {
