@@ -29,7 +29,7 @@ export class ServiceProductCategoryController {
   constructor(private readonly productCategoryFacade: ProductCategoryFacade) {}
 
   @Get()
-  @Roles(UserRoleEnum.Service)
+  @Roles(UserRoleEnum.Admin, UserRoleEnum.Service)
   @ApiResponse({ type: ListItemModel<ProductCategoryDTO> })
   async findAll(): Promise<ListItemModel<ProductCategoryDTO>> {
     return await this.productCategoryFacade.findAllDTO();

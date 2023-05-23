@@ -16,14 +16,14 @@ export class ServiceTableController {
   constructor(private readonly tableFacade: TableFacade) {}
 
   @Get()
-  @Roles(UserRoleEnum.Service)
+  @Roles(UserRoleEnum.Admin, UserRoleEnum.Service)
   @ApiResponse({ type: ListItemModel<TableDTO> })
   async findAll(): Promise<ListItemModel<TableDTO>> {
     return await this.tableFacade.findAllTableDTO();
   }
 
   @Get(':id')
-  @Roles(UserRoleEnum.Service)
+  @Roles(UserRoleEnum.Admin, UserRoleEnum.Service)
   @ApiResponse({ type: TableDetailDTO })
   async findOne(@Param('id') id: string): Promise<TableDetailDTO> {
     return await this.tableFacade.findOneTableDTO(id);

@@ -12,7 +12,7 @@ export class ServiceProductCategoryTypeController {
   constructor(private readonly productCategoryFacade: ProductCategoryFacade) {}
 
   @Get('')
-  @Roles(UserRoleEnum.Service)
+  @Roles(UserRoleEnum.Admin, UserRoleEnum.Service)
   @ApiResponse({ type: ProductCategoryTypeDTO, isArray: true })
   findAll(): Promise<ProductCategoryTypeDTO[]> {
     return this.productCategoryFacade.findAllPoductCategoryTypeDTOs();

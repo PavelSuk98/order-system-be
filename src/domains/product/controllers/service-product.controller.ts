@@ -14,7 +14,7 @@ export class ServiceProductController {
   constructor(private readonly productFacade: ProductFacade) {}
 
   @Get()
-  @Roles(UserRoleEnum.Service)
+  @Roles(UserRoleEnum.Admin, UserRoleEnum.Service)
   @ApiResponse({ type: ListItemModel<ProductDTO> })
   async findAll(): Promise<ListItemModel<ProductDTO>> {
     return await this.productFacade.findAllDTO();
