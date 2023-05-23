@@ -11,7 +11,7 @@ import { LogModule } from '@domains/logger/log.module';
 import { TableModule } from '@domains/table/table.module';
 import { PaymentModule } from '@domains/payment/payment.module';
 import { OrderModule } from '@domains/order/order.module';
-
+import { DashboardModule } from '@domains/dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -26,6 +26,7 @@ import { OrderModule } from '@domains/order/order.module';
     TableModule,
     PaymentModule,
     OrderModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [
