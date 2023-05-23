@@ -34,11 +34,4 @@ export class ServiceProductCategoryController {
   async findAll(): Promise<ListItemModel<ProductCategoryDTO>> {
     return await this.productCategoryFacade.findAllDTO();
   }
-
-  @Get(':id')
-  @Roles(UserRoleEnum.Admin)
-  @ApiResponse({ type: ProductCategoryDetailDTO })
-  async findOne(@Param('id') id: string): Promise<ProductCategoryDetailDTO> {
-    return await this.productCategoryFacade.findOneDTO(id);
-  }
 }
