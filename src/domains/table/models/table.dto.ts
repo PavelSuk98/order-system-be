@@ -1,8 +1,10 @@
+import { ServiceOrderTableProductDTO } from '@domains/order/models/services/service-order-table-product.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { Table } from '@prisma/client';
 import { Exclude } from 'class-transformer';
 import { TableAreaDTO } from './table-area.dto';
 import { TableStateDTO } from './table-state.dto';
+import { TableState } from './table-state.enum';
 
 export class TableDTO implements Table {
   @ApiProperty()
@@ -23,6 +25,9 @@ export class TableDTO implements Table {
   @ApiProperty()
   tableArea: TableAreaDTO;
 
+  @ApiProperty({ type: ServiceOrderTableProductDTO, isArray: true })
+  orderTableProducts: Partial<ServiceOrderTableProductDTO>[];
+
   @Exclude()
   tableStateId: string;
 
@@ -32,7 +37,12 @@ export class TableDTO implements Table {
   @Exclude()
   deleted: Date | null;
 
-  constructor({ tableState, tableArea, ...data }: Partial<TableDTO>) {
+  constructor({
+    tableState,
+    tableArea,
+    orderTableProducts,
+    ...data
+  }: Partial<TableDTO>) {
     Object.assign(this, data);
 
     if (tableState) {
@@ -41,6 +51,12 @@ export class TableDTO implements Table {
 
     if (tableArea) {
       this.tableArea = new TableAreaDTO(tableArea);
+    }
+
+    if (orderTableProducts) {
+      this.orderTableProducts = orderTableProducts.map(
+        (c) => new ServiceOrderTableProductDTO(c),
+      );
     }
   }
 }

@@ -49,22 +49,35 @@ export class ServiceOrderFacade {
         orderId: createdOrder.id,
       },
     });
+
+    await this.orderTableProductService.recalculateTableState(order.tableId);
   }
 
   async deleteOrderTableProduct(id: string) {
-    await this.orderTableProductService.delete({
+    const orderTableProduct = await this.orderTableProductService.delete({
       where: {
         id,
       },
     });
+
+    await this.orderTableProductService.recalculateTableState(
+      orderTableProduct.tableId,
+    );
   }
 
   async createOrderTableProduct(
     order: CreateOrderTableProductDTO[],
   ): Promise<ServiceOrderTableProductDTO[]> {
+    if (order.length === 0) {
+      throw new BadRequestException('Zero ordered products');
+    }
+
     const orders = await this.orderTableProductService.createOrderTableProduct(
       order,
     );
+
+    // order is always on 1 table at the time, so taking first item and tableId is safe
+    await this.orderTableProductService.recalculateTableState(order[0].tableId);
 
     return orders.map((c: any) => new ServiceOrderTableProductDTO(c));
   }

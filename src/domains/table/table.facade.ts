@@ -12,8 +12,6 @@ import { TableAreaService } from './services/table-area.service';
 import { TableStateService } from './services/table-state.service';
 import { TableService } from './services/table.service';
 import { ListItemModel } from '@domains/shared/domain/list-item.interface';
-import { ServiceTableDTO } from './models/service-table.dto';
-import { table } from 'console';
 
 @Injectable()
 export class TableFacade {
@@ -66,30 +64,24 @@ export class TableFacade {
     await this.tableAreaService.delete(id);
   }
 
-  async serviceFindAllTableDTO(): Promise<ListItemModel<ServiceTableDTO>> {
-    const tables = await this.tableService.serviceFindAll();
-    const tableStates = await this.tableStateService.findAll();
-
-    return {
-      list: tables.map((c) => new ServiceTableDTO(c, tableStates)),
-    };
-  }
-
   async findAllTableDTO(): Promise<ListItemModel<TableDTO>> {
-    const tableAreas = await this.tableService.findAll();
+    const tables = await this.tableService.findAll();
 
     return {
-      list: tableAreas.map((c) => new TableDTO(c)),
+      list: tables.map((c) => new TableDTO(c)),
     };
   }
 
   async findOneTableDTO(id: string): Promise<TableDetailDTO | undefined> {
     const tableArea = await this.tableService.findOne(id);
+
     if (!tableArea) {
       return undefined;
     }
+
     return new TableDetailDTO(tableArea);
   }
+
   async createTable(createDTO: CreateTableDTO): Promise<TableDetailDTO> {
     const tableArea = await this.tableService.create(createDTO);
 

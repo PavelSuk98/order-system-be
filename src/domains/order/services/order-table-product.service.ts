@@ -1,3 +1,4 @@
+import { TableState } from '@domains/table/models/table-state.enum';
 import { Injectable } from '@nestjs/common';
 import { RoleGuard } from 'src/domains/identity/infrastructure/role.guard';
 import { PrismaService } from 'src/prisma.service';
@@ -99,13 +100,34 @@ export class OrderTableProductService {
     // });
   }
 
-  getActiveOrderTableProducts(search: OrderTableProductFilterDTO) {
+  async recalculateTableState(tableId: string) {
+    const tableOrderedProducts = await this.getActiveOrderTableProducts({
+      tableId,
+    });
+
+    const newTableStateId =
+      tableOrderedProducts.length === 0
+        ? TableState.Available
+        : TableState.Ordered;
+
+    await this.prisma.table.update({
+      where: {
+        id: tableId,
+      },
+      data: {
+        tableStateId: newTableStateId,
+      },
+    });
+  }
+
+  async getActiveOrderTableProducts(search: OrderTableProductFilterDTO) {
     return this.prisma.orderTableProduct.findMany({
       where: {
         orderId: null,
         ...(search.tableId && {
           tableId: search.tableId,
         }),
+        deleted: null,
       },
       include: {
         product: {

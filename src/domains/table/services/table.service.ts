@@ -8,28 +8,21 @@ import { UpdateTableDTO } from '../models/update-table.dto';
 export class TableService {
   constructor(private readonly prisma: PrismaService) {}
 
-  serviceFindAll() {
-    return this.prisma.table.findMany({
-      include: {
-        tableArea: true,
-        tableState: true,
-        orderTableProducts: {
-          where: {
-            deleted: null,
-            orderId: null,
-          },
+  readonly tableQuery = {
+    include: {
+      tableArea: true,
+      tableState: true,
+      orderTableProducts: {
+        where: {
+          deleted: null,
+          orderId: null,
         },
       },
-    });
-  }
+    },
+  };
 
   findAll() {
-    return this.prisma.table.findMany({
-      include: {
-        tableArea: true,
-        tableState: true,
-      },
-    });
+    return this.prisma.table.findMany(this.tableQuery);
   }
 
   async findOne(id: string) {
@@ -37,10 +30,7 @@ export class TableService {
       where: {
         id,
       },
-      include: {
-        tableArea: true,
-        tableState: true,
-      },
+      ...this.tableQuery,
     });
 
     if (!entity) {

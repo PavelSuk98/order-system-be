@@ -6,7 +6,6 @@ import { UserRoleEnum } from 'src/domains/identity/domain/role.enum';
 import { RoleGuard } from 'src/domains/identity/infrastructure/role.guard';
 import { ListItemModel } from 'src/domains/shared/domain/list-item.interface';
 import { CreateTableDTO } from '../models/create-table.dto';
-import { ServiceTableDTO } from '../models/service-table.dto';
 import { TableDetailDTO } from '../models/table-detail.dto';
 import { TableDTO } from '../models/table.dto';
 import { TableFacade } from '../table.facade';
@@ -19,8 +18,8 @@ export class ServiceTableController {
   @Get()
   @Roles(UserRoleEnum.Admin, UserRoleEnum.Service)
   @ApiResponse({ type: ListItemModel<TableDTO> })
-  async findAll(): Promise<ListItemModel<ServiceTableDTO>> {
-    return await this.tableFacade.serviceFindAllTableDTO();
+  async findAll(): Promise<ListItemModel<TableDTO>> {
+    return await this.tableFacade.findAllTableDTO();
   }
 
   @Get(':id')
