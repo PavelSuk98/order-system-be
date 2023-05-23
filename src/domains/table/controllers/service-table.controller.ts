@@ -8,7 +8,6 @@ import { ListItemModel } from 'src/domains/shared/domain/list-item.interface';
 import { CreateTableDTO } from '../models/create-table.dto';
 import { TableDetailDTO } from '../models/table-detail.dto';
 import { TableDTO } from '../models/table.dto';
-import { UpdateTableDTO } from '../models/update-table.dto';
 import { TableFacade } from '../table.facade';
 @UseGuards(RoleGuard)
 @Controller('v1/Service/Table')
@@ -21,5 +20,12 @@ export class ServiceTableController {
   @ApiResponse({ type: ListItemModel<TableDTO> })
   async findAll(): Promise<ListItemModel<TableDTO>> {
     return await this.tableFacade.findAllTableDTO();
+  }
+
+  @Get(':id')
+  @Roles(UserRoleEnum.Service)
+  @ApiResponse({ type: TableDetailDTO })
+  async findOne(@Param('id') id: string): Promise<TableDetailDTO> {
+    return await this.tableFacade.findOneTableDTO(id);
   }
 }
