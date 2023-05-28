@@ -151,7 +151,11 @@ export class OrderTableProductService {
       include: {
         product: {
           include: {
-            category: true,
+            category: {
+              include: {
+                type: true,
+              },
+            },
           },
         },
         table: {
