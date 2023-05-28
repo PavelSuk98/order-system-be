@@ -21,7 +21,11 @@ export class TableService {
         include: {
           product: {
             include: {
-              category: true,
+              category: {
+                include: {
+                  type: true,
+                },
+              },
             },
           },
         },
