@@ -12,7 +12,7 @@ export class ProductDTO implements Product {
   name: string;
 
   @ApiProperty()
-  description: string;
+  description: string | null;
 
   @ApiProperty()
   imgUrl: string;

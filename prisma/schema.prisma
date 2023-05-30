@@ -142,7 +142,7 @@ model Product {
   deleted           DateTime?
   id                String              @id(map: "PK_6e8f75045ddcd1c389c765c896e") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   name              String              @db.VarChar
-  description       String              @db.VarChar
+  description       String?             @db.VarChar
   imgUrl            String              @db.VarChar
   order             Int
   price             Float
