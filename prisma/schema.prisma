@@ -152,4 +152,7 @@ model Product {
   productState      ProductState        @relation(fields: [productStateId], references: [id])
   productStateId    String              @db.Uuid
   OrderTableProduct OrderTableProduct[]
+  parentProduct     Product?            @relation("parentProduct", fields: [parentProductId], references: [id])
+  childProducts     Product[]           @relation("parentProduct")
+  parentProductId   String?             @db.Uuid
 }

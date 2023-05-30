@@ -41,6 +41,9 @@ export class ProductDTO implements Product {
   @Exclude()
   deleted: Date | null;
 
+  @ApiProperty({ required: false })
+  parentProductId: string | null;
+
   constructor({ category, productState, ...data }: Partial<ProductDTO>) {
     Object.assign(this, data);
 

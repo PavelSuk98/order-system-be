@@ -27,6 +27,9 @@ export class CreateProductDTO implements Product {
   @ApiProperty()
   productStateId: string;
 
+  @ApiProperty({ required: false })
+  parentProductId: string | null;
+
   @Exclude()
   deleted: Date;
 
