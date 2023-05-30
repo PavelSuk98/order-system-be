@@ -28,13 +28,19 @@ export class ServiceOrderTableProductDTO implements OrderTableProduct {
   table: Partial<TableDTO>;
 
   @Exclude()
+  paid: boolean;
+  @Exclude()
+  customerId: string;
+  @Exclude()
+  createdByEmployeeId: string;
+  @Exclude()
+  preparedByEmployeeId: string;
+  @Exclude()
   tableId: string;
   @Exclude()
   productId: string;
   @Exclude()
   orderId: string;
-  @Exclude()
-  managedByEmployeeId: string;
   @Exclude()
   deleted: Date;
 

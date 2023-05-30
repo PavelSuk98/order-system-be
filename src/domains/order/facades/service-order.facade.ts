@@ -42,14 +42,11 @@ export class ServiceOrderFacade {
   }
 
   async createOrder(order: CreateOrderDTO): Promise<void> {
-    order.productTotalPrice =
-      await this.orderTableProductService.getOrderTableProductTotalPrice(
-        order.orderTableProductIds,
-      );
+    order.productTotalPrice = order.totalPrice;
 
     const products =
       await this.orderTableProductService.getOrderTableProductTableIds(
-        order.orderTableProductIds,
+        order.orderTableProductPayments.map((c) => c.orderTableProductId),
       );
 
     if (products.length === 0) {
@@ -62,20 +59,21 @@ export class ServiceOrderFacade {
       data: {
         totalPaid: order.totalPaid,
         totalPrice: order.productTotalPrice,
+        tip: order.totalPaid - order.productTotalPrice,
         managedByEmployeeId: RoleGuard.currentUserId,
         paymentTypeId: order.paymentType,
         tableId: order.tableId,
       },
     });
 
-    await this.orderTableProductService.updateAll({
-      where: {
-        id: { in: order.orderTableProductIds },
-      },
-      data: {
-        orderId: createdOrder.id,
-      },
-    });
+    // await this.orderTableProductService.updateAll({
+    //   where: {
+    //     id: { in: order.orderTableProductIds },
+    //   },
+    //   data: {
+    //     orderId: createdOrder.id,
+    //   },
+    // });
 
     await this.orderTableProductService.recalculateTableState(order.tableId);
   }

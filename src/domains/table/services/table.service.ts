@@ -50,7 +50,7 @@ export class TableService {
         orderTableProducts: {
           where: {
             deleted: null,
-            orderId: null,
+            paid: false,
           },
           include: {
             product: {

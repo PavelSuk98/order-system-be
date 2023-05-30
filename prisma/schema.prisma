@@ -10,38 +10,64 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model OrderTableProductPayment {
+  id                  String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  orderTableProduct   OrderTableProduct @relation(fields: [orderTableProductId], references: [id])
+  orderTableProductId String            @db.Uuid
+  createdDate         DateTime          @default(now()) @db.Timestamptz(6)
+  totalPaid           Float
+  order               Order?            @relation(fields: [orderId], references: [id])
+  orderId             String?           @db.Uuid
+  managedByEmployee   User              @relation("managedByEmployeePayments", fields: [managedByEmployeeId], references: [id])
+  managedByEmployeeId String            @db.Uuid
+
+  customer   User?   @relation("customerPayments", fields: [customerId], references: [id])
+  customerId String? @db.Uuid
+}
+
 model OrderTableProduct {
   id                             String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   table                          Table?    @relation(fields: [tableId], references: [id])
   tableId                        String?   @db.Uuid
   product                        Product   @relation(fields: [productId], references: [id])
   productId                      String    @db.Uuid
-  order                          Order?    @relation(fields: [orderId], references: [id])
-  orderId                        String?   @db.Uuid
   productOrderDate               DateTime  @default(now()) @db.Timestamptz(6)
   productPreparedDate            DateTime?
   deleted                        DateTime?
   productPrice                   Float
+  paid                           Boolean   @default(false)
   customerAdditionalRequirements String?
-  managedByEmployee              User      @relation(fields: [managedByEmployeeId], references: [id])
-  managedByEmployeeId            String    @db.Uuid
+
+  payments OrderTableProductPayment[]
+
+  customer   User?   @relation("customer", fields: [customerId], references: [id])
+  customerId String? @db.Uuid
+
+  createdByEmployee   User   @relation("createdByEmployee", fields: [createdByEmployeeId], references: [id])
+  createdByEmployeeId String @db.Uuid
+
+  preparedByEmployee   User?   @relation("preparedByEmployee", fields: [preparedByEmployeeId], references: [id])
+  preparedByEmployeeId String? @db.Uuid
 }
 
 model Order {
-  id                  String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  paymentType         PaymentType         @relation(fields: [paymentTypeId], references: [id])
-  paymentTypeId       String              @db.Uuid
-  totalPrice          Float
-  totalPaid           Float
-  createdDate         DateTime            @default(now()) @db.Timestamptz(6)
-  deleted             DateTime?
-  customer            User?               @relation("customer", fields: [customerId], references: [id])
-  customerId          String?             @db.Uuid
-  orderTableProducts  OrderTableProduct[]
-  managedByEmployee   User                @relation("managedByEmployee", fields: [managedByEmployeeId], references: [id])
-  managedByEmployeeId String              @db.Uuid
-  table               Table?              @relation(fields: [tableId], references: [id])
-  tableId             String?             @db.Uuid
+  id            String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  paymentType   PaymentType @relation(fields: [paymentTypeId], references: [id])
+  paymentTypeId String      @db.Uuid
+  totalPrice    Float
+  totalPaid     Float
+  tip           Float
+  createdDate   DateTime    @default(now()) @db.Timestamptz(6)
+  deleted       DateTime?
+  customer      User?       @relation("customerOrder", fields: [customerId], references: [id])
+  customerId    String?     @db.Uuid
+
+  table                    Table?                     @relation(fields: [tableId], references: [id])
+  tableId                  String?                    @db.Uuid
+  OrderTableProductPayment OrderTableProductPayment[]
+
+  managedByEmployee   User   @relation("managedByEmployee", fields: [managedByEmployeeId], references: [id])
+  managedByEmployeeId String @db.Uuid
 }
 
 model PaymentType {
@@ -94,17 +120,21 @@ model Role {
 }
 
 model User {
-  id                     String              @id(map: "PK_9862f679340fb2388436a5ab3e4") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  firstName              String              @db.VarChar
-  lastName               String              @db.VarChar
-  email                  String              @unique @db.VarChar
-  password               String              @db.VarChar
-  roleId                 String              @db.Uuid
-  deleted                DateTime?
-  role                   Role                @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_0b8c60cc29663fa5b9fb108edd7")
-  OrderTableProduct      OrderTableProduct[]
-  customerOrder          Order[]             @relation("customer")
-  managedByEmployeeOrder Order[]             @relation("managedByEmployee")
+  id                        String                     @id(map: "PK_9862f679340fb2388436a5ab3e4") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  firstName                 String                     @db.VarChar
+  lastName                  String                     @db.VarChar
+  email                     String                     @unique @db.VarChar
+  password                  String                     @db.VarChar
+  roleId                    String                     @db.Uuid
+  deleted                   DateTime?
+  role                      Role                       @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_0b8c60cc29663fa5b9fb108edd7")
+  customerOrder             Order[]                    @relation("customerOrder")
+  managedByEmployeeOrder    Order[]                    @relation("managedByEmployee")
+  preparedProducts          OrderTableProduct[]        @relation("preparedByEmployee")
+  createdOrderTableProducts OrderTableProduct[]        @relation("createdByEmployee")
+  orderedProducts           OrderTableProduct[]        @relation("customer")
+  productPayments           OrderTableProductPayment[] @relation("customerPayments")
+  OrderTableProductPayment  OrderTableProductPayment[] @relation("managedByEmployeePayments")
 }
 
 model Log {

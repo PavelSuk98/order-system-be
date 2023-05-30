@@ -27,6 +27,9 @@ export class OrderDTO implements Order {
   @ApiProperty()
   orderTableProductCount: number;
 
+  @ApiProperty()
+  tip: number;
+
   @Exclude()
   paymentTypeId: string;
   @Exclude()

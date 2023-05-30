@@ -1,5 +1,6 @@
 import { TableState } from '@domains/table/models/table-state.enum';
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { RoleGuard } from 'src/domains/identity/infrastructure/role.guard';
 import { PrismaService } from 'src/prisma.service';
 import { CreateOrderTableProductDTO } from '../models/services/create-order-table-product.dto';
@@ -29,7 +30,7 @@ export class OrderTableProductService {
     return this.prisma.orderTableProduct.findMany({
       where: {
         id: { in: orderTableProductIds },
-        orderId: null,
+        paid: false,
       },
       select: {
         tableId: true,
@@ -64,7 +65,7 @@ export class OrderTableProductService {
       },
       where: {
         id: { in: orderTableProductIds },
-        orderId: null,
+        paid: false,
       },
     });
 
@@ -87,7 +88,7 @@ export class OrderTableProductService {
               where: { id: product.productId },
             })
           ).price,
-          managedByEmployeeId: RoleGuard.currentUserId,
+          createdByEmployeeId: RoleGuard.currentUserId,
           customerAdditionalRequirements:
             product.customerAdditionalRequirements,
         };
@@ -113,10 +114,6 @@ export class OrderTableProductService {
         }),
       ),
     );
-    // does not return entities ids, only count
-    // return this.prisma.orderTableProduct.createMany({
-    //   data: createOrderTableProductEntities,
-    // });
   }
 
   async recalculateTableState(tableId: string) {
@@ -142,7 +139,7 @@ export class OrderTableProductService {
   async getActiveOrderTableProducts(search: OrderTableProductFilterDTO) {
     return this.prisma.orderTableProduct.findMany({
       where: {
-        orderId: null,
+        paid: false,
         ...(search.tableId && {
           tableId: search.tableId,
         }),
