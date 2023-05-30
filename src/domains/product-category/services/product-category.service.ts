@@ -13,6 +13,9 @@ export class ProductCategoryService {
       include: {
         type: true,
       },
+      orderBy: {
+        order: 'asc',
+      },
     });
   }
 

@@ -9,7 +9,10 @@ export class ProductDTO implements Product {
   id: string;
 
   @ApiProperty()
-  name: string;
+  name: string | null;
+
+  @ApiProperty()
+  nameJP: string | null;
 
   @ApiProperty()
   description: string | null;

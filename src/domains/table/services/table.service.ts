@@ -42,7 +42,24 @@ export class TableService {
       where: {
         id,
       },
-      ...this.tableQuery,
+      include: {
+        tableArea: true,
+        tableState: true,
+
+        orderTableProducts: {
+          where: {
+            deleted: null,
+            orderId: null,
+          },
+          include: {
+            product: {
+              include: {
+                category: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     if (!entity) {

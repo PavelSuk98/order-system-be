@@ -18,6 +18,16 @@ export class ProductService {
         },
         productState: true,
       },
+      orderBy: [
+        {
+          category: {
+            order: 'asc',
+          },
+        },
+        {
+          order: 'asc',
+        },
+      ],
     });
   }
 
