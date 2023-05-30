@@ -9,7 +9,11 @@ export class TableAreaService {
   constructor(private readonly prisma: PrismaService) {}
 
   findAll() {
-    return this.prisma.tableArea.findMany();
+    return this.prisma.tableArea.findMany({
+      where: {
+        deleted: null,
+      },
+    });
   }
 
   async findOne(id: string) {

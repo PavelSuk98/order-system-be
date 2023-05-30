@@ -10,6 +10,9 @@ export class ProductService {
 
   findAll(): Promise<Product[]> {
     return this.prisma.product.findMany({
+      where: {
+        deleted: null,
+      },
       include: {
         category: {
           include: {

@@ -12,6 +12,7 @@ export class TableService {
     include: {
       tableArea: true,
       tableState: true,
+      deleted: null,
 
       orderTableProducts: {
         where: {
