@@ -26,6 +26,27 @@ export class OrderTableProductService {
     return this.prisma.orderTableProduct.delete(args);
   }
 
+  async isProductPaid(productId: string): Promise<boolean> {
+    const res = await this.prisma.orderTableProduct.findFirst({
+      where: {
+        id: productId,
+      },
+      select: {
+        productPrice: true,
+        payments: {
+          select: {
+            totalPaid: true,
+          },
+        },
+      },
+    });
+
+    return (
+      res.payments.reduce((sum, current) => sum + current.totalPaid, 0) >=
+      res.productPrice
+    );
+  }
+
   async getOrderTableProductTableIds(orderTableProductIds: string[]) {
     return this.prisma.orderTableProduct.findMany({
       where: {

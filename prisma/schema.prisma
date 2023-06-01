@@ -38,6 +38,9 @@ model OrderTableProduct {
   paid                           Boolean   @default(false)
   customerAdditionalRequirements String?
 
+  order   Order?  @relation(fields: [orderId], references: [id])
+  orderId String? @db.Uuid
+
   payments OrderTableProductPayment[]
 
   customer   User?   @relation("customer", fields: [customerId], references: [id])
@@ -66,8 +69,9 @@ model Order {
   tableId                  String?                    @db.Uuid
   OrderTableProductPayment OrderTableProductPayment[]
 
-  managedByEmployee   User   @relation("managedByEmployee", fields: [managedByEmployeeId], references: [id])
-  managedByEmployeeId String @db.Uuid
+  managedByEmployee   User                @relation("managedByEmployee", fields: [managedByEmployeeId], references: [id])
+  managedByEmployeeId String              @db.Uuid
+  products            OrderTableProduct[]
 }
 
 model PaymentType {

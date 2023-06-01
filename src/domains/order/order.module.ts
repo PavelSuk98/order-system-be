@@ -7,6 +7,7 @@ import { OrderTableProductService } from './services/order-table-product.service
 import { OrderService } from './services/order.service';
 import { ServiceOrderController } from './controllers/service-order.controller';
 import { ServiceOrderTableProductController } from './controllers/service-order-table-product.controller';
+import { OrderProductPaymentService } from './facades/order-product-payment.service';
 
 @Module({
   controllers: [
@@ -19,6 +20,7 @@ import { ServiceOrderTableProductController } from './controllers/service-order-
     AdminOrderFacade,
     PrismaService,
     ServiceOrderFacade,
+    OrderProductPaymentService,
     OrderTableProductService,
   ],
 })

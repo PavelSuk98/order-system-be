@@ -7,12 +7,14 @@ import { OrderTableProductFilterDTO } from '../models/services/order-table-produ
 import { OrderService } from '../services/order.service';
 import { RoleGuard } from '@domains/identity/infrastructure/role.guard';
 import { MoveOrderTableProductsDTO } from '../models/services/move-order-table-product.dto';
+import { OrderProductPaymentService } from './order-product-payment.service';
 
 @Injectable()
 export class ServiceOrderFacade {
   constructor(
     private readonly orderTableProductService: OrderTableProductService,
     private readonly orderService: OrderService,
+    private readonly paymentService: OrderProductPaymentService,
   ) {}
 
   async moveOrderTableProducts(
@@ -66,14 +68,27 @@ export class ServiceOrderFacade {
       },
     });
 
-    // await this.orderTableProductService.updateAll({
-    //   where: {
-    //     id: { in: order.orderTableProductIds },
-    //   },
-    //   data: {
-    //     orderId: createdOrder.id,
-    //   },
-    // });
+    //  vytvorit dilci platby za produkt
+    await this.paymentService.addPayments(
+      order.orderTableProductPayments,
+      createdOrder.id,
+    );
+
+    // TODO: Check, ktere produkty dilci platbou obsahli cenu >=
+    // TODO: tyto produkty nastavit na stole jako zaplacene
+    for await (const c of order.orderTableProductPayments) {
+      await this.orderTableProductService.update({
+        where: {
+          id: c.orderTableProductId,
+        },
+        data: {
+          orderId: createdOrder.id,
+          paid: await this.orderTableProductService.isProductPaid(
+            c.orderTableProductId,
+          ),
+        },
+      });
+    }
 
     await this.orderTableProductService.recalculateTableState(order.tableId);
   }
