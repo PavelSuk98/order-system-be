@@ -9,10 +9,12 @@ export class TableService {
   constructor(private readonly prisma: PrismaService) {}
 
   readonly tableQuery = {
+    where: {
+      deleted: null,
+    },
     include: {
       tableArea: true,
       tableState: true,
-      deleted: null,
 
       orderTableProducts: {
         where: {
