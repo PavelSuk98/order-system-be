@@ -13,7 +13,7 @@ export class AdminOrderFacade {
       include: {
         _count: {
           select: {
-            orderTableProducts: true,
+            products: true,
           },
         },
         managedByEmployee: {
@@ -43,7 +43,7 @@ export class AdminOrderFacade {
       include: {
         _count: {
           select: {
-            orderTableProducts: true,
+            products: true,
           },
         },
         orderTableProducts: {

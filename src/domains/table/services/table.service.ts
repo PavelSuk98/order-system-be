@@ -19,7 +19,7 @@ export class TableService {
       orderTableProducts: {
         where: {
           deleted: null,
-          orderId: null,
+          paid: false,
         },
         include: {
           product: {
@@ -31,6 +31,7 @@ export class TableService {
               },
             },
           },
+          payments: true,
         },
       },
     },
@@ -60,6 +61,7 @@ export class TableService {
                 category: true,
               },
             },
+            payments: true,
           },
         },
       },
