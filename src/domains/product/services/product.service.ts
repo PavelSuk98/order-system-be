@@ -24,6 +24,13 @@ export class ProductService {
       orderBy: [
         {
           category: {
+            type: {
+              name: 'asc',
+            },
+          },
+        },
+        {
+          category: {
             order: 'asc',
           },
         },
