@@ -16,9 +16,16 @@ export class ProductCategoryService {
       include: {
         type: true,
       },
-      orderBy: {
-        order: 'asc',
-      },
+      orderBy: [
+        {
+          type: {
+            name: 'asc',
+          },
+        },
+        {
+          order: 'asc',
+        },
+      ],
     });
   }
 
